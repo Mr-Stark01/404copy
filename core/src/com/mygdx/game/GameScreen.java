@@ -5,49 +5,64 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.ScreenUtils;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.mygdx.game.units.Knight;
 
 public class GameScreen implements Screen {
+
+    Knight knightTest;
     final MyGdxGame game;
-    OrthographicCamera camera;
+    //map from tiled
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    //Camera
+    OrthographicCamera camera;
+    SpriteBatch spriteBatch;
 
     public GameScreen(final MyGdxGame game){
         this.game=game;
-
-
-
-
+        spriteBatch = new SpriteBatch();
     }
 
     @Override
     public void show() {
-        camera = new OrthographicCamera();
+        //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/Base.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map);
-        //Camera creation
 
-        camera.viewportHeight=480;
-        camera.viewportWidth=800;
+        knightTest = new Knight(new Sprite(new Texture("textures/knight.png")));
+
+        //Camera viewport settings
+        camera = new OrthographicCamera();
+        camera.viewportHeight=1080;
+        camera.viewportWidth=1920;
         camera.update();
     }
 
     @Override
     public void render(float delta) {
 
-
+        // clearing screen
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(camera);
         renderer.render();
 
+
+        //To draw anything thats needed
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+        knightTest.draw(spriteBatch);
+        spriteBatch.end();
+
+        // Bad solution for input handling needs to change away from polling to eventhandlers
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-10,0);
             System.out.println("LEFT");
@@ -64,6 +79,8 @@ public class GameScreen implements Screen {
             camera.translate(10,0);
             System.out.println("RIGHT");
         }
+
+        //Updatign camera position
         camera.update();
 
     }
