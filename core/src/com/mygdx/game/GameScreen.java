@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -16,7 +17,10 @@ import com.mygdx.game.units.Knight;
 
 public class GameScreen implements Screen {
 
-    Knight knightTest;
+    private int X,Y;
+
+
+    Castle castle;
     final MyGdxGame game;
     //map from tiled
     private TiledMap map;
@@ -25,7 +29,10 @@ public class GameScreen implements Screen {
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
 
-    public GameScreen(final MyGdxGame game){
+    public GameScreen(final MyGdxGame game,int X,int Y){
+            this.X=X;
+            this.Y=Y;
+
         this.game=game;
         spriteBatch = new SpriteBatch();
     }
@@ -38,9 +45,10 @@ public class GameScreen implements Screen {
 
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        knightTest = new Knight(new Sprite(new Texture("textures/knight.png")));
-        knightTest.SetCollisionLayer((TiledMapTileLayer) map.getLayers().get(0));
 
+
+        castle=new Castle();
+        castle.SetLayer(map.getLayers());
         //Camera viewport settings
         camera = new OrthographicCamera();
         camera.viewportHeight=1080;
@@ -61,25 +69,43 @@ public class GameScreen implements Screen {
         //To draw anything thats needed
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        knightTest.draw(spriteBatch);
+        castle.draw(spriteBatch);
         spriteBatch.end();
 
         // Bad solution for input handling needs to change away from polling to eventhandlers
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-10,0);
+            camera.translate(-50,0);
             System.out.println("LEFT");
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+            castle.spawnUnits();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+            castle.buyKnight();
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0,10);
+            camera.translate(0,50);
             System.out.println("UP");
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0,-10);
+            camera.translate(0,-50);
             System.out.println("DOWN");
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(10,0);
+            camera.translate(50,0);
             System.out.println("RIGHT");
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            if(camera.zoom>0.1) {
+                camera.zoom = camera.zoom + (-0.02f);
+                System.out.println(camera.zoom);
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+            if(camera.zoom<3) {
+                camera.zoom = camera.zoom + 0.02f;
+                System.out.println(camera.zoom);
+            }
         }
 
         //Updatign camera position
@@ -89,7 +115,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
 
     }
 
