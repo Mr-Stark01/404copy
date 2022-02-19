@@ -5,72 +5,93 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.ScreenUtils;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.mygdx.game.units.Knight;
 
 public class GameScreen implements Screen {
+
+    private int X,Y;
+
+    CameraHandler cameraHandler;
+    Castle castle;
     final MyGdxGame game;
-    OrthographicCamera camera;
+    //map from tiled
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    //Camera
+    OrthographicCamera camera;
+    SpriteBatch spriteBatch;
 
-    public GameScreen(final MyGdxGame game){
+    public GameScreen(final MyGdxGame game,int X,int Y){
+            this.X=X;
+            this.Y=Y;
+
         this.game=game;
-
-
-
+        spriteBatch = new SpriteBatch();
 
     }
 
     @Override
     public void show() {
-        camera = new OrthographicCamera();
+        //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/Base.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map);
-        //Camera creation
 
-        camera.viewportHeight=480;
-        camera.viewportWidth=800;
+
+
+        castle=new Castle();
+        castle.SetLayer(map.getLayers());
+        //Camera viewport settings
+        camera = new OrthographicCamera();
+        camera.viewportHeight=1080;
+        camera.viewportWidth=1920;
         camera.update();
+        cameraHandler = new CameraHandler(camera);
+        Gdx.input.setInputProcessor(cameraHandler);
     }
 
     @Override
     public void render(float delta) {
 
-
+        // clearing screen
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(camera);
         renderer.render();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-10,0);
-            System.out.println("LEFT");
+
+        //To draw anything thats needed
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+        castle.draw(spriteBatch);
+        spriteBatch.end();
+        cameraHandler.update();
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+            castle.spawnUnits();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0,10);
-            System.out.println("UP");
+        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+            castle.buyKnight();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0,-10);
-            System.out.println("DOWN");
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(10,0);
-            System.out.println("RIGHT");
-        }
+
+
+        //Updatign camera position
         camera.update();
 
     }
 
     @Override
     public void resize(int width, int height) {
-
 
     }
 
