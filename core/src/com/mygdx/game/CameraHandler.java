@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,13 +91,13 @@ public class CameraHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         flags.put(keycode,true);
-        return false;
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
             flags.put(keycode, false);
-        return false;
+        return true;
     }
 
     @Override
@@ -116,7 +117,12 @@ public class CameraHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+        float x = Gdx.input.getDeltaX();
+        float y = Gdx.input.getDeltaY();
+        x=x* camera.zoom;
+        y=y* camera.zoom;
+        camera.translate(-x,y);
+        return true;
     }
 
     @Override
@@ -136,6 +142,6 @@ public class CameraHandler implements InputProcessor {
             camera.zoom = camera.zoom + amountY;
 
         }
-        return false;
+        return true;
     }
 }
