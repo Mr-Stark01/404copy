@@ -41,7 +41,7 @@ public class Knight extends Sprite{
     //bs currently
     public void update() {
         if (true) {///kurav élet
-            setX(getX() + 32);
+            setX(getX() + 1);
             System.out.println("asd");
         }
 

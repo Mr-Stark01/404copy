@@ -19,7 +19,7 @@ public class GameScreen implements Screen {
 
     private int X,Y;
 
-
+    CameraHandler cameraHandler;
     Castle castle;
     final MyGdxGame game;
     //map from tiled
@@ -35,6 +35,7 @@ public class GameScreen implements Screen {
 
         this.game=game;
         spriteBatch = new SpriteBatch();
+
     }
 
     @Override
@@ -54,6 +55,8 @@ public class GameScreen implements Screen {
         camera.viewportHeight=1080;
         camera.viewportWidth=1920;
         camera.update();
+        cameraHandler = new CameraHandler(camera);
+        Gdx.input.setInputProcessor(cameraHandler);
     }
 
     @Override
@@ -71,42 +74,16 @@ public class GameScreen implements Screen {
         spriteBatch.begin();
         castle.draw(spriteBatch);
         spriteBatch.end();
+        cameraHandler.update();
 
-        // Bad solution for input handling needs to change away from polling to eventhandlers
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-50,0);
-            System.out.println("LEFT");
-        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
             castle.spawnUnits();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
             castle.buyKnight();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0,50);
-            System.out.println("UP");
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0,-50);
-            System.out.println("DOWN");
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(50,0);
-            System.out.println("RIGHT");
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            if(camera.zoom>0.1) {
-                camera.zoom = camera.zoom + (-0.02f);
-                System.out.println(camera.zoom);
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
-            if(camera.zoom<3) {
-                camera.zoom = camera.zoom + 0.02f;
-                System.out.println(camera.zoom);
-            }
-        }
+
 
         //Updatign camera position
         camera.update();
