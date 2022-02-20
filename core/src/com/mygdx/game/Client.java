@@ -30,6 +30,10 @@ public class Client {
         return resp;
     }
 
+    public void tearDown(){
+        this.stopConnection();
+    }
+
     public void stopConnection() {
         try {
             in.close();
