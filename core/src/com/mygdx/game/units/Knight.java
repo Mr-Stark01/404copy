@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import java.io.Serializable;
 
-public class Knight extends Sprite{
+
+public class Knight extends Sprite implements Serializable {
     protected int attackPower=10;
     protected TiledMapTileLayer collisionLayer;
     protected boolean spawned=false;
@@ -34,8 +36,11 @@ public class Knight extends Sprite{
         spawned=true;
     }
 
-    public void attack(){
-
+    public int attack(){
+        return attackPower;
+    }
+    public void getDamaged(){
+        attackPower--;
     }
 
     //bs currently

@@ -48,22 +48,16 @@ public class MainMenu implements Screen {
         else if(Gdx.input.isKeyPressed(Input.Keys.K)){
             Server server=new Server();
             server.start(6666);
-            System.out.println("the end");
+            System.out.println("the end Server");
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.C)){
             System.out.println("Client Started");
             Client client=new Client();
             client.startConnection("192.168.0.210", 6666);
-            String resp=client.sendMessage("1hello server");
-            System.out.println(resp);
-             resp=client.sendMessage("2hello server");
-            System.out.println(resp);
-             resp=client.sendMessage("3hello server");
-            System.out.println(resp);
-            resp=client.sendMessage(".");
-            System.out.println(resp);
+
             client.tearDown();
-            System.out.println("the end");
+            client.stopConnection();
+            System.out.println("the end Client");
 
         }
     }
