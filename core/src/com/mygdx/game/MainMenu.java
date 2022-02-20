@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.mygdx.game.network.Client;
+import com.mygdx.game.network.ClientHandler;
+import com.mygdx.game.network.Server;
 
 public class MainMenu implements Screen {
 

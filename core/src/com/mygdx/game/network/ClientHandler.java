@@ -1,6 +1,4 @@
-package com.mygdx.game;
-
-
+package com.mygdx.game.network;
 
 public class ClientHandler implements Runnable{
     private Client client;

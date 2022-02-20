@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.network;
 
 import com.mygdx.game.units.Knight;
 
