@@ -55,7 +55,6 @@ public class MainMenu implements Screen {
             Client client=new Client();
             client.startConnection("192.168.0.210", 6666);
             client.sendMessage("asd");
-            client.tearDown();
             client.stopConnection();
             System.out.println("the end Client");
 

@@ -31,32 +31,24 @@ public class Client {
 
         String resp ="Nem lett valami jó";
         try {
-            out.writeUTF("idfk");
-            System.out.println("here");
-             resp =in.readUTF();
-             Knight asdknight=new Knight();
-            System.out.println("here");
-            objectOut.writeObject(asdknight);
-            System.out.println("here");
-            try {
-                System.out.println("here");
-                asdknight = (Knight) objectIn.readObject();
-                System.out.println("here");
-                resp = String.valueOf(asdknight.attack());
-            }catch (Exception a){
-
-            }
-            System.out.println("here");
-
+            out.writeUTF(msg);
         }catch (IOException e){
 
         }
         return resp;
     }
 
-    public void tearDown(){
-        this.stopConnection();
+    public Serializable sendObject(Serializable object){
+        try {
+            objectOut.writeObject(object);
+            object =(Serializable) objectIn.readObject();
+        }catch (Exception a){
+
+        }
+
+        return object;
     }
+
 
     public void stopConnection() {
         try {
