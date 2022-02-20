@@ -14,11 +14,14 @@ public class Server {
             clientSocket = serverSocket.accept();
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String greeting = in.readLine();
-            if ("hello server".equals(greeting)) {
-                out.println("hello client");
-            } else {
-                out.println("unrecognised greeting");
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine);
+                if (".".equals(inputLine)) {
+                    out.println("good bye");
+                    break;
+                }
+                out.println(inputLine);
             }
         }catch (IOException e){
 
