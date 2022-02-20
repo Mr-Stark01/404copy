@@ -38,6 +38,8 @@ public class MainMenu implements Screen {
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
         game.batch.end();
 
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             game.setScreen(new GameScreen(game,32,32));
             dispose();
@@ -46,8 +48,24 @@ public class MainMenu implements Screen {
             Server server=new Server();
             server.start(6666);
         }
+        else if(Gdx.input.isKeyPressed(Input.Keys.C)){
+            System.out.println("Client Started");
+            Client client=new Client();
+            client.startConnection("192.168.0.210", 6666);
+            String resp=client.sendMessage("1hello server");
+            System.out.println(resp);
+             resp=client.sendMessage("2hello server");
+            System.out.println(resp);
+             resp=client.sendMessage("3hello server");
+            System.out.println(resp);
+            resp=client.sendMessage(".");
+            System.out.println(resp);
+            client.tearDown();
+
+        }
     }
 
+    
     @Override
     public void resize(int width, int height) {
 
