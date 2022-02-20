@@ -44,6 +44,7 @@ public class MainMenu implements Screen {
             game.setScreen(new GameScreen(game,32,32));
             dispose();
         }
+        //Client and servers Currently doesn't do much besides sends basic messages
         else if(Gdx.input.isKeyPressed(Input.Keys.K)){
             Server server=new Server();
             server.start(6666);
