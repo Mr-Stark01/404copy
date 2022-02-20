@@ -27,6 +27,7 @@ public class Server {
             String inputLine;
             while ((inputLine = in.readUTF()) != null) {
                 System.out.println(inputLine);
+                out.writeUTF("asd");
                 try {
                     Knight knight = (Knight) objectIn.readObject();
                     knight.getDamaged();
