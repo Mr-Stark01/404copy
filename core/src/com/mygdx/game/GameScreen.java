@@ -85,6 +85,7 @@ public class GameScreen implements Screen {
         }
 
 
+
         //Updatign camera position
         camera.update();
 
