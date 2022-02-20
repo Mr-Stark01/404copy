@@ -48,6 +48,7 @@ public class MainMenu implements Screen {
         else if(Gdx.input.isKeyPressed(Input.Keys.K)){
             Server server=new Server();
             server.start(6666);
+            System.out.println("the end");
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.C)){
             System.out.println("Client Started");
@@ -62,6 +63,7 @@ public class MainMenu implements Screen {
             resp=client.sendMessage(".");
             System.out.println(resp);
             client.tearDown();
+            System.out.println("the end");
 
         }
     }
