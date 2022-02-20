@@ -16,6 +16,7 @@ public class Castle {
     protected ArrayList<Knight> knights;
     public Castle() {
         knights = new ArrayList<Knight>();
+
     }
 
     public MapLayers getCastleLayer(){

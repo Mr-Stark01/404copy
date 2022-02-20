@@ -11,8 +11,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 
 public class Knight extends Sprite{
-    private int attackPower=10;
-    private TiledMapTileLayer collisionLayer;
+    protected int attackPower=10;
+    protected TiledMapTileLayer collisionLayer;
     protected boolean spawned=false;
     public Knight() {
         super(new Sprite(new Texture("textures/placeholder.png")));
@@ -25,7 +25,7 @@ public class Knight extends Sprite{
         if(spawned) {
             update();
             super.draw(spriteBatch);
-            System.out.println("drawened");
+
         }
 
     }
@@ -40,9 +40,9 @@ public class Knight extends Sprite{
 
     //bs currently
     public void update() {
-        if (true) {///kurav élet
-            setX(getX() + 1);
-            System.out.println("asd");
+        if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {///kurav élet
+            setX(getX() + 10);
+
         }
 
         // Manual Movement

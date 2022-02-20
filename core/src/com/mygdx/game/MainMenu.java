@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -16,7 +17,7 @@ public class MainMenu implements Screen {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1920, 1080);
     }
 
 
@@ -37,9 +38,13 @@ public class MainMenu implements Screen {
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
         game.batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             game.setScreen(new GameScreen(game,32,32));
             dispose();
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.K)){
+            Server server=new Server();
+            server.start(6666);
         }
     }
 
