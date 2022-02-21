@@ -8,10 +8,11 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.units.Knight;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Castle {
-    protected float health,gold=5000;
+public class Castle implements Serializable {
+    protected float health=500,gold=5000;
     protected MapLayers mainLayer;
     protected ArrayList<Knight> knights;
     public Castle() {
@@ -42,6 +43,15 @@ public class Castle {
     public void draw(SpriteBatch spriteBatch){
         for(Knight knight:knights){
             knight.draw(spriteBatch);
+        }
+    }
+
+    //To get the enemies view of the castle
+    public void update(Castle castle){
+        this.knights=castle.knights;
+        this.gold=castle.gold;
+        if (this.health != castle.health /*&& thisIsServer*/ ){
+
         }
     }
 

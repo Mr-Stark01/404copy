@@ -42,6 +42,7 @@ public class MainMenu implements Screen {
 
 
 
+
         if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             game.setScreen(new GameScreen(game,32,32));
             dispose();
@@ -54,7 +55,7 @@ public class MainMenu implements Screen {
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.C)){
             Client client=new Client();
-            ClientHandler clh=new ClientHandler(client);
+            ClientHandler clh=new ClientHandler(client,"192");
             clh.start();
 
         }

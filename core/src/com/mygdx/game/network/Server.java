@@ -1,5 +1,6 @@
 package com.mygdx.game.network;
 
+import com.mygdx.game.Castle;
 import com.mygdx.game.units.Knight;
 
 import java.net.*;
@@ -20,33 +21,47 @@ public class Server {
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new DataInputStream(clientSocket.getInputStream());
 
-            objectOut= new ObjectOutputStream(clientSocket.getOutputStream());
-            objectIn= new ObjectInputStream(clientSocket.getInputStream());
+            objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
+            objectIn = new ObjectInputStream(clientSocket.getInputStream());
+        }
+        catch (IOException e){
 
-
-            String inputLine;
-            while ((inputLine = in.readUTF()) != null) {
-                System.out.println(inputLine);
-                out.writeUTF("asd");
-                try {
-                    Knight knight = (Knight) objectIn.readObject();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    objectOut.writeObject(knight);
-                }catch (ClassNotFoundException a){
-
-                }
-                if (".".equals(inputLine)) {
-                    out.writeUTF("shit it worked");
-                    break;
-                }
-                out.writeUTF(inputLine);
-            }
+        }
+    }
+    public void sendMessage(String msg) {
+        try {
+            out.writeUTF(msg);
         }catch (IOException e){
 
         }
+
+    }
+
+    public void sendObject(Serializable object){
+        try {
+            objectOut.writeObject(object);
+        }catch (Exception a){
+
+        }
+    }
+
+    public String receiveMessage(){
+        String receive="error";
+        try{
+            receive=in.readUTF();
+        }catch (IOException e){
+
+        }
+        return receive;
+    }
+    public Castle receiveObject(){
+        Castle receive=new Castle();
+        try{
+            receive=(Castle)objectIn.readObject();
+        }catch (Exception e){
+
+        }
+        return receive;
     }
 
     public void stop() {
