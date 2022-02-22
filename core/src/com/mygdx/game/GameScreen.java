@@ -54,7 +54,7 @@ public class GameScreen implements Screen {
 
 
         castle=new Castle();
-        castle.SetLayer((TiledMapTileLayer)map.getLayers().get(0));
+
 
         network.setCastle(castle);
         network.start();
