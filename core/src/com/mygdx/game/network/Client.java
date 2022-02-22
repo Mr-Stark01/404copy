@@ -22,12 +22,17 @@ public class Client {
             in = new DataInputStream(clientSocket.getInputStream());
 
 
+
             objectOut= new ObjectOutputStream(clientSocket.getOutputStream());
             objectIn= new ObjectInputStream(clientSocket.getInputStream());
 
         }catch (IOException e){
 
         }
+    }
+
+    public boolean isConnected() {
+        return clientSocket.isConnected();
     }
 
     public void sendMessage(String msg) {
@@ -43,7 +48,7 @@ public class Client {
         try {
             objectOut.writeObject(object);
         }catch (Exception a){
-
+            System.out.println(a);
         }
     }
 
@@ -52,7 +57,7 @@ public class Client {
         try{
             receive=in.readUTF();
         }catch (IOException e){
-
+            System.out.println(e);
         }
         return receive;
     }

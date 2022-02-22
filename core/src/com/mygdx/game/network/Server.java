@@ -31,7 +31,7 @@ public class Server {
         try {
             out.writeUTF(msg);
         }catch (IOException e){
-
+            System.out.println(e);
         }
 
     }
@@ -40,7 +40,7 @@ public class Server {
         try {
             objectOut.writeObject(object);
         }catch (Exception a){
-
+            System.out.println(a);
         }
     }
 
@@ -49,7 +49,7 @@ public class Server {
         try{
             receive=in.readUTF();
         }catch (IOException e){
-
+            System.out.println(e);
         }
         return receive;
     }
@@ -58,9 +58,13 @@ public class Server {
         try{
             receive=(Castle)objectIn.readObject();
         }catch (Exception e){
-
+            System.out.println(e);
         }
         return receive;
+    }
+
+    public boolean isConnected() {
+        return !serverSocket.isClosed();
     }
 
     public void stop() {
@@ -70,7 +74,7 @@ public class Server {
             clientSocket.close();
             serverSocket.close();
          }catch (IOException e){
-
+            System.out.println(e);
         }
     }
 
