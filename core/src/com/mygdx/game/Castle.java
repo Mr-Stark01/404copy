@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Castle implements Serializable {
     protected float health=500,gold=5000;
-    protected TiledMapTileLayer collisionLayer;
+
     protected ArrayList<Knight> knights;
     protected String id;
     public Castle() {
@@ -21,19 +21,12 @@ public class Castle implements Serializable {
 
     }
 
-    public TiledMapTileLayer getCastleLayer(){
-        return collisionLayer;
-    }
 
-    public void SetLayer(TiledMapTileLayer collisionLayer){
-        this.collisionLayer=collisionLayer;
-    }
 
     public void buyKnight(){
         if (gold>50){
             gold-=50;
             knights.add(new Knight());
-            knights.get(knights.size()-1).SetCollisionLayer(collisionLayer);
         }
     }
     public void spawnUnits(){

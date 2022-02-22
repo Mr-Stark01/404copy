@@ -14,7 +14,6 @@ import java.io.Serializable;
 
 public class Knight extends Sprite implements Serializable {
     protected int attackPower=10;
-    protected TiledMapTileLayer collisionLayer;
     protected boolean spawned=false;
     public Knight() {
         super(new Sprite(new Texture("textures/placeholder.png")));
@@ -45,10 +44,7 @@ public class Knight extends Sprite implements Serializable {
 
     //bs currently
     public void update() {
-        if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {
-            setX(getX() + 10);
 
-        }
 
         // Manual Movement
         /*
@@ -78,13 +74,7 @@ public class Knight extends Sprite implements Serializable {
     }
 
 
-    public TiledMapTileLayer getCollisionLayer(){
-        return collisionLayer;
-    }
 
-    public void SetCollisionLayer(TiledMapTileLayer collisionLayer){
-        this.collisionLayer=collisionLayer;
-    }
     /* idk
     @Override
     public boolean keyDown(int keycode) {
