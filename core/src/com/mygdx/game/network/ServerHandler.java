@@ -20,7 +20,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
 
         server.sendObject(ownCastle);
         enemyCastle=server.receiveObject();
-        notifyAll();
+
         while(server.receiveMessage()!="STOP"){
             ownCastle.update(server.receiveObject());
             server.sendObject(enemyCastle);
