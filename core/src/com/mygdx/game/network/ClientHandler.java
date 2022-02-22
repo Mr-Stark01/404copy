@@ -27,7 +27,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.sendObject(ownCastle);
 
         while (client.isConnected()){
-            System.out.println("ASD");
+
             enemyCastle.update(client.receiveObject());
             client.sendObject(ownCastle);
 

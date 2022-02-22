@@ -21,7 +21,9 @@ public class Castle implements Serializable {
 
     }
 
-
+    public float getGold(){
+        return gold;
+    }
 
     public void buyKnight(){
         if (gold>50){

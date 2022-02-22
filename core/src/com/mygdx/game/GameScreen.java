@@ -89,6 +89,7 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+            System.out.println(castle.getGold());
             castle.spawnUnits();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
