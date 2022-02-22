@@ -8,7 +8,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
     private Castle enemyCastle;
     private Thread t;
     private String threadName="John";
-    private boolean gotCastle=false;
+
     public ServerHandler(Server server){
         this.server=server;
     }
@@ -16,9 +16,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
     public void run() {
         System.out.println("Client Started");
         server.start(6666);
-        while(!gotCastle){
 
-        }
 
         server.sendObject(ownCastle);
         enemyCastle=server.receiveObject();

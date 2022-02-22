@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
             this.X=X;
             this.Y=Y;
             this.network=network;
-        network.start();
+
         this.game=game;
         spriteBatch = new SpriteBatch();
 
@@ -57,11 +57,7 @@ public class GameScreen implements Screen {
         castle.SetLayer(map.getLayers());
 
         network.setCastle(castle);
-        try {
-            wait();
-        }catch (InterruptedException e){
-
-        }
+        network.start();
         //Camera viewport settings
         camera = new OrthographicCamera();
         camera.viewportHeight=1080;
@@ -87,8 +83,9 @@ public class GameScreen implements Screen {
         castle.draw(spriteBatch);
         spriteBatch.end();
         cameraHandler.update();
-
-        System.out.println(network.getEnemyCastle().getId());
+        if (Gdx.input.isKeyPressed(Input.Keys.G)) {
+            System.out.println(network.getEnemyCastle().getId());
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
             castle.spawnUnits();
