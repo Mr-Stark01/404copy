@@ -23,16 +23,16 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.startConnection(ip, 6666);
 
         enemyCastle=client.receiveObject();
-
+        System.out.println(enemyCastle.getId());
         client.sendObject(ownCastle);
-        System.out.println("HERE");
+
         while (client.receiveMessage()!="STOP"){
             System.out.println("ASD");
             enemyCastle.update(client.receiveObject());
             client.sendObject(ownCastle);
-            System.out.println("idk");
+
         }
-        System.out.println("the end Client");
+
         client.stopConnection();
         System.out.println("the end Client");
     }

@@ -61,7 +61,7 @@ public class Client {
         try{
             receive=(Castle)objectIn.readObject();
         }catch (Exception e){
-
+            System.out.println(e);
         }
         return receive;
     }
