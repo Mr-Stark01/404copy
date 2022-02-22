@@ -23,7 +23,9 @@ public class ClientHandler implements NetworkHandler ,Runnable{
 
         }
         enemyCastle=client.receiveObject();
+
         client.sendObject(ownCastle);
+        notifyAll();
         while (client.receiveMessage()!="STOP"){
             ownCastle.update(client.receiveObject());
             client.sendObject(enemyCastle);

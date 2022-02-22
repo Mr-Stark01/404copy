@@ -57,7 +57,11 @@ public class GameScreen implements Screen {
         castle.SetLayer(map.getLayers());
 
         network.setCastle(castle);
+        try {
+            wait();
+        }catch (InterruptedException e){
 
+        }
         //Camera viewport settings
         camera = new OrthographicCamera();
         camera.viewportHeight=1080;

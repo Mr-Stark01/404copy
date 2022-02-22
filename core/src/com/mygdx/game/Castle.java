@@ -15,7 +15,7 @@ public class Castle implements Serializable {
     protected float health=500,gold=5000;
     protected MapLayers mainLayer;
     protected ArrayList<Knight> knights;
-    protected String id;
+    protected String id="This is the big pc";
     public Castle() {
         knights = new ArrayList<Knight>();
 
