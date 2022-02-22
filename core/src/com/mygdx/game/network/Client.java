@@ -1,6 +1,6 @@
 package com.mygdx.game.network;
 
-import com.mygdx.game.units.Knight;
+import com.mygdx.game.Castle;
 
 import java.net.*;
 import java.io.*;
@@ -22,6 +22,7 @@ public class Client {
             in = new DataInputStream(clientSocket.getInputStream());
 
 
+
             objectOut= new ObjectOutputStream(clientSocket.getOutputStream());
             objectIn= new ObjectInputStream(clientSocket.getInputStream());
 
@@ -30,26 +31,44 @@ public class Client {
         }
     }
 
-    public String sendMessage(String msg) {
+    public boolean isConnected() {
+        return clientSocket.isConnected();
+    }
 
-        String resp ="Nem lett valami jó";
+    public void sendMessage(String msg) {
         try {
             out.writeUTF(msg);
         }catch (IOException e){
 
         }
-        return resp;
+
     }
 
-    public Serializable sendObject(Serializable object){
+    public void sendObject(Serializable object){
         try {
             objectOut.writeObject(object);
-            object =(Serializable) objectIn.readObject();
         }catch (Exception a){
-
+            System.out.println(a);
         }
+    }
 
-        return object;
+    public String receiveMessage(){
+        String receive="error";
+        try{
+            receive=in.readUTF();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return receive;
+    }
+    public Castle receiveObject(){
+        Castle receive=new Castle();
+        try{
+            receive=(Castle)objectIn.readObject();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return receive;
     }
 
 
@@ -57,6 +76,8 @@ public class Client {
         try {
             in.close();
             out.close();
+            objectOut.close();
+            objectIn.close();
             clientSocket.close();
         }catch (IOException e){
 

@@ -1,20 +1,52 @@
 package com.mygdx.game.network;
 
-public class ClientHandler implements Runnable{
-    private Client client;
+import com.mygdx.game.Castle;
 
+public class ClientHandler implements NetworkHandler ,Runnable{
+    private Client client;
+    private Castle ownCastle;
+    private Castle enemyCastle;
     private Thread t;
     private String threadName="Steve";
-    public ClientHandler(Client client){
+    private String ip;
+
+
+
+    public ClientHandler(Client client,String ip){
         this.client=client;
+        this.ip=ip;
     }
+
     @Override
     public void run() {
         System.out.println("Client Started");
-        client.startConnection("192.168.0.210", 6666);
-        client.sendMessage("asd");
+        client.startConnection(ip, 6666);
+
+        enemyCastle=client.receiveObject();
+        System.out.println(enemyCastle.getId());
+        client.sendObject(ownCastle);
+
+        while (client.isConnected()){
+
+            enemyCastle.update(client.receiveObject());
+            client.sendObject(ownCastle);
+
+        }
+
         client.stopConnection();
         System.out.println("the end Client");
+    }
+
+    public void setCastle(Castle ownCastle){
+        this.ownCastle=ownCastle;
+        ownCastle.setId("client");
+
+    }
+
+
+
+    public Castle getEnemyCastle(){
+        return enemyCastle;
     }
 
     public void start () {

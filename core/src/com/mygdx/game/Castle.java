@@ -8,30 +8,27 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.units.Knight;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Castle {
-    protected float health,gold=5000;
-    protected MapLayers mainLayer;
+public class Castle implements Serializable {
+    protected float health=500,gold=5000;
+
     protected ArrayList<Knight> knights;
+    protected String id;
     public Castle() {
         knights = new ArrayList<Knight>();
 
     }
 
-    public MapLayers getCastleLayer(){
-        return mainLayer;
-    }
-
-    public void SetLayer(MapLayers mainLayer){
-        this.mainLayer=mainLayer;
+    public float getGold(){
+        return gold;
     }
 
     public void buyKnight(){
         if (gold>50){
             gold-=50;
             knights.add(new Knight());
-            knights.get(knights.size()-1).SetCollisionLayer((TiledMapTileLayer)mainLayer.get(0));
         }
     }
     public void spawnUnits(){
@@ -39,9 +36,32 @@ public class Castle {
             knight.spawn();
         }
     }
+
+    public void setId(String id){
+        this.id=id;
+    }
+
     public void draw(SpriteBatch spriteBatch){
         for(Knight knight:knights){
             knight.draw(spriteBatch);
+        }
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public ArrayList<Knight> getKnights() {
+        return knights;
+    }
+
+    //To get the enemies view of the castle
+    public void update(Castle castle){
+        this.id= castle.getId();
+        this.knights=castle.getKnights();
+        this.gold=castle.getGold();
+        if (this.health != castle.health /*&& thisIsServer*/ ){
+
         }
     }
 

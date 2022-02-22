@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.network.Client;
 import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.Server;
+import com.mygdx.game.network.ServerHandler;
 
 public class MainMenu implements Screen {
 
@@ -42,20 +43,20 @@ public class MainMenu implements Screen {
 
 
 
+
         if (Gdx.input.isKeyPressed(Input.Keys.M)) {
-            game.setScreen(new GameScreen(game,32,32));
+
+        }
+        //Client and server
+        else if(Gdx.input.isKeyPressed(Input.Keys.K)){
+            ServerHandler serverHandler=new ServerHandler(new Server());
+            game.setScreen(new GameScreen(game,serverHandler,32,32));
             dispose();
         }
-        //Client and servers Currently doesn't do much besides sends basic messages
-        else if(Gdx.input.isKeyPressed(Input.Keys.K)){
-            Server server=new Server();
-            server.start(6666);
-            System.out.println("the end Server");
-        }
         else if(Gdx.input.isKeyPressed(Input.Keys.C)){
-            Client client=new Client();
-            ClientHandler clh=new ClientHandler(client);
-            clh.start();
+            ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
+            game.setScreen(new GameScreen(game,clh,32,32));
+            dispose();
 
         }
     }

@@ -1,6 +1,6 @@
 package com.mygdx.game.network;
 
-import com.mygdx.game.units.Knight;
+import com.mygdx.game.Castle;
 
 import java.net.*;
 import java.io.*;
@@ -20,33 +20,51 @@ public class Server {
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new DataInputStream(clientSocket.getInputStream());
 
-            objectOut= new ObjectOutputStream(clientSocket.getOutputStream());
-            objectIn= new ObjectInputStream(clientSocket.getInputStream());
-
-
-            String inputLine;
-            while ((inputLine = in.readUTF()) != null) {
-                System.out.println(inputLine);
-                out.writeUTF("asd");
-                try {
-                    Knight knight = (Knight) objectIn.readObject();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    knight.getDamaged();
-                    objectOut.writeObject(knight);
-                }catch (ClassNotFoundException a){
-
-                }
-                if (".".equals(inputLine)) {
-                    out.writeUTF("shit it worked");
-                    break;
-                }
-                out.writeUTF(inputLine);
-            }
-        }catch (IOException e){
+            objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
+            objectIn = new ObjectInputStream(clientSocket.getInputStream());
+        }
+        catch (IOException e){
 
         }
+    }
+    public void sendMessage(String msg) {
+        try {
+            out.writeUTF(msg);
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
+    }
+
+    public void sendObject(Serializable object){
+        try {
+            objectOut.writeObject(object);
+        }catch (Exception a){
+            System.out.println(a);
+        }
+    }
+
+    public String receiveMessage(){
+        String receive="error";
+        try{
+            receive=in.readUTF();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return receive;
+    }
+    public Castle receiveObject(){
+        Castle receive=new Castle();
+        try{
+            receive=(Castle)objectIn.readObject();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return receive;
+    }
+
+    public boolean isConnected() {
+        return !serverSocket.isClosed();
     }
 
     public void stop() {
@@ -56,7 +74,7 @@ public class Server {
             clientSocket.close();
             serverSocket.close();
          }catch (IOException e){
-
+            System.out.println(e);
         }
     }
 

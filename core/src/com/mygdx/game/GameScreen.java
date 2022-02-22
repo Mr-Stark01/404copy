@@ -13,11 +13,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.network.*;
 import com.mygdx.game.units.Knight;
 
 public class GameScreen implements Screen {
 
     private int X,Y;
+
+    private NetworkHandler network;
 
     CameraHandler cameraHandler;
     Castle castle;
@@ -29,9 +32,12 @@ public class GameScreen implements Screen {
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
 
-    public GameScreen(final MyGdxGame game,int X,int Y){
+
+
+    public GameScreen(final MyGdxGame game,NetworkHandler network, int X, int Y){
             this.X=X;
             this.Y=Y;
+            this.network=network;
 
         this.game=game;
         spriteBatch = new SpriteBatch();
@@ -47,9 +53,11 @@ public class GameScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
 
-
         castle=new Castle();
-        castle.SetLayer(map.getLayers());
+
+
+        network.setCastle(castle);
+        network.start();
         //Camera viewport settings
         camera = new OrthographicCamera();
         camera.viewportHeight=1080;
@@ -76,12 +84,18 @@ public class GameScreen implements Screen {
         spriteBatch.end();
         cameraHandler.update();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.G)) {
+            System.out.println(network.getEnemyCastle().getId());
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+
             castle.spawnUnits();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+
             castle.buyKnight();
+
         }
 
 
