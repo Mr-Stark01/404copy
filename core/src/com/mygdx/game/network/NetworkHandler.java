@@ -7,5 +7,5 @@ public interface NetworkHandler {
     public void run();
     public void setCastle(Castle ownCastle);
     public Castle getEnemyCastle();
-    public String getGood();
+
 }

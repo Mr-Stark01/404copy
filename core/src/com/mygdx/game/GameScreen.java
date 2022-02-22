@@ -83,7 +83,7 @@ public class GameScreen implements Screen {
         castle.draw(spriteBatch);
         spriteBatch.end();
         cameraHandler.update();
-        System.out.println(network.getGood());
+
         if (Gdx.input.isKeyPressed(Input.Keys.G)) {
             System.out.println(network.getEnemyCastle().getId());
         }

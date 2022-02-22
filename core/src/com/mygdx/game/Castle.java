@@ -15,7 +15,7 @@ public class Castle implements Serializable {
     protected float health=500,gold=5000;
     protected MapLayers mainLayer;
     protected ArrayList<Knight> knights;
-    protected String id="This is the big pc";
+    protected String id;
     public Castle() {
         knights = new ArrayList<Knight>();
 
@@ -41,6 +41,11 @@ public class Castle implements Serializable {
             knight.spawn();
         }
     }
+
+    public void setId(String id){
+        this.id=id;
+    }
+
     public void draw(SpriteBatch spriteBatch){
         for(Knight knight:knights){
             knight.draw(spriteBatch);
