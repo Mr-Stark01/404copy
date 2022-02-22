@@ -54,7 +54,7 @@ public class GameScreen implements Screen {
 
 
         castle=new Castle();
-        castle.SetLayer(map.getLayers());
+        castle.SetLayer((TiledMapTileLayer)map.getLayers().get(0));
 
         network.setCastle(castle);
         network.start();
@@ -89,7 +89,7 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
-            castle.spawnUnits();
+            network.getEnemyCastle().spawnUnits();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
             castle.buyKnight();

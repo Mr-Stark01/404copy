@@ -45,7 +45,7 @@ public class Knight extends Sprite implements Serializable {
 
     //bs currently
     public void update() {
-        if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {///kurav élet
+        if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {
             setX(getX() + 10);
 
         }
