@@ -59,7 +59,7 @@ public class Castle implements Serializable {
     public void update(Castle castle){
         this.id= castle.getId();
         this.knights=castle.getKnights();
-        this.gold=castle.gold;
+        this.gold=castle.getGold();
         if (this.health != castle.health /*&& thisIsServer*/ ){
 
         }
