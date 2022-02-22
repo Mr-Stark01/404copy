@@ -10,6 +10,8 @@ public class ClientHandler implements NetworkHandler ,Runnable{
     private String threadName="Steve";
     private String ip;
 
+    private String good="asd";
+
     public ClientHandler(Client client,String ip){
         this.client=client;
         this.ip=ip;
@@ -25,6 +27,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.sendObject(ownCastle);
 
         while (client.receiveMessage()!="STOP"){
+            good="good";
             enemyCastle.update(client.receiveObject());
             client.sendObject(ownCastle);
         }
@@ -35,6 +38,10 @@ public class ClientHandler implements NetworkHandler ,Runnable{
     public void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
 
+    }
+
+    public String getGood(){
+        return good;
     }
 
     public Castle getEnemyCastle(){

@@ -53,6 +53,7 @@ public class Castle implements Serializable {
 
     //To get the enemies view of the castle
     public void update(Castle castle){
+        this.id= castle.getId();
         this.knights=castle.knights;
         this.gold=castle.gold;
         if (this.health != castle.health /*&& thisIsServer*/ ){

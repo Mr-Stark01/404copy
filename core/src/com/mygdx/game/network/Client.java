@@ -1,12 +1,11 @@
 package com.mygdx.game.network;
 
 import com.mygdx.game.Castle;
-import com.mygdx.game.units.Knight;
 
 import java.net.*;
 import java.io.*;
 
-public class Client extends Network {
+public class Client {
     private Socket clientSocket;
     private DataOutputStream out;
     private DataInputStream in;

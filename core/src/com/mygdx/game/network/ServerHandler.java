@@ -8,7 +8,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
     private Castle enemyCastle;
     private Thread t;
     private String threadName="John";
-
+    private String good="asd";
     public ServerHandler(Server server){
         this.server=server;
     }
@@ -22,6 +22,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
         enemyCastle=server.receiveObject();
 
         while(server.receiveMessage()!="STOP"){
+            good="good";
             enemyCastle.update(server.receiveObject());
             server.sendObject(ownCastle);
         }
@@ -30,6 +31,10 @@ public class ServerHandler implements NetworkHandler ,Runnable{
 
     public void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
+    }
+
+    public String getGood(){
+        return good;
     }
 
     public Castle getEnemyCastle(){
