@@ -15,6 +15,7 @@ public class Castle implements Serializable {
     protected float health=500,gold=5000;
     protected MapLayers mainLayer;
     protected ArrayList<Knight> knights;
+    protected String id;
     public Castle() {
         knights = new ArrayList<Knight>();
 
@@ -44,6 +45,10 @@ public class Castle implements Serializable {
         for(Knight knight:knights){
             knight.draw(spriteBatch);
         }
+    }
+
+    public String getId(){
+        return id;
     }
 
     //To get the enemies view of the castle

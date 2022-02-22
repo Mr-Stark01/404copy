@@ -2,12 +2,13 @@ package com.mygdx.game.network;
 
 import com.mygdx.game.Castle;
 
-public class ServerHandler implements Runnable{
+public class ServerHandler implements NetworkHandler ,Runnable{
     private Server server;
     private Castle ownCastle;
     private Castle enemyCastle;
     private Thread t;
     private String threadName="John";
+    private boolean gotCastle=false;
     public ServerHandler(Server server){
         this.server=server;
     }
@@ -15,6 +16,9 @@ public class ServerHandler implements Runnable{
     public void run() {
         System.out.println("Client Started");
         server.start(6666);
+        while(!gotCastle){
+
+        }
         server.sendObject(ownCastle);
         enemyCastle=server.receiveObject();
         while(server.receiveMessage()!="STOP"){

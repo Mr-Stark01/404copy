@@ -5,7 +5,7 @@ import com.mygdx.game.units.Knight;
 
 import java.net.*;
 import java.io.*;
-public class Server {
+public class Server extends Network {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private DataOutputStream out;
