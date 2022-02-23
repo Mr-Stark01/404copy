@@ -1,24 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.CameraHandler;
-import com.mygdx.game.Castle;
-import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.network.*;
-import com.mygdx.game.units.Knight;
 
 public class MapEditorScreen implements Screen {
 
@@ -42,8 +29,8 @@ public class MapEditorScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(255, 98, 0, 1);
-        Texture bg = new Texture("bg.jpg");
-        Texture exitButton = new Texture("back_button.png");
+        Texture bg = new Texture("menu/bg.jpg");
+        Texture exitButton = new Texture("menu/back_button.png");
 
         int buttonWid = 250;
         int buttonHei = 100;
@@ -62,11 +49,13 @@ public class MapEditorScreen implements Screen {
 
         //backButton
         game.batch.draw(exitButton, buttonX , backbuttonY, buttonWid, buttonHei);
-        if(Gdx.input.getX() < buttonX + buttonWid && Gdx.input.getX() > buttonX && 1080 - Gdx.input.getY() < backbuttonY + buttonHei + buttonHei/2 && 1080 - Gdx.input.getY() > backbuttonY + buttonHei/2){
-            if(Gdx.input.isTouched()){
-                game.setScreen(new MainMenu(game));
-                dispose();
-            }
+        if(Gdx.input.isTouched()){
+            Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+            camera.unproject(vec);
+            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y > backbuttonY  && vec.y < backbuttonY + buttonHei){
+                    game.setScreen(new MainMenu(game));
+                    dispose();
+                }
         }
 
         game.batch.end();
