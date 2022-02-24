@@ -57,7 +57,7 @@ public class Castle implements Serializable {
     }
 
     //To copy the enemy castle to our set of it
-    public synchronized void update(Castle castle){
+    public void update(Castle castle){
         this.id= castle.getId();
         this.knights=castle.getKnights();
         this.gold=castle.getGold();

@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
 
 
         // update castle
-        network.setCastle(castle);
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.G)) {
             System.out.println(network.getEnemyCastle().getId());
@@ -100,7 +100,7 @@ public class GameScreen implements Screen {
             castle.buyKnight();
 
         }
-
+        network.setCastle(castle);
 
 
         //Updatign camera position

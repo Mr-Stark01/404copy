@@ -31,11 +31,6 @@ public class ClientHandler implements NetworkHandler ,Runnable{
             enemyCastle.update(client.receiveObject());
             client.sendObject(ownCastle);
 
-            try {
-                wait(10);
-            }catch (InterruptedException e){
-
-            }
 
         }
 
@@ -43,7 +38,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         System.out.println("the end Client");
     }
 
-    public synchronized void setCastle(Castle ownCastle){
+    public void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
 
 

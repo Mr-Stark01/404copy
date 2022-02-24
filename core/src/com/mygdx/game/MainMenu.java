@@ -138,6 +138,7 @@ public class MainMenu implements Screen {
 
                     this.dispose();
                     Gdx.app.exit();
+
                 }
         }
 
