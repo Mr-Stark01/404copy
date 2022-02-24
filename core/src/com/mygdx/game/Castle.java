@@ -15,7 +15,7 @@ public class Castle implements Serializable {
     protected float health=500,gold=5000;
 
     protected ArrayList<Knight> knights;
-    protected String id="idk";
+    public String id="asdasd";
     public Castle() {
         knights = new ArrayList<Knight>();
 
@@ -58,7 +58,7 @@ public class Castle implements Serializable {
 
     //To copy the enemy castle to our set of it
     public void update(Castle castle){
-        System.out.println(castle.getId());
+
         this.id=castle.getId();
         this.knights=castle.getKnights();
         this.gold=castle.getGold();
