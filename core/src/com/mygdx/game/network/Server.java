@@ -42,6 +42,12 @@ public class Server {
         }catch (Exception a){
             System.out.println(a);
         }
+
+        try {
+            objectOut.reset();
+        }catch (IOException e){
+            System.out.println(e);
+        }
     }
 
     public String receiveMessage(){
@@ -58,6 +64,12 @@ public class Server {
         try{
             receive=(Castle)objectIn.readObject();
         }catch (Exception e){
+            System.out.println(e);
+        }
+
+        try {
+            objectIn.reset();
+        }catch (IOException e){
             System.out.println(e);
         }
         return receive;

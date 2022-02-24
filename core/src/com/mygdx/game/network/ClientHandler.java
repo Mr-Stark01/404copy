@@ -26,8 +26,9 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.sendObject(ownCastle);
 
         while (client.isConnected()){
-
+            client.sendMessage(String.valueOf(ownCastle.getGold()));
             enemyCastle=client.receiveObject();
+            System.out.println(ownCastle.getGold());
             client.sendObject(ownCastle);
 
 
