@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.network.Client;
 import com.mygdx.game.network.ClientHandler;
+import com.mygdx.game.network.Server;
+import com.mygdx.game.network.ServerHandler;
 
 public class MainMenu implements Screen {
 
@@ -148,8 +151,10 @@ public class MainMenu implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.M)) {
 
         }
+        */
+
         //Client and server
-        else if(Gdx.input.isKeyPressed(Input.Keys.K)){
+        if(Gdx.input.isKeyPressed(Input.Keys.K)){
             ServerHandler serverHandler=new ServerHandler(new Server());
             game.setScreen(new GameScreen(game,serverHandler,32,32));
             dispose();
@@ -160,7 +165,7 @@ public class MainMenu implements Screen {
             dispose();
 
         }
-        */
+
     }
 
     
