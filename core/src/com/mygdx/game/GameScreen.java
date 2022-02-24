@@ -75,8 +75,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(camera);
         renderer.render();
-
-
+        // update castle
+        network.setCastle(castle);
         //To draw anything thats needed
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();

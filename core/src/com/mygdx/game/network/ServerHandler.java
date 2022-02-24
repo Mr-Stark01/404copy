@@ -30,9 +30,9 @@ public class ServerHandler implements NetworkHandler ,Runnable{
         System.out.println("the end Client");
     }
 
-    public void setCastle(Castle ownCastle){
+    public synchronized void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
-        ownCastle.setId("Server");
+
     }
 
 
