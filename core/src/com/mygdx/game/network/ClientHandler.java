@@ -31,6 +31,12 @@ public class ClientHandler implements NetworkHandler ,Runnable{
             enemyCastle.update(client.receiveObject());
             client.sendObject(ownCastle);
 
+            try {
+                wait(10);
+            }catch (InterruptedException e){
+
+            }
+
         }
 
         client.stopConnection();
