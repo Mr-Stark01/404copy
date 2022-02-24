@@ -38,7 +38,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
 
 
 
-    public Castle getEnemyCastle(){
+    public synchronized Castle getEnemyCastle(){
         return enemyCastle;
     }
 

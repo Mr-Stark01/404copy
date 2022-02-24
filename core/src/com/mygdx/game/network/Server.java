@@ -67,11 +67,7 @@ public class Server {
             System.out.println(e);
         }
 
-        try {
-            objectIn.reset();
-        }catch (IOException e){
-            System.out.println(e);
-        }
+
         return receive;
     }
 

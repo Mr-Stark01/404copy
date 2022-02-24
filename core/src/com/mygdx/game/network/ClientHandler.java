@@ -26,7 +26,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.sendObject(ownCastle);
 
         while (client.isConnected()){
-            client.sendMessage(String.valueOf(ownCastle.getGold()));
+
             enemyCastle=client.receiveObject();
             System.out.println(ownCastle.getGold());
             client.sendObject(ownCastle);
@@ -38,7 +38,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         System.out.println("the end Client");
     }
 
-    public void setCastle(Castle ownCastle){
+    public synchronized void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
 
 
