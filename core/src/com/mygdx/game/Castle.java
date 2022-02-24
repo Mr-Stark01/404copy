@@ -51,6 +51,7 @@ public class Castle implements Serializable {
         return id;
     }
 
+
     public ArrayList<Knight> getKnights() {
         return knights;
     }
