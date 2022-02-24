@@ -42,6 +42,7 @@ public class Client {
 
         }
 
+
     }
 
     public void sendObject(Serializable object){
@@ -50,6 +51,13 @@ public class Client {
         }catch (Exception a){
             System.out.println(a);
         }
+
+        try {
+            objectOut.reset();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
     }
 
     public String receiveMessage(){
@@ -59,6 +67,13 @@ public class Client {
         }catch (IOException e){
             System.out.println(e);
         }
+
+        try {
+            in.reset();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
         return receive;
     }
     public Castle receiveObject(){
@@ -68,7 +83,15 @@ public class Client {
         }catch (Exception e){
             System.out.println(e);
         }
+
+        try {
+            objectOut.reset();
+        }catch (IOException e){
+            System.out.println(e);
+        }
         return receive;
+
+
     }
 
 

@@ -20,24 +20,25 @@ public class ServerHandler implements NetworkHandler ,Runnable{
 
         server.sendObject(ownCastle);
         enemyCastle=server.receiveObject();
-        System.out.println(enemyCastle.getId());
+
 
         while(server.isConnected()){
             server.sendObject(ownCastle);
-            enemyCastle.update(server.receiveObject());
-
+            enemyCastle=server.receiveObject();
+            System.out.println(enemyCastle.getId());
+            System.out.println(enemyCastle.getGold());
         }
         System.out.println("the end Client");
     }
 
     public void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
-        ownCastle.setId("Server");
+
     }
 
 
 
-    public Castle getEnemyCastle(){
+    public synchronized Castle getEnemyCastle(){
         return enemyCastle;
     }
 

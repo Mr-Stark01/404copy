@@ -76,7 +76,6 @@ public class GameScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-
         //To draw anything thats needed
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
@@ -84,8 +83,14 @@ public class GameScreen implements Screen {
         spriteBatch.end();
         cameraHandler.update();
 
+
+        // update castle
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.G)) {
             System.out.println(network.getEnemyCastle().getId());
+            castle.setId("coolio");
+
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
@@ -93,11 +98,11 @@ public class GameScreen implements Screen {
             castle.spawnUnits();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
-
+            castle.setId("not");
             castle.buyKnight();
 
         }
-
+        network.setCastle(castle);
 
 
         //Updatign camera position

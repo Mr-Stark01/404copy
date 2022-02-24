@@ -23,13 +23,14 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         client.startConnection(ip, 6666);
 
         enemyCastle=client.receiveObject();
-        System.out.println(enemyCastle.getId());
         client.sendObject(ownCastle);
 
         while (client.isConnected()){
 
-            enemyCastle.update(client.receiveObject());
+            enemyCastle=client.receiveObject();
+            System.out.println(ownCastle.getGold());
             client.sendObject(ownCastle);
+
 
         }
 
@@ -37,9 +38,9 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         System.out.println("the end Client");
     }
 
-    public void setCastle(Castle ownCastle){
+    public synchronized void setCastle(Castle ownCastle){
         this.ownCastle=ownCastle;
-        ownCastle.setId("client");
+
 
     }
 
