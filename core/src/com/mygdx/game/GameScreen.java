@@ -18,14 +18,15 @@ import com.mygdx.game.units.Knight;
 
 public class GameScreen implements Screen {
 
-    private int X,Y;
+
 
     private NetworkHandler network;
-
+    static float scale;
     CameraHandler cameraHandler;
     Castle castle;
     final MyGdxGame game;
     //map from tiled
+    private TiledMapTileLayer layer;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     //Camera
@@ -34,13 +35,12 @@ public class GameScreen implements Screen {
 
 
 
-    public GameScreen(final MyGdxGame game,NetworkHandler network, int X, int Y){
-            this.X=X;
-            this.Y=Y;
+    public GameScreen(final MyGdxGame game,NetworkHandler network){
             this.network=network;
 
         this.game=game;
         spriteBatch = new SpriteBatch();
+
 
     }
 
@@ -49,8 +49,10 @@ public class GameScreen implements Screen {
         //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/Base.tmx");
+        layer=(TiledMapTileLayer) map.getLayers().get(0);
 
-        renderer = new OrthogonalTiledMapRenderer(map);
+        scale=(float)layer.getTileWidth();
+        renderer = new OrthogonalTiledMapRenderer(map,1/scale);
 
 
         castle=new Castle();
@@ -60,10 +62,10 @@ public class GameScreen implements Screen {
         network.start();
         //Camera viewport settings
         camera = new OrthographicCamera();
-        camera.viewportHeight=1080;
-        camera.viewportWidth=1920;
+        camera.viewportHeight=1080/scale;
+        camera.viewportWidth=1920/scale;
         camera.update();
-        cameraHandler = new CameraHandler(camera);
+        cameraHandler = new CameraHandler(camera,scale);
         Gdx.input.setInputProcessor(cameraHandler);
     }
 
@@ -82,6 +84,12 @@ public class GameScreen implements Screen {
         castle.draw(spriteBatch);
         spriteBatch.end();
         cameraHandler.update();
+
+        /*for(int x=0;x<layer.getWidth();x++) {
+            for(int y=0;y<layer.getHeight();x++) {
+                layer.getCell(x,y);
+            }
+        }*/
 
 
         // update castle

@@ -87,7 +87,7 @@ public class MainMenu implements Screen {
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x  > buttonX && vec.y > startButtonY && vec.y < startButtonY + buttonHei){
                 ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
-                game.setScreen(new GameScreen(game,clh,32,32));
+                game.setScreen(new GameScreen(game,clh));
                 dispose();
             }
         }
@@ -157,12 +157,12 @@ public class MainMenu implements Screen {
         //Client and server
         if(Gdx.input.isKeyPressed(Input.Keys.K)){
             ServerHandler serverHandler=new ServerHandler(new Server());
-            game.setScreen(new GameScreen(game,serverHandler,32,32));
+            game.setScreen(new GameScreen(game,serverHandler));
             dispose();
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.C)){
             ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
-            game.setScreen(new GameScreen(game,clh,32,32));
+            game.setScreen(new GameScreen(game,clh));
             dispose();
 
         }
