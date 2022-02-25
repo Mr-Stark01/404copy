@@ -13,7 +13,9 @@ import java.util.Map;
 public class CameraHandler implements InputProcessor {
     OrthographicCamera camera;
     Map<Integer,Boolean> flags;
-    public CameraHandler(OrthographicCamera camera){
+    float scale;
+    public CameraHandler(OrthographicCamera camera,float scale){
+        this.scale=scale;
         this.camera=camera;
         flags=new HashMap<>();
         flags.put(Input.Keys.LEFT,false);
@@ -60,26 +62,26 @@ public class CameraHandler implements InputProcessor {
         }
         */
         if(flags.get(Input.Keys.RIGHT)){
-            camera.translate(50, 0);
+            camera.translate(50/scale, 0);
         }
         if(flags.get(Input.Keys.LEFT)){
-            camera.translate(-50,0);
+            camera.translate(-50/scale,0);
         }
         if(flags.get(Input.Keys.UP)){
-            camera.translate(0, 50);
+            camera.translate(0, 50/scale);
         }
         if(flags.get(Input.Keys.DOWN)){
-            camera.translate(0, -50);
+            camera.translate(0, -50/scale);
         }
         if(flags.get(Input.Keys.P)){
             if(camera.zoom>0.1) {
-                camera.zoom = camera.zoom + (-0.02f);
+                camera.zoom = camera.zoom + (-0.02f/scale);
                 System.out.println(camera.zoom);
             }
         }
         if(flags.get(Input.Keys.M)){
-            if(camera.zoom<3) {
-                camera.zoom = camera.zoom + 0.02f;
+            if(camera.zoom<scale*3) {
+                camera.zoom = camera.zoom + 0.02f/scale;
                 System.out.println(camera.zoom);
             }
         }
@@ -117,8 +119,8 @@ public class CameraHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        float x = Gdx.input.getDeltaX();
-        float y = Gdx.input.getDeltaY();
+        float x = Gdx.input.getDeltaX()/scale;
+        float y = Gdx.input.getDeltaY()/scale;
         x=x* camera.zoom;
         y=y* camera.zoom;
         camera.translate(-x,y);

@@ -56,7 +56,8 @@ public class Castle implements Serializable {
         return knights;
     }
 
-    //To copy the enemy castle to our set of it
+
+    /**For updating castle from the network Handler */
     public void update(Castle castle){
 
         this.id=castle.getId();
