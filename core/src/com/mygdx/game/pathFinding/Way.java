@@ -17,16 +17,16 @@ public class Way implements Connection<GridPoint> {
 
     @Override
     public float getCost() {
-        return 0;
+        return cost;
     }
 
     @Override
     public GridPoint getFromNode() {
-        return null;
+        return fromGridPoint;
     }
 
     @Override
     public GridPoint getToNode() {
-        return null;
+        return toGridPoint;
     }
 }

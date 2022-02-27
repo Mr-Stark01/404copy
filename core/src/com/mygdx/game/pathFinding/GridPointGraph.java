@@ -20,6 +20,7 @@ public class GridPointGraph implements IndexedGraph<GridPoint> {
     private int lastNodeIndex = 0;
 
     public void addSpawnPoint(GridPoint gridPoint){
+
         gridPoint.index=lastNodeIndex;
         lastNodeIndex++;
         gridPoints.add(gridPoint);
@@ -36,7 +37,9 @@ public class GridPointGraph implements IndexedGraph<GridPoint> {
 
     public GraphPath<GridPoint> findPath(GridPoint startGridPoint, GridPoint goalGridPoint){
         GraphPath<GridPoint> spawnPointPath = new DefaultGraphPath<>();
+
         new IndexedAStarPathFinder<>(this).searchNodePath(startGridPoint, goalGridPoint, gridPointHeuristic,spawnPointPath);
+
         return spawnPointPath;
     }
 

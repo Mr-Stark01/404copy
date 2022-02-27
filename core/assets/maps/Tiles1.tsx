@@ -3,8 +3,7 @@
  <image source="../tiles/tiles1_2.png" width="896" height="896"/>
  <tile id="60">
   <properties>
-   <property name="asd" value=""/>
-   <property name="idk" value="asd"/>
+   <property name="asd" value="aéldfkga"/>
   </properties>
  </tile>
  <tile id="112">
