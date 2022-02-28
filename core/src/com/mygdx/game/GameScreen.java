@@ -16,6 +16,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.network.*;
 import com.mygdx.game.units.Knight;
 
+import java.util.ArrayList;
+
 public class GameScreen implements Screen {
 
 
@@ -26,13 +28,14 @@ public class GameScreen implements Screen {
     Castle castle;
     final MyGdxGame game;
     //map from tiled
-    private TiledMapTileLayer layer;
+    private TiledMapTileLayer tileyLayer;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     //Camera
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
 
+    ArrayList<TiledMapTileLayer.Cell> cellList;
 
 
     public GameScreen(final MyGdxGame game,NetworkHandler network){
@@ -49,11 +52,16 @@ public class GameScreen implements Screen {
         //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/Base.tmx");
-        layer=(TiledMapTileLayer) map.getLayers().get(0);
+        tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
 
-        scale=(float)layer.getTileWidth();
+        scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
-
+        cellList=new ArrayList<>();
+        for(int i=0;i<tileyLayer.getWidth();i++){
+            for(int j=0;j<tileyLayer.getHeight();j++){
+                cellList.add(tileyLayer.getCell(i,j));
+            }
+        }
 
         castle=new Castle();
 
