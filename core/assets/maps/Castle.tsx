@@ -3,12 +3,12 @@
  <image source="../tiles/Castlevania_Updated with Stonework.png" width="704" height="448"/>
  <tile id="0">
   <properties>
-   <property name="spawnServer" value=""/>
+   <property name="Spawn" value="Server"/>
   </properties>
  </tile>
  <tile id="1">
   <properties>
-   <property name="SpawnClient" value=""/>
+   <property name="Spawn" value="Client"/>
   </properties>
  </tile>
  <tile id="45">

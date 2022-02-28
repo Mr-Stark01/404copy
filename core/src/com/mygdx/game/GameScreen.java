@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.network.*;
+import com.mygdx.game.pathFinding.pathFinder;
 import com.mygdx.game.units.Knight;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer tileyLayer;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private pathFinder pathFinder;
     //Camera
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
@@ -56,15 +58,9 @@ public class GameScreen implements Screen {
 
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
-        cellList=new ArrayList<>();
-        for(int i=0;i<tileyLayer.getWidth();i++){
-            for(int j=0;j<tileyLayer.getHeight();j++){
-                cellList.add(tileyLayer.getCell(i,j));
-            }
-        }
-
+        //path
+        pathFinder=new pathFinder(map);
         castle=new Castle();
-
 
         network.setCastle(castle);
         network.start();
