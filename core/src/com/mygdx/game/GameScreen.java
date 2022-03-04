@@ -5,34 +5,31 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.network.*;
-import com.mygdx.game.pathFinding.pathFinder;
-import com.mygdx.game.units.Knight;
+import com.mygdx.game.pathFinding.PathFinder;
 
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
 
+    static String player;
 
     private NetworkHandler network;
     static float scale;
-    CameraHandler cameraHandler;
+    InputHandler inputHandler;
     Castle castle;
     final MyGdxGame game;
     //map from tiled
     private TiledMapTileLayer tileyLayer;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private pathFinder pathFinder;
+    private PathFinder pathFinder;
     //Camera
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
@@ -40,8 +37,10 @@ public class GameScreen implements Screen {
     ArrayList<TiledMapTileLayer.Cell> cellList;
 
 
-    public GameScreen(final MyGdxGame game,NetworkHandler network){
-            this.network=network;
+    public GameScreen(final MyGdxGame game, NetworkHandler network){
+        this.network=network;
+
+        player=(network.getClass()==ClientHandler.class?"Client":"Server");
 
         this.game=game;
         spriteBatch = new SpriteBatch();
@@ -59,7 +58,7 @@ public class GameScreen implements Screen {
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
         //path
-        pathFinder=new pathFinder(map);
+        pathFinder=new PathFinder(map);
         castle=new Castle();
 
         network.setCastle(castle);
@@ -69,8 +68,8 @@ public class GameScreen implements Screen {
         camera.viewportHeight=1080/scale;
         camera.viewportWidth=1920/scale;
         camera.update();
-        cameraHandler = new CameraHandler(camera,scale);
-        Gdx.input.setInputProcessor(cameraHandler);
+        inputHandler = new InputHandler(camera,scale,castle,pathFinder);
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
@@ -87,7 +86,7 @@ public class GameScreen implements Screen {
         spriteBatch.begin();
         castle.draw(spriteBatch);
         spriteBatch.end();
-        cameraHandler.update();
+        inputHandler.update();
 
         /*for(int x=0;x<layer.getWidth();x++) {
             for(int y=0;y<layer.getHeight();x++) {
@@ -105,15 +104,8 @@ public class GameScreen implements Screen {
 
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
 
-            castle.spawnUnits();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
-            castle.setId("not");
-            castle.buyKnight();
 
-        }
         network.setCastle(castle);
 
 

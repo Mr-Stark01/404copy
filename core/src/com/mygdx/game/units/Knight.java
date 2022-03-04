@@ -3,32 +3,57 @@ package com.mygdx.game.units;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.pathFinding.GridPoint;
+import com.badlogic.gdx.utils.Queue;
+import com.mygdx.game.pathFinding.GridPointGraph;
 
 import java.io.Serializable;
 
 
 public class Knight extends Sprite implements Serializable {
+
+
+    float speed = 1/32f;
+    private float deltaX=0;
+    private float deltaY=0;
+    GridPoint previousPoint;
+
+    GraphPath<GridPoint> path;
+    Queue<GridPoint> pathQueue = new Queue<>();
+
     protected int attackPower=10;
     protected boolean spawned=false;
     public Knight() {
         super(new Sprite(new Texture("textures/placeholder.png")));
-        setX(64);
-        setY(500);
+        setX(10);
+        setY(15);
+        setSize(1,1);
+
     }
 
     public void draw(SpriteBatch spriteBatch) {
 
         if(spawned) {
             update();
+
             super.draw(spriteBatch);
+
 
         }
 
+
+    }
+
+    public float getX(){
+        return super.getX();
     }
 
     public void spawn(){
@@ -42,11 +67,69 @@ public class Knight extends Sprite implements Serializable {
         attackPower--;
     }
 
+
+    public void setPath(GraphPath<GridPoint> path,GridPoint start){
+
+        previousPoint=start;
+        setX(start.getX());
+        setY(start.getY());
+        this.path=path;
+        for (int i = 1; i < path.getCount(); i++) {
+            pathQueue.addLast(path.get(i));
+        }
+    }
+
+    private void setSpeedToNextPoint() {
+        GridPoint nextPoint = pathQueue.first();
+        float angle = MathUtils.atan2(nextPoint.getY() - previousPoint.getX(), nextPoint.getX() - previousPoint.getY());
+        deltaX = MathUtils.cos(angle) * speed;
+        deltaY = MathUtils.sin(angle) * speed;
+
+    }
+
+    private void checkCollision() {
+        if (pathQueue.size > 0) {
+            GridPoint targetCity = pathQueue.first();
+            if (Vector2.dst(getX(), getY(), targetCity.getX(), targetCity.getY()) < 5) {
+                reachNextPoint();
+            }
+        }
+    }
+    public void step() {
+        setX(getX()+deltaX);
+        setY(getY()+deltaY);
+        checkCollision();
+    }
+
+
+    private void reachNextPoint() {
+
+        GridPoint nextPoint = pathQueue.first();
+
+        // Set the position to keep the Agent in the middle of the path
+        setX(nextPoint.getX());
+        setY(nextPoint.getY());
+
+        this.previousPoint = nextPoint;
+        pathQueue.removeFirst();
+
+        if (pathQueue.size == 0) {
+            reachDestination();
+        } else {
+            setSpeedToNextPoint();
+        }
+    }
+    private void reachDestination() {
+        deltaX = 0;
+        deltaY = 0;
+    }
+
+
     //bs currently
     public void update() {
-        // collision detection
-        setX(getX() + 10);
-    }/*
+        step();
+    }
+    /*
         if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {
             setX(getX() + 10);
 

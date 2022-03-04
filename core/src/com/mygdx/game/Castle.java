@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.units.Knight;
 
 import java.io.Serializable;
@@ -25,10 +26,11 @@ public class Castle implements Serializable {
         return gold;
     }
 
-    public void buyKnight(){
+    public void buyKnight(PathFinder pathFinder){
         if (gold>50){
             gold-=50;
             knights.add(new Knight());
+            pathFinder.findWay(knights.get(knights.size()-1));
         }
     }
     public void spawnUnits(){

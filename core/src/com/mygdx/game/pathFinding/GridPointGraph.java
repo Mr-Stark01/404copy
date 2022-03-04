@@ -8,8 +8,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-// Now if anyone questions that do we need a pathfinder the answer is fuck you I implemented it halfway at this point and only now realized that no not realy
-//This shit will work I will fucking will it into existence
+
 public class GridPointGraph implements IndexedGraph<GridPoint> {
     GridPointHeuristic gridPointHeuristic = new GridPointHeuristic();
     Array<GridPoint> gridPoints = new Array<>();
