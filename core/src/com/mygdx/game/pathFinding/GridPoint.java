@@ -10,11 +10,27 @@ public class GridPoint {
     /** Index used by the A* algorithm. Keep track of it so we don't have to recalculate it later. */
     int index;
 
-    public GridPoint(TiledMapTileLayer.Cell cell){
-        this.x=cell.getTile().getOffsetX();
-        this.y=cell.getTile().getOffsetY();
-        if(cell.getTile().getProperties().containsKey("Spawn")) {
-            this.name = (String) cell.getTile().getProperties().get("Spawn");
+    public String getName() {
+        return name;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public GridPoint(CellWithCoordinates cell){
+        this.x=cell.x;
+        this.y=cell.y;
+        if(cell.cell.getTile().getProperties().containsKey("Spawn")) {
+            this.name = (String) cell.cell.getTile().getProperties().get("Spawn");
         }
         else{
             this.name="WhoCares";
