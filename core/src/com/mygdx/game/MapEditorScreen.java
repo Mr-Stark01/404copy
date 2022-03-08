@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,12 @@ public class MapEditorScreen implements Screen {
 
     final MyGdxGame game;
     OrthographicCamera camera;
+
+    Texture bg;
+    int buttonWid;
+    int buttonHei;
+    int buttonX;
+    int backbuttonY;
 
 
     public MapEditorScreen(final MyGdxGame game){
@@ -23,20 +30,17 @@ public class MapEditorScreen implements Screen {
 
     @Override
     public void show() {
+        //ScreenUtils.clear(255, 98, 0, 1);
+        bg = new Texture("menu/background.jpg");
 
+        buttonWid = 250;
+        buttonHei = 100;
+        buttonX = 1920-buttonWid-50;
+        backbuttonY = 50;
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(255, 98, 0, 1);
-        Texture bg = new Texture("menu/bg.jpg");
-        Texture exitButton = new Texture("menu/back_button.png");
-
-        int buttonWid = 250;
-        int buttonHei = 100;
-        int buttonX = 1920-buttonWid-50;
-        int backbuttonY = 50;
-
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -48,8 +52,7 @@ public class MapEditorScreen implements Screen {
         game.font.draw(game.batch, "Map Editor", 1920/2, 800);
 
         //backButton
-        game.batch.draw(exitButton, buttonX , backbuttonY, buttonWid, buttonHei);
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y > backbuttonY  && vec.y < backbuttonY + buttonHei){

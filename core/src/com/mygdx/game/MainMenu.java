@@ -25,14 +25,12 @@ public class MainMenu implements Screen {
     int mapButtonY ;
     int loadButtonY ;
     int startButtonY ;
+    int exitButtonWid;
+    int optionButtonWid;
+    int mapEditorButtonWid;
+    int startButtonWid;
 
     Texture bg;
-    Texture logoButton ;
-    Texture exitButton ;
-    Texture startButton;
-    Texture optionsButton;
-    Texture loadButton ;
-    Texture mapButton ;
 
     OrthographicCamera camera;
 
@@ -48,25 +46,23 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-        ScreenUtils.clear(255, 98, 0, 1);
+        //ScreenUtils.clear(255, 98, 0, 1);
 
-        bg = new Texture("menu/bg.jpg");
-        logoButton = new Texture("menu/logo.png");
-        exitButton = new Texture("menu/exit_button.png");
-        startButton = new Texture("menu/start_button.png");
-        optionsButton = new Texture("menu/options_button.png");
-        loadButton = new Texture("menu/load_button.png");
-        mapButton = new Texture("menu/map_button.png");
+        bg = new Texture("menu/background_main.jpg");
 
 
         buttonWid = 250;
-        buttonHei = 100;
+        buttonHei = 90;
         buttonX = 1920/2-buttonWid/2;
         exitbuttonY = 100;
         optionsButtonY = 225;
         mapButtonY = 350;
         loadButtonY = 475;
         startButtonY = 600;
+        exitButtonWid = 200;
+        optionButtonWid = 400;
+        mapEditorButtonWid = 530;
+        startButtonWid = 280;
     }
 
     @Override
@@ -77,12 +73,9 @@ public class MainMenu implements Screen {
         camera.update();
         game.batch.begin();
         game.batch.draw(bg, 0 , 0, 1920, 1080);
-        game.batch.draw(logoButton, 1920/2-700/2 , 800, 700, 150);
+
         //startButton
-        game.batch.draw(startButton, buttonX , startButtonY, buttonWid, buttonHei);
-
-
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x  > buttonX && vec.y > startButtonY && vec.y < startButtonY + buttonHei){
@@ -93,11 +86,10 @@ public class MainMenu implements Screen {
         }
 
         //loadButton
-        game.batch.draw(loadButton, buttonX , loadButtonY, buttonWid, buttonHei);
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
-            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y >loadButtonY  && vec.y < loadButtonY + buttonHei){
+            if(vec.x < buttonX - ((mapEditorButtonWid - buttonWid)/2)  + mapEditorButtonWid && vec.x > buttonX - ((mapEditorButtonWid - buttonWid)/2) && vec.y >loadButtonY  && vec.y < loadButtonY + buttonHei){
                 game.setScreen(new MapLoaderScreen(game));
                 dispose();
             }
@@ -105,11 +97,10 @@ public class MainMenu implements Screen {
 
     //here we go
         //mapButton
-        game.batch.draw(mapButton, buttonX , mapButtonY, buttonWid, buttonHei);
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
-            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y >  buttonHei  &&  vec.y < mapButtonY + buttonHei){
+            if(vec.x < buttonX - ((mapEditorButtonWid - buttonWid)/2)  + mapEditorButtonWid && vec.x > buttonX - ((mapEditorButtonWid - buttonWid)/2) && vec.y >  mapButtonY  &&  vec.y < mapButtonY + buttonHei){
                 game.setScreen(new MapEditorScreen(game));
                 dispose();
             }
@@ -117,11 +108,10 @@ public class MainMenu implements Screen {
 
 
         //optionsButton
-        game.batch.draw(optionsButton, buttonX , optionsButtonY, buttonWid, buttonHei);
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
-            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y >  buttonHei  && vec.y < optionsButtonY + buttonHei){
+            if(vec.x < buttonX - ((optionButtonWid - buttonWid)/2)  + optionButtonWid && vec.x > buttonX - ((optionButtonWid - buttonWid)/2) && vec.y >  optionsButtonY  && vec.y < optionsButtonY + buttonHei){
 
                 game.setScreen(new OptionScreen(game));
                 dispose();
@@ -130,11 +120,10 @@ public class MainMenu implements Screen {
 
 
         //exitButton
-        game.batch.draw(exitButton, buttonX , exitbuttonY, buttonWid, buttonHei);
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
-            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y > buttonHei  &&  vec.y < exitbuttonY + buttonHei){
+            if(vec.x < buttonX - ((exitButtonWid - buttonWid)/2)  + exitButtonWid && vec.x > buttonX - ((exitButtonWid - buttonWid)/2) && vec.y > exitbuttonY  &&  vec.y < exitbuttonY + buttonHei){
 
                     this.dispose();
                     Gdx.app.exit();
