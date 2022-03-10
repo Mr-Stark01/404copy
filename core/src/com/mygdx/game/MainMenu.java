@@ -148,12 +148,6 @@ public class MainMenu implements Screen {
 
         game.batch.end();
 
-        /*
-        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
-
-        }
-        */
-
         //Client and server
         if(Gdx.input.isKeyPressed(Input.Keys.K)){
             ServerHandler serverHandler=new ServerHandler(new Server());
