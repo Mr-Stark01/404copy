@@ -21,6 +21,9 @@ import java.io.Serializable;
 public class Knight extends Sprite implements Serializable {
 
 
+    /*
+    private int health;
+    */
     float speed = 1/32f;
     private float deltaX=0;
     private float deltaY=0;
@@ -51,6 +54,12 @@ public class Knight extends Sprite implements Serializable {
 
 
     }
+
+    /*
+    public void recieveDamage(int dmg){
+        this.health -= dmg;
+    }
+     */
 
     public float getX(){
         return super.getX();

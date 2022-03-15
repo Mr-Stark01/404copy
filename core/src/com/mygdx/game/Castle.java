@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.towers.Tower;
 import com.mygdx.game.units.Knight;
 
 import java.io.Serializable;
@@ -15,15 +16,23 @@ import java.util.ArrayList;
 public class Castle implements Serializable {
     protected float health=500,gold=5000;
 
+    protected ArrayList<Tower> towers;
+
     protected ArrayList<Knight> knights;
     public String id="asdasd";
     public Castle() {
-        knights = new ArrayList<Knight>();
+        knights = new ArrayList<>();
 
     }
 
     public float getGold(){
         return gold;
+    }
+
+    public void buyTower(Tower tower){
+        this.gold -= tower.getPrice();
+        this.towers.add(tower);
+        tower.setOwner(this);
     }
 
     public void buyKnight(PathFinder pathFinder){
