@@ -29,8 +29,9 @@ public class GridPoint {
     public GridPoint(CellWithCoordinates cell){
         this.x=cell.x;
         this.y=cell.y;
-        if(cell.cell.getTile().getProperties().containsKey("Spawn")) {
-            this.name = (String) cell.cell.getTile().getProperties().get("Spawn");
+        // This is proof that there were times I was not retarded
+        if(cell.cell.getTile().getProperties().containsKey("CellPath")) {
+            this.name = (String) cell.cell.getTile().getProperties().get("CellPath");
         }
         else{
             this.name="WhoCares";

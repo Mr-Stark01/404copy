@@ -28,14 +28,14 @@ public class ClientHandler implements NetworkHandler ,Runnable{
         while (client.isConnected()){
 
             enemyCastle=client.receiveObject();
-            System.out.println(ownCastle.getGold());
+
             client.sendObject(ownCastle);
 
 
         }
 
         client.stopConnection();
-        System.out.println("the end Client");
+
     }
 
     public synchronized void setCastle(Castle ownCastle){
@@ -51,7 +51,7 @@ public class ClientHandler implements NetworkHandler ,Runnable{
     }
 
     public void start () {
-        System.out.println("Starting " +  threadName );
+
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();

@@ -6,10 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.Castle;
+import com.mygdx.game.InputHandler;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.network.*;
 import com.mygdx.game.pathFinding.PathFinder;
 
@@ -54,12 +60,11 @@ public class GameScreen implements Screen {
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/Base.tmx");
         tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
-
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
         //path
         pathFinder=new PathFinder(map);
-        castle=new Castle();
+        castle=new Castle(player);
 
         network.setCastle(castle);
         network.start();
@@ -99,8 +104,8 @@ public class GameScreen implements Screen {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.G)) {
-            System.out.println(network.getEnemyCastle().getId());
-            castle.setId("coolio");
+
+
 
         }
 

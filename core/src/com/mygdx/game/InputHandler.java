@@ -99,7 +99,7 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
 
         if(Input.Keys.B==keycode){
-            castle.setId("not");
+
             castle.buyKnight(pathFinder);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
@@ -127,7 +127,7 @@ public class InputHandler implements InputProcessor {
         mouseInWorld2D.y=screenY;
         mouseInWorld2D.z=0;
         camera.unproject(mouseInWorld2D);
-            System.out.println(mouseInWorld2D.x+"/   /"+mouseInWorld2D.y);
+
         return false;
     }
 
