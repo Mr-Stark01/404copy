@@ -19,9 +19,20 @@ public class Castle implements Serializable {
     protected ArrayList<Tower> towers;
 
     protected ArrayList<Knight> knights;
-    public String id="asdasd";
-    public Castle() {
-        knights = new ArrayList<>();
+
+    private String player;
+    private float spawnPointX,spawnPointY;
+    public Castle(String player) {
+        this.player=player;
+        knights = new ArrayList<Knight>();
+        if(player=="Server"){
+            spawnPointX=19;
+            spawnPointY=45;
+        }
+        else{
+            spawnPointX=282;
+            spawnPointY=46;
+        }
 
     }
 
@@ -38,7 +49,7 @@ public class Castle implements Serializable {
     public void buyKnight(PathFinder pathFinder){
         if (gold>50){
             gold-=50;
-            knights.add(new Knight());
+            knights.add(new Knight(spawnPointX,spawnPointY));
             pathFinder.findWay(knights.get(knights.size()-1));
         }
     }
@@ -48,9 +59,6 @@ public class Castle implements Serializable {
         }
     }
 
-    public void setId(String id){
-        this.id=id;
-    }
 
     public void draw(SpriteBatch spriteBatch){
         for(Knight knight:knights){
@@ -58,9 +66,7 @@ public class Castle implements Serializable {
         }
     }
 
-    public String getId(){
-        return id;
-    }
+
 
 
     public ArrayList<Knight> getKnights() {
@@ -71,7 +77,7 @@ public class Castle implements Serializable {
     /**For updating castle from the network Handler */
     public void update(Castle castle){
 
-        this.id=castle.getId();
+
         this.knights=castle.getKnights();
         this.gold=castle.getGold();
         if (this.health != castle.health /*&& thisIsServer*/ ){

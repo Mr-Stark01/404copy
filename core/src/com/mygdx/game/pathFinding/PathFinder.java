@@ -65,13 +65,14 @@ public class PathFinder {
                 }
 
             }
-
-            if((cellList.get(i).cell.getTile().getProperties().get("Spawn")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("Spawn").equals("Client"))){
+        // Good god why did I do this
+            // We need to find another way because hard coding is not an option.
+            if((cellList.get(i).cell.getTile().getProperties().get("CellPath")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("Client"))){
                     start=gridPoints.get(i);
 
                     System.out.println("Client ok now for real though");
             }
-            if((cellList.get(i).cell.getTile().getProperties().get("Spawn")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("Spawn").equals("Server"))){
+            if((cellList.get(i).cell.getTile().getProperties().get("CellPath")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("RallyPointServer"))){
                     end=gridPoints.get(i);
 
                 System.out.println("Server ok now for real though");

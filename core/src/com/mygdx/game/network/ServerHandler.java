@@ -14,7 +14,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
     }
     @Override
     public void run() {
-        System.out.println("Server Started");
+
         server.start(6666);
 
 
@@ -25,10 +25,9 @@ public class ServerHandler implements NetworkHandler ,Runnable{
         while(server.isConnected()){
             server.sendObject(ownCastle);
             enemyCastle=server.receiveObject();
-            System.out.println(enemyCastle.getId());
-            System.out.println(enemyCastle.getGold());
+
         }
-        System.out.println("the end Client");
+
     }
 
     public void setCastle(Castle ownCastle){
@@ -43,7 +42,7 @@ public class ServerHandler implements NetworkHandler ,Runnable{
     }
 
     public void start () {
-        System.out.println("Starting " +  threadName );
+
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();

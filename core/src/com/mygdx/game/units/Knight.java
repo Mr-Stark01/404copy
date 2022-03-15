@@ -28,16 +28,19 @@ public class Knight extends Sprite implements Serializable {
     private float deltaX=0;
     private float deltaY=0;
     GridPoint previousPoint;
+    private float spawnPointX,spawnPointY;
 
     GraphPath<GridPoint> path;
     Queue<GridPoint> pathQueue = new Queue<>();
 
     protected int attackPower=10;
     protected boolean spawned=false;
-    public Knight() {
+    public Knight(float spawnPointX,float spawnPointY) {
         super(new Sprite(new Texture("textures/placeholder.png")));
-        setX(10);
-        setY(15);
+        this.spawnPointX=spawnPointX;
+        this.spawnPointY=spawnPointY;
+        setX(spawnPointX);
+        setY(spawnPointY);
         setSize(1,1);
 
     }
@@ -115,7 +118,7 @@ public class Knight extends Sprite implements Serializable {
 
         GridPoint nextPoint = pathQueue.first();
 
-        // Set the position to keep the Agent in the middle of the path
+
         setX(nextPoint.getX());
         setY(nextPoint.getY());
 

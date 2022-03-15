@@ -77,7 +77,7 @@ public class Client {
         return receive;
     }
     public Castle receiveObject(){
-        Castle receive=new Castle();
+        Castle receive=new Castle("Server");
         try{
             receive=(Castle)objectIn.readObject();
         }catch (Exception e){
