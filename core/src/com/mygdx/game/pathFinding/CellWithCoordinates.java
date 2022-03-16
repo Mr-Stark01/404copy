@@ -2,6 +2,10 @@ package com.mygdx.game.pathFinding;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+/**
+ * This is stupid.
+ */
+
 public class CellWithCoordinates {
     public TiledMapTileLayer.Cell cell;
     public int x;

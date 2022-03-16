@@ -2,7 +2,9 @@ package com.mygdx.game.pathFinding;
 
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.math.Vector2;
-
+/**
+ * This is stupid.
+ */
 public class Way implements Connection<GridPoint> {
     GridPoint fromGridPoint;
     GridPoint toGridPoint;

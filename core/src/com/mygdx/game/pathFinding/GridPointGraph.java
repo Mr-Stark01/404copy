@@ -9,6 +9,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 
+/**
+ * This is stupid.
+ */
+
 public class GridPointGraph implements IndexedGraph<GridPoint> {
     GridPointHeuristic gridPointHeuristic = new GridPointHeuristic();
     Array<GridPoint> gridPoints = new Array<>();

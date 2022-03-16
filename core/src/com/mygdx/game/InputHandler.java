@@ -11,6 +11,12 @@ import com.mygdx.game.pathFinding.PathFinder;
 import java.util.HashMap;
 import java.util.Map;
 //Currently set up to do both polling and eventhandling which is stupid
+
+/**
+ * For handling inputs by the player.
+ * This works by interupt rather then pooling.
+ *
+ */
 public class InputHandler implements InputProcessor {
     OrthographicCamera camera;
     Map<Integer,Boolean> flags;
@@ -33,6 +39,10 @@ public class InputHandler implements InputProcessor {
 
     }
 
+    /**
+     * This is massively rarded and makes the whole thing not work by interrupt.
+     * Which is a design genius step by me congrats DIE.
+     */
     public void update(){
         /*
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -95,6 +105,12 @@ public class InputHandler implements InputProcessor {
 
 
     //cool so this is better but I still hate it
+
+    /**
+     *  Handles keypresses
+     * @param keycode The code of the key that was pressed
+     * @return True if this has been implemented and false if not.
+     */
     @Override
     public boolean keyDown(int keycode) {
 
@@ -108,6 +124,11 @@ public class InputHandler implements InputProcessor {
         flags.put(keycode,true);
         return true;
     }
+    /**
+     *  Handles key release
+     * @param keycode The code of the key that was pressed
+     * @return True if this has been implemented and false if not.
+     */
 
     @Override
     public boolean keyUp(int keycode) {
@@ -115,11 +136,20 @@ public class InputHandler implements InputProcessor {
         return true;
     }
 
+
     @Override
     public boolean keyTyped(char character) {
         return false;
     }
 
+    /**
+     * Handles mouse or touch screen
+     * @param screenX The X coordinates for the press
+     * @param screenY The Y coordinates for the press
+     * @param pointer
+     * @param button The button that was pressed if any.
+     * @return
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         final Vector3 mouseInWorld2D = new Vector3();
@@ -136,6 +166,13 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
+    /**
+     *  If the mouse left key is being pressed this will constantly update the coordinates.
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @return
+     */
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         float x = Gdx.input.getDeltaX()/scale;
@@ -151,6 +188,12 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
+    /**
+     * If the scroll wheel is in use.
+     * @param amountX
+     * @param amountY
+     * @return
+     */
     @Override
     public boolean scrolled(float amountX, float amountY) {
         amountY=amountY/10;

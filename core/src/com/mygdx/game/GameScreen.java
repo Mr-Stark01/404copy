@@ -21,6 +21,11 @@ import com.mygdx.game.pathFinding.PathFinder;
 
 import java.util.ArrayList;
 
+/**
+ * The main game class.
+ * This class handles the base tick of the game and any action have to be originated from here.
+ */
+
 public class GameScreen implements Screen {
 
 
@@ -42,7 +47,11 @@ public class GameScreen implements Screen {
 
     ArrayList<TiledMapTileLayer.Cell> cellList;
 
-
+    /**
+     * Everything thats needs to be initiated should be done here or in the show if it's a display thing.
+     * @param game For handling inputs and any interactions with the player
+     * @param network For handling the exchange of the Castle classes.
+     */
     public GameScreen(final MyGdxGame game, NetworkHandler network){
         this.network=network;
 
@@ -54,6 +63,9 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * Anything that will be shown to the player Will be initiated here.
+     */
     @Override
     public void show() {
         //Importing the map itself from maps folder
@@ -77,6 +89,10 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(inputHandler);
     }
 
+    /**
+     * The main game clock so to speak this is the main game loop.
+     * @param delta
+     */
     @Override
     public void render(float delta) {
 
@@ -119,6 +135,11 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * For resizing of the screen to be rendered
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
 

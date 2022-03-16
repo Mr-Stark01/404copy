@@ -13,6 +13,9 @@ import com.mygdx.game.units.Knight;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/** Represent the player and the castle both.
+ *
+ */
 public class Castle implements Serializable {
     protected float health=500,gold=5000;
 
@@ -22,6 +25,11 @@ public class Castle implements Serializable {
 
     private String player;
     private float spawnPointX,spawnPointY;
+
+    /**
+     * Creates a castle for the player and set's it's coordinates.
+     * @param player
+     */
     public Castle(String player) {
         this.player=player;
         knights = new ArrayList<Knight>();
@@ -36,16 +44,30 @@ public class Castle implements Serializable {
 
     }
 
+    /**
+     *
+     * @return The ammount of gold.
+     */
+
     public float getGold(){
         return gold;
     }
 
+    /**
+     * Buys a new tower that can be deployed.
+     * Lower the amount of money the player has.
+     * @param tower
+     */
     public void buyTower(Tower tower){
         this.gold -= tower.getPrice();
         this.towers.add(tower);
         tower.setOwner(this);
     }
 
+    /**
+     * Buys a knight and gives it the route that it will have to follow.
+     * @param pathFinder
+     */
     public void buyKnight(PathFinder pathFinder){
         if (gold>50){
             gold-=50;
@@ -53,13 +75,21 @@ public class Castle implements Serializable {
             pathFinder.findWay(knights.get(knights.size()-1));
         }
     }
+
+    /**
+     * Spawns the units that were bought in the buy phase.
+     */
     public void spawnUnits(){
         for(Knight knight:knights){
             knight.spawn();
         }
     }
 
-
+    /**
+     * Draws anything that is connected to this specific player.
+     * Such as towers and units.
+     * @param spriteBatch
+     */
     public void draw(SpriteBatch spriteBatch){
         for(Knight knight:knights){
             knight.draw(spriteBatch);
@@ -67,14 +97,19 @@ public class Castle implements Serializable {
     }
 
 
-
-
+    /**
+     *
+     * @return All the units that are stored and not dead willbe returned by this.
+     */
     public ArrayList<Knight> getKnights() {
         return knights;
     }
 
 
-    /**For updating castle from the network Handler */
+    /**For updating the specific instance of the castle with the castle give to it by the networkd handler.
+     *
+     * @param castle The castle given to it by the Network.
+     */
     public void update(Castle castle){
 
 

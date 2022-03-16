@@ -28,7 +28,7 @@ public class Knight extends Sprite implements Serializable {
     private float deltaX=0;
     private float deltaY=0;
     GridPoint previousPoint;
-    private float spawnPointX,spawnPointY;
+
 
     GraphPath<GridPoint> path;
     Queue<GridPoint> pathQueue = new Queue<>();
@@ -37,8 +37,7 @@ public class Knight extends Sprite implements Serializable {
     protected boolean spawned=false;
     public Knight(float spawnPointX,float spawnPointY) {
         super(new Sprite(new Texture("textures/placeholder.png")));
-        this.spawnPointX=spawnPointX;
-        this.spawnPointY=spawnPointY;
+
         setX(spawnPointX);
         setY(spawnPointY);
         setSize(1,1);
@@ -79,7 +78,7 @@ public class Knight extends Sprite implements Serializable {
         attackPower--;
     }
 
-
+    /* FONTOS */
     public void setPath(GraphPath<GridPoint> path,GridPoint start){
 
         previousPoint=start;
@@ -141,6 +140,7 @@ public class Knight extends Sprite implements Serializable {
     public void update() {
         step();
     }
+    /* FONTOS */
     /*
         if (!collisionLayer.getCell((int) getX()/32+1, (int) getY()/32).getTile().getProperties().containsKey("blocked")) {
             setX(getX() + 10);

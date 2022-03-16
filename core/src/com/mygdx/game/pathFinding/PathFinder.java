@@ -18,6 +18,10 @@ public class PathFinder {
     GridPoint end = null;
 
 // Kell méret pályának és https://happycoding.io/tutorials/libgdx/pathfinding
+    /**
+     * This is stupid.
+     */
+
     public PathFinder(TiledMap map){
         TiledMapTileLayer tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
         cellList=new ArrayList<>();
