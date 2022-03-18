@@ -113,31 +113,33 @@ public class ServerMenu implements Screen,TextInputListener {
         game.font.draw(game.batch, "Game by 404", 1700, 40);
 
         //joinButton
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-            camera.unproject(vec);
-            if(vec.x < buttonX  - ((buttonWid - buttonWid)/2) + buttonWid && vec.x > buttonX - ((buttonWid - buttonWid)/2) && vec.y > joinButtonY  && vec.y < joinButtonY + buttonHei){
-                //join to game
-                text = "";
-                while(!correctIPCheck(text)){
-                    Gdx.input.getTextInput(this,"Enter IP address","","");
+        if(Gdx.input.justTouched()) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(vec);
+                if (vec.x < buttonX - ((buttonWid - buttonWid) / 2) + buttonWid && vec.x > buttonX - ((buttonWid - buttonWid) / 2) && vec.y > joinButtonY && vec.y < joinButtonY + buttonHei) {
+                    //join to game
+                    text = "";
+                    while (!correctIPCheck(text)) {
+                        Gdx.input.getTextInput(this, "Enter IP address", "", "");
+                    }
+                    ClientHandler clh = new ClientHandler(new Client(), text);
+                    game.setScreen(new GameScreen(game, clh));
+                    dispose();
                 }
-                ClientHandler clh=new ClientHandler(new Client(),text);
-                game.setScreen(new GameScreen(game,clh));
-                dispose();
             }
-        }
 
-        //createButton
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-            camera.unproject(vec);
-            if(vec.x < buttonX  - ((createButtonWid - buttonWid)/2) + createButtonWid && vec.x > buttonX - ((createButtonWid - buttonWid)/2) && vec.y > createButtonY  && vec.y < createButtonY + buttonHei){
-                //create game
-                Gdx.input.getTextInput(this,"Enter New Game Name","","");
-                ServerHandler serverHandler=new ServerHandler(new Server());
-                game.setScreen(new GameScreen(game,serverHandler));
-                dispose();
+            //createButton
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(vec);
+                if (vec.x < buttonX - ((createButtonWid - buttonWid) / 2) + createButtonWid && vec.x > buttonX - ((createButtonWid - buttonWid) / 2) && vec.y > createButtonY && vec.y < createButtonY + buttonHei) {
+                    //create game
+                    Gdx.input.getTextInput(this, "Enter New Game Name", "", "");
+                    ServerHandler serverHandler = new ServerHandler(new Server());
+                    game.setScreen(new GameScreen(game, serverHandler));
+                    dispose();
+                }
             }
         }
 

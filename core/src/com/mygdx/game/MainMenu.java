@@ -74,7 +74,7 @@ public class MainMenu implements Screen {
         game.batch.draw(bg, 0 , 0, 1920, 1080);
 
         //startButton
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x  > buttonX && vec.y > startButtonY && vec.y < startButtonY + buttonHei){
