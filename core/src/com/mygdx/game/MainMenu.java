@@ -79,10 +79,6 @@ public class MainMenu implements Screen {
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x  > buttonX && vec.y > startButtonY && vec.y < startButtonY + buttonHei){
                 game.setScreen(new StartMenu(game));
-
-                //ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
-                //game.setScreen(new GameScreen(game,clh));
-
                 dispose();
             }
         }

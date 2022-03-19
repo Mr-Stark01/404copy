@@ -12,7 +12,6 @@ public class MyGdxGame extends Game {
 	Texture img;
 	BitmapFont font;
 	Music music;
-	public static String gameName;
 	
 	@Override
 	public void create() {
@@ -23,7 +22,6 @@ public class MyGdxGame extends Game {
 		music.setLooping(true);
 		music.setVolume(0.1f);
 		music.play();
-		gameName = "";
 	}
 
 	@Override
@@ -36,9 +34,5 @@ public class MyGdxGame extends Game {
 		batch.dispose();
 		font.dispose();
 		music.dispose();
-	}
-
-	public static void setGameName(String setName){
-		gameName = setName;
 	}
 }

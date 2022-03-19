@@ -15,7 +15,7 @@ import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.Server;
 import com.mygdx.game.network.ServerHandler;
 
-import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class StartMenu implements Screen,TextInputListener {
 
@@ -48,6 +48,39 @@ public class StartMenu implements Screen,TextInputListener {
 
     }
 
+    public boolean correctIPCheck(String text){
+        String IPV4_REGEX =
+                "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
+
+        Pattern IPv4_PATTERN = Pattern.compile(IPV4_REGEX);
+
+        if(text == null){
+            return false;
+        }
+
+        if(!IPv4_PATTERN.matcher(text).matches()){
+            return false;
+        }
+
+        String[] parts = text.split("\\.");
+
+        // verify that each of the four subgroups of IPv4 addresses is legal
+        try{
+            for(String segment: parts)
+            {
+                // x.0.x.x is accepted but x.01.x.x is not
+                if (Integer.parseInt(segment) > 255 ||
+                        (segment.length() > 1 && segment.startsWith("0"))) {
+                    return false;
+                }
+            }
+        }catch(NumberFormatException e) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void show() {
         //ScreenUtils.clear(255, 98, 0, 1);
@@ -65,7 +98,9 @@ public class StartMenu implements Screen,TextInputListener {
         clientButtonY = 600;
 
         serverButtonY = 480;
-        serverButtonWid = 335;
+        serverButtonWid = 250;
+
+        text = "";
     }
 
     @Override
@@ -79,27 +114,32 @@ public class StartMenu implements Screen,TextInputListener {
         game.font.setColor(0,0,0,1);
         game.font.draw(game.batch, "Game by 404", 1700, 40);
 
-        //clientButton
+        //joinButton
         if(Gdx.input.justTouched()) {
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.unproject(vec);
                 if (vec.x < buttonX - ((buttonWid - buttonWid) / 2) + buttonWid && vec.x > buttonX - ((buttonWid - buttonWid) / 2) && vec.y > clientButtonY && vec.y < clientButtonY + buttonHei) {
-                    //create new game
-                    Gdx.input.getTextInput(this, "Enter New Game Name", "", "");
-                    ServerHandler serverHandler = new ServerHandler(new Server());
-                    game.setScreen(new GameScreen(game, serverHandler));
+                    //join game
+                    if(text == ""){
+                        Gdx.input.getTextInput(this, "Set IP address", "", "192.168.0.210");
+                    }
+                    if(text != "") {
+                        ClientHandler clh = new ClientHandler(new Client(), text);
+                        game.setScreen(new GameScreen(game, clh));
+                    }
                     dispose();
                 }
             }
 
-            //serverButton
+            //hostButton
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.unproject(vec);
                 if (vec.x < buttonX - ((serverButtonWid - buttonWid) / 2) + serverButtonWid && vec.x > buttonX - ((serverButtonWid - buttonWid) / 2) && vec.y > serverButtonY && vec.y < serverButtonY + buttonHei) {
-                    //server menu
-                    game.setScreen(new ServerMenu(game));
+                    //host game
+                    ServerHandler serverHandler = new ServerHandler(new Server());
+                    game.setScreen(new GameScreen(game, serverHandler));
                     dispose();
                 }
             }
@@ -148,8 +188,9 @@ public class StartMenu implements Screen,TextInputListener {
 
     @Override
     public void input(String text) {
-        this.text = text;
-        MyGdxGame.setGameName(text);
+        if(correctIPCheck(text)) {
+            this.text = text;
+        }
     }
 
     @Override
