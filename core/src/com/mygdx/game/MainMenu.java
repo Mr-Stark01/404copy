@@ -74,12 +74,11 @@ public class MainMenu implements Screen {
         game.batch.draw(bg, 0 , 0, 1920, 1080);
 
         //startButton
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX + buttonWid && vec.x  > buttonX && vec.y > startButtonY && vec.y < startButtonY + buttonHei){
-                ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
-                game.setScreen(new GameScreen(game,clh));
+                game.setScreen(new StartMenu(game));
                 dispose();
             }
         }
@@ -136,6 +135,7 @@ public class MainMenu implements Screen {
 
         game.batch.end();
 
+        /*
         //Client and server
         if(Gdx.input.isKeyPressed(Input.Keys.K)){
             ServerHandler serverHandler=new ServerHandler(new Server());
@@ -148,6 +148,7 @@ public class MainMenu implements Screen {
             dispose();
 
         }
+         */
 
     }
 
