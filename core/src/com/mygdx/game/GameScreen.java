@@ -18,6 +18,7 @@ import com.mygdx.game.InputHandler;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.network.*;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.screens.Hud;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,7 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private PathFinder pathFinder;
+    private Hud hud;
     //Camera
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
@@ -50,6 +52,7 @@ public class GameScreen implements Screen {
 
         this.game=game;
         spriteBatch = new SpriteBatch();
+        hud= new Hud(spriteBatch);
 
 
     }
@@ -102,6 +105,10 @@ public class GameScreen implements Screen {
 
         // update castle
 
+        //Hud update
+        hud.update(1f);
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         if (Gdx.input.isKeyPressed(Input.Keys.G)) {
 
@@ -141,7 +148,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        hud.dispose();
         map.dispose();
         renderer.dispose();
+        spriteBatch.dispose();
     }
 }
