@@ -122,11 +122,14 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         final Vector3 mouseInWorld2D = new Vector3();
         mouseInWorld2D.x=screenX;
         mouseInWorld2D.y=screenY;
         mouseInWorld2D.z=0;
         camera.unproject(mouseInWorld2D);
+
+        float asd=mouseInWorld2D.x;
 
         return false;
     }
