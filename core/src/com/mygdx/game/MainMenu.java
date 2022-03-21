@@ -61,7 +61,7 @@ public class MainMenu implements Screen {
         exitButtonWid = 200;
         optionButtonWid = 400;
         mapEditorButtonWid = 530;
-        startButtonWid = 280;
+        startButtonWid = 281;
     }
 
     @Override
