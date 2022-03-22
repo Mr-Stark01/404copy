@@ -15,7 +15,7 @@ Doc-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - apt-get update -qq && apt-get install -y -qq gradle
-    - gradle javadoc
+    - gradle tasks
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
