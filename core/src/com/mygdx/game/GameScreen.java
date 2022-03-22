@@ -70,7 +70,7 @@ public class GameScreen implements Screen {
     public void show() {
         //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("maps/Base.tmx");
+        map = loader.load("maps/map.tmx");
         tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
