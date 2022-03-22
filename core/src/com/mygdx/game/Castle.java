@@ -85,6 +85,11 @@ public class Castle implements Serializable {
         }
     }
 
+    public float getSpawnPointX() {
+        return this.spawnPointX;
+    }
 
-
+    public float getSpawnPointY() {
+        return this.spawnPointY;
+    }
 }
