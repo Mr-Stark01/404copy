@@ -1,0 +1,26 @@
+
+
+apply plugin: "java"
+
+sourceCompatibility = 1.7 // This is nonsense why the fuck is 7 1.7 who tough this is fine I spent a fucking hour here Because you fuck said that this was a runtime Issue I curse your family for generations and your cat will die
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+
+sourceSets {
+	test {
+        java {
+            srcDir 'src'
+        }
+    }
+    
+    
+}
+
+dependencies {
+    implementation 'junit:junit:4.13.2'
+}
+
+eclipse.project {
+    name = appName + "-tests"
+}
