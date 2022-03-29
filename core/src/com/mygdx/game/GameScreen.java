@@ -70,7 +70,7 @@ public class GameScreen implements Screen {
     public void show() {
         //Importing the map itself from maps folder
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("maps/map.tmx");
+        map = loader.load("maps/map_01.tmx");
         tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
@@ -133,6 +133,11 @@ public class GameScreen implements Screen {
         //Updatign camera position
         camera.update();
 
+        //Exit on escape
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            this.dispose();
+            Gdx.app.exit();
+        }
     }
 
     /**
