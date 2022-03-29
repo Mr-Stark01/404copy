@@ -57,12 +57,6 @@ public class Knight extends Sprite implements Serializable {
 
     }
 
-    /*
-    public void recieveDamage(int dmg){
-        this.health -= dmg;
-    }
-     */
-
     public float getX(){
         return super.getX();
     }
@@ -74,8 +68,8 @@ public class Knight extends Sprite implements Serializable {
     public int attack(){
         return attackPower;
     }
-    public void getDamaged(){
-        attackPower--;
+    public void getDamaged(int dmg){
+        attackPower-=dmg;
     }
 
     /* FONTOS */
@@ -233,4 +227,8 @@ public class Knight extends Sprite implements Serializable {
     }
 
 */
+
+    public int getAttackPower() {
+        return attackPower;
+    }
 }
