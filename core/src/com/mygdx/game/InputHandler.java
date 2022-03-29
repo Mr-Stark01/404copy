@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.towers.ArcherTower;
+import com.mygdx.game.towers.CannonTower;
+import com.mygdx.game.towers.FireTower;
 import com.mygdx.game.towers.Tower;
 
 import java.util.HashMap;
@@ -119,7 +121,20 @@ public class InputHandler implements InputProcessor {
             Tower tower = new ArcherTower(castle, T1.x, T1.y); //mouse koordináták kellenek
             castle.buyTower(tower);
             castle.spawnTowers();
-            System.out.println(castle.getGold());
+        }
+
+        if(Input.Keys.C==keycode){
+            Vector3 T1=camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Tower tower = new CannonTower(castle, T1.x, T1.y); //mouse koordináták kellenek
+            castle.buyTower(tower);
+            castle.spawnTowers();
+        }
+
+        if(Input.Keys.F==keycode){
+            Vector3 T1=camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Tower tower = new FireTower(castle, T1.x, T1.y); //mouse koordináták kellenek
+            castle.buyTower(tower);
+            castle.spawnTowers();
         }
 
         if(Input.Keys.B==keycode){

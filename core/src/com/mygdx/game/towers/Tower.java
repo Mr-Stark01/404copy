@@ -85,17 +85,6 @@ public abstract class Tower extends Sprite implements Serializable {
             }
             i++;
         }
-
-        /*
-        for (Knight enemyKnight : enemyKnights) {
-            distanceX = Math.abs(enemyKnight.getX() - this.getX());
-            distanceY = Math.abs(enemyKnight.getY() - this.getY());
-            if (distanceX <= range && distanceY <= range) {
-                target
-            }
-        }
-         */
-
     }
 
     public void checkTargetPresence(){
