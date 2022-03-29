@@ -32,6 +32,7 @@ public class Castle implements Serializable {
      */
     public Castle(String player) {
         this.player=player;
+        towers = new ArrayList<Tower>();
         knights = new ArrayList<Knight>();
         if(player=="Server"){
             spawnPointX=19;
@@ -59,9 +60,16 @@ public class Castle implements Serializable {
      * @param tower
      */
     public void buyTower(Tower tower){
-        this.gold -= tower.getPrice();
-        this.towers.add(tower);
-        tower.setOwner(this);
+        if(tower.getPrice()<=gold){
+            gold -= tower.getPrice();
+            towers.add(tower);
+        }
+    }
+
+    public void spawnTowers(){
+        for (Tower tower:towers){
+            tower.spawn();
+        }
     }
 
     /**
@@ -94,13 +102,15 @@ public class Castle implements Serializable {
         for(Knight knight:knights){
             knight.draw(spriteBatch);
         }
+        for (Tower tower:towers){
+            tower.draw(spriteBatch, this); //enemy lesz this helyett
+        }
     }
 
+    public ArrayList<Tower> getTowers() {
+        return towers;
+    }
 
-    /**
-     *
-     * @return All the units that are stored and not dead willbe returned by this.
-     */
     public ArrayList<Knight> getKnights() {
         return knights;
     }
@@ -114,6 +124,7 @@ public class Castle implements Serializable {
 
 
         this.knights=castle.getKnights();
+        this.towers=castle.getTowers();
         this.gold=castle.getGold();
         if (this.health != castle.health /*&& thisIsServer*/ ){
 

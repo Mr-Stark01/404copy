@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.towers.ArcherTower;
+import com.mygdx.game.towers.Tower;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +37,6 @@ public class InputHandler implements InputProcessor {
         flags.put(Input.Keys.DOWN,false);
         flags.put(Input.Keys.P,false);
         flags.put(Input.Keys.M,false);
-
-
     }
 
     /**
@@ -113,6 +113,14 @@ public class InputHandler implements InputProcessor {
      */
     @Override
     public boolean keyDown(int keycode) {
+
+        if(Input.Keys.A==keycode){
+            Vector3 T1=camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Tower tower = new ArcherTower(castle, T1.x, T1.y); //mouse koordináták kellenek
+            castle.buyTower(tower);
+            castle.spawnTowers();
+            System.out.println(castle.getGold());
+        }
 
         if(Input.Keys.B==keycode){
 
