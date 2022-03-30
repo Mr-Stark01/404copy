@@ -15,6 +15,6 @@ public class AssetExistsExampleTest {
 	@Test
 	public void badlogicLogoFileExists() {
 		assertTrue("This test will only pass when the badlogic.jpg file coming with a new project setup has not been deleted.", Gdx.files
-				.internal("../core/assets/menu/4.png").exists());
+				.internal("../core/assets/menu/404.png").exists());
 	}
 }
