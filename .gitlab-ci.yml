@@ -1,15 +1,15 @@
 
 stages:          # List of stages for jobs, and their order of execution
-  - build
+  # - build
   - test
   #- deploy
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  script:
-    - apt-get update -qq && apt-get install -y -qq gradle
-    - gradle desktop:dist
-    - echo "Compile complete."
+#build-job:       # This job runs in the build stage, which runs first.
+#  stage: build
+#  script:
+#    - apt-get update -qq && apt-get install -y -qq gradle
+#    - gradle desktop:dist
+#    - echo "Compile complete."
 
 #Doc-job:       # This job runs in the build stage, which runs first.
 #  stage: build
@@ -27,7 +27,7 @@ unit-test-job:
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/**/TEST-*.xml
+      junit: build/test-results/test/TEST-*.xml
 
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
