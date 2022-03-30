@@ -27,7 +27,7 @@ unit-test-job:
   artifacts:
     when: always
     reports:
-      junit: tests/build/test-results/test/TEST-*.xml
+      junit: tests/build/test-results/test/**/TEST-*.xml
 
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
