@@ -23,11 +23,12 @@ unit-test-job:
   script:
     - apt-get update -qq && apt-get install -y -qq gradle
     - gradle tests:test
+    - ls
     - echo "good"
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/TEST-*.xml
+      junit: tests/build/test-results/test/TEST-*.xml
 
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
