@@ -2,6 +2,10 @@ package com.mygdx.game.pathFinding;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+/**
+ * This is stupid.
+ */
+
 public class GridPoint {
     float x;
     float y;

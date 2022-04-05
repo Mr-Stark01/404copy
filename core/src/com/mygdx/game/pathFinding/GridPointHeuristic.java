@@ -3,6 +3,10 @@ package com.mygdx.game.pathFinding;
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * This is stupid.
+ */
+
 public class GridPointHeuristic implements Heuristic<GridPoint> {
 
     @Override

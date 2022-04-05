@@ -1,9 +1,6 @@
 package com.mygdx.game.pathFinding;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.units.Knight;
@@ -20,12 +17,12 @@ public class PathFinder {
     GridPoint start = null;
     GridPoint end = null;
 
-    // Kell méret pályának és https://happycoding.io/tutorials/libgdx/pathfinding
+// Kell méret pályának és https://happycoding.io/tutorials/libgdx/pathfinding
+    /**
+     * This is stupid.
+     */
+
     public PathFinder(TiledMap map){
-
-
-
-
         TiledMapTileLayer tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
         cellList=new ArrayList<>();
         for(int i=0;i<tileyLayer.getWidth();i++){
