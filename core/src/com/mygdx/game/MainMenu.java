@@ -47,7 +47,7 @@ public class MainMenu implements Screen {
     public void show() {
         //ScreenUtils.clear(255, 98, 0, 1);
 
-        bg = new Texture("menu/background_main.jpg");
+        bg = new Texture("menu/background_main.png");
 
 
         buttonWid = 250;

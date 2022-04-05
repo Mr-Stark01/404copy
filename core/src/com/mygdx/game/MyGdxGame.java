@@ -11,7 +11,7 @@ public class MyGdxGame extends Game {
 	SpriteBatch batch;
 	Texture img;
 	BitmapFont font;
-	Music music;
+	static Music music;
 	
 	@Override
 	public void create() {
@@ -34,5 +34,15 @@ public class MyGdxGame extends Game {
 		batch.dispose();
 		font.dispose();
 		music.dispose();
+	}
+
+	public static void stopMusic(){
+		music.stop();
+		music.setVolume(0);
+	}
+
+	public static void startMusic(){
+		music.setVolume(0.1f);
+		music.play();
 	}
 }

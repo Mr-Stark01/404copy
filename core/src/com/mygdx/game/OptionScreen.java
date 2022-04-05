@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class OptionScreen implements Screen {
 
@@ -14,11 +13,22 @@ public class OptionScreen implements Screen {
     OrthographicCamera camera;
 
     Texture bg;
+    Texture onButton;
+    Texture offButton;
+
+    Texture backButton;
+
     int buttonWid;
     int buttonHei;
     int buttonX;
     int backbuttonY;
 
+    int onoffButtonWid;
+    int onoffButtonHei;
+    int onoffButtonX;
+    int onoffButtonY;
+
+    boolean musicIsOn;
 
     public OptionScreen(final MyGdxGame game){
         this.game = game;
@@ -31,12 +41,22 @@ public class OptionScreen implements Screen {
     @Override
     public void show() {
         //ScreenUtils.clear(255, 98, 0, 1);
-        bg = new Texture("menu/background.jpg");
+        bg = new Texture("menu/background_options.jpg");
+        onButton = new Texture("menu/musicOnButton.png");
+        offButton = new Texture("menu/musicOffButton.png");
+        backButton = new Texture("menu/back_button.png");
 
         buttonWid = 250;
         buttonHei = 100;
         buttonX = 1920-buttonWid-50;
         backbuttonY = 50;
+
+        musicIsOn = true;
+
+        onoffButtonWid = 600;
+        onoffButtonHei = 100;
+        onoffButtonX = 1920/2-onoffButtonWid/2;
+        onoffButtonY = 500;
     }
 
     @Override
@@ -49,7 +69,33 @@ public class OptionScreen implements Screen {
         game.batch.draw(bg, 0 , 0, 1920, 1080);
         game.font.setColor(0,0,0,1);
         game.font.draw(game.batch, "Game by 404", 1700, 40);
-        game.font.draw(game.batch, "Options", 1920/2, 800);
+
+        if(musicIsOn){
+            game.batch.draw(offButton, onoffButtonX , onoffButtonY, onoffButtonWid, onoffButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < onoffButtonX + onoffButtonWid && vec.x > onoffButtonX && vec.y > onoffButtonY && vec.y < onoffButtonY + onoffButtonHei) {
+                        musicIsOn = false;
+                        MyGdxGame.stopMusic();
+                    }
+                }
+            }
+        }
+        else{
+            game.batch.draw(onButton, onoffButtonX , onoffButtonY, onoffButtonWid, onoffButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < onoffButtonX + onoffButtonWid && vec.x > onoffButtonX && vec.y > onoffButtonY && vec.y < onoffButtonY + onoffButtonHei) {
+                        musicIsOn = true;
+                        MyGdxGame.startMusic();
+                    }
+                }
+            }
+        }
 
         //backButton
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){

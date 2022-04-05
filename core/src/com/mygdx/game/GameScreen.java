@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Castle;
 import com.mygdx.game.InputHandler;
 import com.mygdx.game.MyGdxGame;
@@ -43,6 +44,8 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     private PathFinder pathFinder;
     private Hud hud;
+    //0 = build , 1 = attack
+    private int currentGameState;
     //Camera
     OrthographicCamera camera;
     SpriteBatch spriteBatch;
@@ -90,6 +93,8 @@ public class GameScreen implements Screen {
         camera.update();
         inputHandler = new InputHandler(camera,scale,castle,pathFinder);
         Gdx.input.setInputProcessor(inputHandler);
+
+        currentGameState = 0;
     }
 
     /**
@@ -145,6 +150,20 @@ public class GameScreen implements Screen {
             this.dispose();
             Gdx.app.exit();
         }
+
+        //Ready button
+        if(Gdx.input.justTouched()) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(vec);
+                if (vec.x < (1920/2-250/2 + 250) && vec.x > (1920/2-250/2) && vec.y > (1080-100) && vec.y < (1080)) {
+                    currentGameState = 1;
+                }
+            }
+        }
+
+        //Towers/units click
+
     }
 
     /**
