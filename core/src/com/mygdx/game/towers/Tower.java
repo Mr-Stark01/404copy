@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.Castle;
 import com.mygdx.game.units.Knight;
+import com.mygdx.game.units.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public abstract class Tower extends Sprite implements Serializable {
     protected int health;
 
     protected int range;
-    protected Knight target;
+    protected Unit target;
     boolean hasTarget;
 
     protected boolean spawned;
@@ -66,20 +67,20 @@ public abstract class Tower extends Sprite implements Serializable {
                 attack();
 
             } else {
-                selectTarget(enemy.getKnights());
+                selectTarget(enemy.getUnits());
             }
     }
 
-    public void selectTarget(ArrayList<Knight> enemyKnights) {
+    public void selectTarget(ArrayList<Unit> enemyUnits) {
         float distanceX;
         float distanceY;
         boolean tmp = false;
         int i = 0;
-        while (!tmp && i<enemyKnights.size()) {
-            distanceX = Math.abs(enemyKnights.get(i).getX() - this.getX());
-            distanceY = Math.abs(enemyKnights.get(i).getY() - this.getY());
+        while (!tmp && i<enemyUnits.size()) {
+            distanceX = Math.abs(enemyUnits.get(i).getX() - this.getX());
+            distanceY = Math.abs(enemyUnits.get(i).getY() - this.getY());
             if (distanceX <= range && distanceY <= range) {
-                target = enemyKnights.get(i);
+                target = enemyUnits.get(i);
                 hasTarget = true;
                 tmp = true;
             }
@@ -95,9 +96,9 @@ public abstract class Tower extends Sprite implements Serializable {
     }
 
     public void attack() {
-        if (target.getAttackPower() > 0) {
+        if (target.getHealth() > 0) {
             target.getDamaged(damage);
-            System.out.println(target.getAttackPower());
+            System.out.println(target.getHealth());
         } else {
             target=null;
             hasTarget=false;
@@ -113,4 +114,6 @@ public abstract class Tower extends Sprite implements Serializable {
     public void setOwner(Castle owner) {
         this.owner = owner;
     }
+
+
 }

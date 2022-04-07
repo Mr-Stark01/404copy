@@ -3,6 +3,7 @@ package com.mygdx.game.units;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
@@ -16,9 +17,9 @@ public abstract class Unit extends Sprite implements Serializable {
     protected int price;
     protected int health;
     protected int range;
-    protected Castle owner;
+    protected Castle owner; //Why are we storing this here ?
 
-    float speed = 1/32f;
+    float speed = 0.1f; // increase this to make it faster decrease it to make it slower
     private float deltaX=0;
     private float deltaY=0;
 
@@ -44,13 +45,12 @@ public abstract class Unit extends Sprite implements Serializable {
         this.range=range;
         this.owner=owner;
 
+
     }
 
-    public float getX(){
-        return super.getX();
-    }
-    public float getY(){
-        return super.getY();
+    public void spawn(){
+        spawned=true;
+        setSpeedToNextPoint();
     }
 
     public void setPath(GraphPath<GridPoint> path,GridPoint start){
@@ -66,16 +66,16 @@ public abstract class Unit extends Sprite implements Serializable {
 
     private void setSpeedToNextPoint() {
         GridPoint nextPoint = pathQueue.first();
-        float angle = MathUtils.atan2(nextPoint.getY() - previousPoint.getX(), nextPoint.getX() - previousPoint.getY());
+        float angle = MathUtils.atan2(nextPoint.getY() - previousPoint.getY(), nextPoint.getX() - previousPoint.getX());
         deltaX = MathUtils.cos(angle) * speed;
         deltaY = MathUtils.sin(angle) * speed;
-
     }
 
     private void checkCollision() {
         if (pathQueue.size > 0) {
             GridPoint targetCity = pathQueue.first();
-            if (Vector2.dst(getX(), getY(), targetCity.getX(), targetCity.getY()) < 5) {
+            System.out.println(Vector2.dst(getX(), getY(), targetCity.getX(), targetCity.getY()));
+            if (Vector2.dst(getX(), getY(), targetCity.getX(), targetCity.getY()) < 0.1) {
                 reachNextPoint();
             }
         }
@@ -88,16 +88,11 @@ public abstract class Unit extends Sprite implements Serializable {
 
 
     private void reachNextPoint() {
-
         GridPoint nextPoint = pathQueue.first();
-
-
         setX(nextPoint.getX());
         setY(nextPoint.getY());
-
         this.previousPoint = nextPoint;
         pathQueue.removeFirst();
-
         if (pathQueue.size == 0) {
             reachDestination();
         } else {
@@ -110,9 +105,12 @@ public abstract class Unit extends Sprite implements Serializable {
     }
 
 
-    //bs currently
-    public void update() {
-        step();
+
+    public void draw(SpriteBatch spriteBatch) {
+        if (spawned) {
+            step();
+            super.draw(spriteBatch);
+        }
     }
 
     //Get Set
@@ -131,4 +129,5 @@ public abstract class Unit extends Sprite implements Serializable {
     public int getDamage() {
         return damage;
     }
+    public void getDamaged(int damage){health-=damage;}
 }
