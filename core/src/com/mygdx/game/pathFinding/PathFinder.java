@@ -4,6 +4,7 @@ import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.units.Knight;
+import com.mygdx.game.units.Unit;
 
 import java.util.ArrayList;
 
@@ -16,13 +17,23 @@ public class PathFinder {
     ArrayList<GridPoint> gridPoints=new ArrayList<>();
     GridPoint start = null;
     GridPoint end = null;
-
+    String player;
 // Kell méret pályának és https://happycoding.io/tutorials/libgdx/pathfinding
+
+    public GridPoint getStart() {
+        return start;
+    }
+
+    public GridPoint getEnd() {
+        return end;
+    }
+
     /**
      * This is stupid.
      */
 
-    public PathFinder(TiledMap map){
+    public PathFinder(TiledMap map,String player){
+        this.player=player;
         TiledMapTileLayer tileyLayer=(TiledMapTileLayer) map.getLayers().get(0);
         cellList=new ArrayList<>();
         for(int i=0;i<tileyLayer.getWidth();i++){
@@ -71,36 +82,32 @@ public class PathFinder {
             }
         // Good god why did I do this
             // We need to find another way because hard coding is not an option.
-            if((cellList.get(i).cell.getTile().getProperties().get("CellPath")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("Client"))){
-                    start=gridPoints.get(i);
-
-                    System.out.println("Client ok now for real though");
+            if(player.equals("Client")) {
+                if ((cellList.get(i).cell.getTile().getProperties().get("CellPath") != null) && (cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("Client"))) {
+                    start = gridPoints.get(i);
+                }
+                if ((cellList.get(i).cell.getTile().getProperties().get("CellPath") != null) && (cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("RallyPointServer"))) {
+                    end = gridPoints.get(i);
+                }
             }
-            if((cellList.get(i).cell.getTile().getProperties().get("CellPath")!=null)&&(cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("RallyPointServer"))){
-                    end=gridPoints.get(i);
-
-                System.out.println("Server ok now for real though");
+            else{
+                if ((cellList.get(i).cell.getTile().getProperties().get("CellPath") != null) && (cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("Server"))) {
+                    start = gridPoints.get(i);
+                }
+                if ((cellList.get(i).cell.getTile().getProperties().get("CellPath") != null) && (cellList.get(i).cell.getTile().getProperties().get("CellPath").equals("RallyPointClient"))) {
+                    end = gridPoints.get(i);
+                }
             }
         }
 
 
     }
-    public void findWay(Knight knight){
-
-
-
-
+    public void findWay(Unit unit){
         for(GridPoint gridPoint:gridPoints){
-            if( gridPoint.x == knight.getX() && knight.getY() == gridPoint.y){
-
+            if( gridPoint.x == unit.getX() && unit.getY() == gridPoint.y){
                 start = gridPoint;
-
             }
-
         }
-
-
-
-        knight.setPath(gridPointGraph.findPath(start,end),start);
+        unit.setPath(gridPointGraph.findPath(start,end),start);
     }
 }

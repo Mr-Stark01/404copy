@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -75,9 +76,11 @@ public class GameScreen implements Screen {
         scale=(float)tileyLayer.getTileWidth();
         renderer = new OrthogonalTiledMapRenderer(map,1/scale);
         //path
-        pathFinder=new PathFinder(map);
-        castle=new Castle(player);
 
+        castle=new Castle(player);
+        pathFinder=new PathFinder(map,player);
+
+        castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         network.setCastle(castle);
         network.start();
         //Camera viewport settings
@@ -114,22 +117,7 @@ public class GameScreen implements Screen {
                 layer.getCell(x,y);
             }
         }*/
-
-
-        // update castle
-
-
-        if (Gdx.input.isKeyPressed(Input.Keys.G)) {
-
-
-
-        }
-
-
-
         network.setCastle(castle);
-
-
         //Updatign camera position
         camera.update();
 

@@ -8,7 +8,9 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.towers.Tower;
+import com.mygdx.game.units.Archer;
 import com.mygdx.game.units.Knight;
+import com.mygdx.game.units.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,14 +20,18 @@ import java.util.ArrayList;
  */
 public class Castle implements Serializable {
     protected float health=500,gold=5000;
+    protected int archerPrice=50;
 
     protected ArrayList<Tower> towers;
 
-    protected ArrayList<Knight> knights;
+    protected ArrayList<Unit> units;
 
     private String player;
     private float spawnPointX,spawnPointY;
 
+    public int getArcherPrice(){
+        return archerPrice;
+    }
     /**
      * Creates a castle for the player and set's it's coordinates.
      * @param player
@@ -33,15 +39,12 @@ public class Castle implements Serializable {
     public Castle(String player) {
         this.player=player;
         towers = new ArrayList<Tower>();
-        knights = new ArrayList<Knight>();
-        if(player=="Server"){
-            spawnPointX=19;
-            spawnPointY=45;
-        }
-        else{
-            spawnPointX=282;
-            spawnPointY=46;
-        }
+        units = new ArrayList<Unit>();
+    }
+
+    public void setSpawn(float x,float y){
+        spawnPointX=x;
+        spawnPointY=y;
 
     }
 
@@ -49,7 +52,6 @@ public class Castle implements Serializable {
      *
      * @return The ammount of gold.
      */
-
     public float getGold(){
         return gold;
     }
@@ -76,20 +78,19 @@ public class Castle implements Serializable {
      * Buys a knight and gives it the route that it will have to follow.
      * @param pathFinder
      */
-    public void buyKnight(PathFinder pathFinder){
-        if (gold>50){
-            gold-=50;
-            knights.add(new Knight(spawnPointX,spawnPointY));
-            pathFinder.findWay(knights.get(knights.size()-1));
+    public void buyArcher(PathFinder pathFinder){
+        if (gold>=archerPrice){
+            gold-=archerPrice;
+            units.add(new Archer(this));
+            pathFinder.findWay(units.get(units.size()-1));
         }
     }
-
     /**
      * Spawns the units that were bought in the buy phase.
      */
     public void spawnUnits(){
-        for(Knight knight:knights){
-            knight.spawn();
+        for(Unit unit:units){
+            unit.spawn();
         }
     }
 
@@ -99,8 +100,8 @@ public class Castle implements Serializable {
      * @param spriteBatch
      */
     public void draw(SpriteBatch spriteBatch){
-        for(Knight knight:knights){
-            knight.draw(spriteBatch);
+        for(Unit unit:units){
+            unit.draw(spriteBatch);
         }
         for (Tower tower:towers){
             tower.draw(spriteBatch, this); //enemy lesz this helyett
@@ -111,8 +112,8 @@ public class Castle implements Serializable {
         return towers;
     }
 
-    public ArrayList<Knight> getKnights() {
-        return knights;
+    public ArrayList<Unit> getUnits() {
+        return units;
     }
 
 
@@ -123,7 +124,7 @@ public class Castle implements Serializable {
     public void update(Castle castle){
 
 
-        this.knights=castle.getKnights();
+        this.units=castle.getUnits();
         this.towers=castle.getTowers();
         this.gold=castle.getGold();
         if (this.health != castle.health /*&& thisIsServer*/ ){

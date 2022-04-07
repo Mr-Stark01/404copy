@@ -139,7 +139,7 @@ public class InputHandler implements InputProcessor {
 
         if(Input.Keys.B==keycode){
 
-            castle.buyKnight(pathFinder);
+            castle.buyArcher(pathFinder);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.J)) {
             castle.spawnUnits();
