@@ -13,7 +13,7 @@
  </tile>
  <tile id="7">
   <properties>
-   <property name="CellPath" value="Server"/>
+   <property name="CellPath" value="RallyPointClient"/>
   </properties>
  </tile>
  <tile id="34">
@@ -48,7 +48,7 @@
  </tile>
  <tile id="63">
   <properties>
-   <property name="CellPath" value="RallyPointClient"/>
+   <property name="CellPath" value="Server"/>
   </properties>
  </tile>
  <tile id="112">

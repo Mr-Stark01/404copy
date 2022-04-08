@@ -2,59 +2,44 @@ package com.mygdx.game.network;
 
 import com.mygdx.game.Castle;
 
-public class ClientHandler implements NetworkHandler ,Runnable{
-    private Client client;
-    private Castle ownCastle;
-    private Castle enemyCastle;
-    private Thread t;
-    private String threadName="Steve";
-    private String ip;
+public class ClientHandler implements NetworkHandler, Runnable {
+  private final Client client;
+  private Castle ownCastle;
+  private Castle enemyCastle;
+  private Thread t;
+  private final String threadName = "Steve";
+  private final String ip;
 
+  public ClientHandler(Client client, String ip) {
+    this.client = client;
+    this.ip = ip;
+  }
 
-
-    public ClientHandler(Client client,String ip){
-        this.client=client;
-        this.ip=ip;
+  @Override
+  public void run() {
+    System.out.println("Client Started");
+    client.startConnection(ip, 6666);
+    enemyCastle = client.receiveObject();
+    client.sendObject(ownCastle);
+    while (client.isConnected()) {
+      enemyCastle = client.receiveObject();
+      client.sendObject(ownCastle);
     }
+    client.stopConnection();
+  }
 
-    @Override
-    public void run() {
-        System.out.println("Client Started");
-        client.startConnection(ip, 6666);
+  public synchronized void setCastle(Castle ownCastle) {
+    this.ownCastle = ownCastle;
+  }
 
-        enemyCastle=client.receiveObject();
-        client.sendObject(ownCastle);
+  public Castle getEnemyCastle() {
+    return enemyCastle;
+  }
 
-        while (client.isConnected()){
-
-            enemyCastle=client.receiveObject();
-
-            client.sendObject(ownCastle);
-
-
-        }
-
-        client.stopConnection();
-
+  public void start() {
+    if (t == null) {
+      t = new Thread(this, threadName);
+      t.start();
     }
-
-    public synchronized void setCastle(Castle ownCastle){
-        this.ownCastle=ownCastle;
-
-
-    }
-
-
-
-    public Castle getEnemyCastle(){
-        return enemyCastle;
-    }
-
-    public void start () {
-
-        if (t == null) {
-            t = new Thread (this, threadName);
-            t.start ();
-        }
-    }
+  }
 }

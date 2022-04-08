@@ -24,7 +24,7 @@ public class Castletest {
     }
 
     @Test
-    public void enoughMoneyArcher(){
+    public void enoughMoneyKnight(){
         PathFinder pathFinder=mock(PathFinder.class);
         Castle castle= new Castle("P1");
 
