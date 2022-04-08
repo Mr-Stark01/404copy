@@ -54,7 +54,6 @@ public abstract class Tower extends Sprite implements Serializable {
   public void update(Castle enemy) {
     checkTargetPresence();
     if (hasTarget) {
-      System.out.println(target.getX());
       attack();
     } else {
       selectTarget(enemy.getUnits());
@@ -90,12 +89,10 @@ public abstract class Tower extends Sprite implements Serializable {
   public void attack() {
     if (target.getHealth() > 0) {
       target.getDamaged(damage);
-      System.out.println(target.getHealth());
     } else {
       target = null;
       hasTarget = false;
     }
-    System.out.println(hasTarget);
   }
 
   // GETTERS & SETTERS
