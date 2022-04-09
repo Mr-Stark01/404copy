@@ -27,13 +27,12 @@ public class Castletest {
     public void enoughMoneyKnight(){
         PathFinder pathFinder=mock(PathFinder.class);
         Castle castle= new Castle("P1");
-
+        castle.setSpawn(10,10);
         int goldStart=Math.round(castle.getGold());
         for(int i=0;i<goldStart/castle.getArcherPrice();i++){
             castle.buyArcher(pathFinder);
         }
         assertEquals(castle.getGold(),0f,0);
-
         assertEquals(castle.getUnits().size(),goldStart/Math.round(castle.getArcherPrice()));
         castle.buyArcher(pathFinder);
         assertEquals(castle.getGold(),0f,0);

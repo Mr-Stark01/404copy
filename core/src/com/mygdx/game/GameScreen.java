@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -16,6 +15,7 @@ import com.mygdx.game.network.NetworkHandler;
 import com.mygdx.game.pathFinding.PathFinder;
 
 import java.util.ArrayList;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * The main game class. This class handles the base tick of the game and any action have to be
@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
   private final NetworkHandler network;
   InputHandler inputHandler;
   Castle castle;
+  Castle EnemyCastle;
   // Camera
   OrthographicCamera camera;
   SpriteBatch spriteBatch;
@@ -37,6 +38,7 @@ public class GameScreen implements Screen {
   private TiledMap map;
   private OrthogonalTiledMapRenderer renderer;
   private PathFinder pathFinder;
+  private SynchronousQueue<Castle> queue = new SynchronousQueue<>();
 
   /**
    * Everything thats needs to be initiated should be done here or in the show if it's a display
@@ -67,7 +69,7 @@ public class GameScreen implements Screen {
     pathFinder = new PathFinder(map, player);
     castle.setSpawn(pathFinder.getStart().getX(), pathFinder.getStart().getY());
     // Network setup
-    network.setCastle(castle);
+    network.setCastle(castle.clone());
     network.start();
     // Camera viewport settings
     camera = new OrthographicCamera();
@@ -91,13 +93,22 @@ public class GameScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     renderer.setView(camera);
     renderer.render();
-    // To draw anything thats needed
+    // To draw anything that's needed
     spriteBatch.setProjectionMatrix(camera.combined);
     spriteBatch.begin();
     castle.draw(spriteBatch);
     spriteBatch.end();
     inputHandler.update();
-    network.setCastle(castle);
+    network.setCastle(castle.clone());
+    if (network.getEnemyCastle() != null) {
+      EnemyCastle=network.getEnemyCastle().clone();
+      spriteBatch.begin();
+      EnemyCastle.draw(spriteBatch);
+      if (EnemyCastle.getUnits().size() > 0) {
+        System.out.println(EnemyCastle.getUnits().get(0).getX()+"enemy castle");
+      }
+      spriteBatch.end();
+    }
     // Updatign camera position
     camera.update();
     // Exit on escape

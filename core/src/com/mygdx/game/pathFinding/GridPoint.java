@@ -1,7 +1,9 @@
 package com.mygdx.game.pathFinding;
 
+import java.io.Serializable;
+
 /** This is stupid. */
-public class GridPoint {
+public class GridPoint implements Serializable {
   float x;
   float y;
   String name;
@@ -18,6 +20,12 @@ public class GridPoint {
       this.name = "WhoCares";
     }
   }
+  public GridPoint(float x,float y,String name) {
+    this.x = x;
+    this.y = y;
+    this.name=name;
+  }
+
 
   public String getName() {
     return name;

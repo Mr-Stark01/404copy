@@ -23,6 +23,7 @@ public class Server {
       objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
       objectIn = new ObjectInputStream(clientSocket.getInputStream());
     } catch (IOException e) {
+      System.out.println(e+"here7");
     }
   }
 
@@ -30,20 +31,20 @@ public class Server {
     try {
       out.writeUTF(msg);
     } catch (IOException e) {
-      System.out.println(e);
+      System.out.println(e+"here6");
     }
   }
 
-  public void sendObject(Serializable object) {
+  public synchronized void sendObject(Serializable object) {
     try {
       objectOut.writeObject(object);
     } catch (Exception a) {
-      System.out.println(a);
+      System.out.println(a.getLocalizedMessage()+"here5");
     }
     try {
       objectOut.reset();
     } catch (IOException e) {
-      System.out.println(e);
+      System.out.println(e+"here4");
     }
   }
 
@@ -52,7 +53,7 @@ public class Server {
     try {
       receive = in.readUTF();
     } catch (IOException e) {
-      System.out.println(e);
+      System.out.println(e+"here3");
     }
     return receive;
   }
@@ -62,7 +63,7 @@ public class Server {
     try {
       receive = (Castle) objectIn.readObject();
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println(e+"here1");
     }
     return receive;
   }
@@ -78,7 +79,7 @@ public class Server {
       clientSocket.close();
       serverSocket.close();
     } catch (IOException e) {
-      System.out.println(e);
+      System.out.println(e+"here2");
     }
   }
 }

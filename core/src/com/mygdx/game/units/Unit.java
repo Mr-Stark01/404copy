@@ -11,8 +11,10 @@ import com.mygdx.game.Castle;
 import com.mygdx.game.pathFinding.GridPoint;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-public abstract class Unit extends Sprite implements Serializable {
+public abstract class Unit extends Sprite implements Serializable,Cloneable {
   protected int damage;
   protected int price;
   protected int health;
@@ -21,12 +23,12 @@ public abstract class Unit extends Sprite implements Serializable {
   protected boolean spawned = false;
   float speed = 0.1f; // increase this to make it faster decrease it to make it slower
   GridPoint previousPoint;
-  GraphPath<GridPoint> path;
-  Queue<GridPoint> pathQueue = new Queue<>();
+  ArrayList<GridPoint> pathQ = new ArrayList<>();
   private float deltaX = 0;
   private float deltaY = 0;
   private final float spawnPointX;
-    private final float spawnPointY;
+  private final float spawnPointY;
+  private float x,y;
 
   public Unit(
       int damage,
@@ -58,14 +60,13 @@ public abstract class Unit extends Sprite implements Serializable {
     previousPoint = start;
     setX(start.getX());
     setY(start.getY());
-    this.path = path;
     for (int i = 1; i < path.getCount(); i++) {
-      pathQueue.addLast(path.get(i));
+      pathQ.add(path.get(i));
     }
   }
 
   private void setSpeedToNextPoint() {
-    GridPoint nextPoint = pathQueue.first();
+    GridPoint nextPoint = pathQ.get(0);
     float angle =
         MathUtils.atan2(
             nextPoint.getY() - previousPoint.getY(), nextPoint.getX() - previousPoint.getX());
@@ -74,8 +75,8 @@ public abstract class Unit extends Sprite implements Serializable {
   }
 
   private void checkCollision() {
-    if (pathQueue.size > 0) {
-      GridPoint targetCity = pathQueue.first();
+    if (pathQ.size() > 0) {
+      GridPoint targetCity = pathQ.get(0);
       if (Vector2.dst(getX(), getY(), targetCity.getX(), targetCity.getY()) < 0.1) {
         reachNextPoint();
       }
@@ -85,16 +86,18 @@ public abstract class Unit extends Sprite implements Serializable {
   public void step() {
     setX(getX() + deltaX);
     setY(getY() + deltaY);
+    x=getX();
+    y=getY();
     checkCollision();
   }
 
   private void reachNextPoint() {
-    GridPoint nextPoint = pathQueue.first();
+    GridPoint nextPoint = pathQ.get(0);
     setX(nextPoint.getX());
     setY(nextPoint.getY());
     this.previousPoint = nextPoint;
-    pathQueue.removeFirst();
-    if (pathQueue.size == 0) {
+    pathQ.remove(0);
+    if (pathQ.size() == 0) {
       reachDestination();
     } else {
       setSpeedToNextPoint();
@@ -109,8 +112,9 @@ public abstract class Unit extends Sprite implements Serializable {
   public void draw(SpriteBatch spriteBatch) {
     if (spawned) {
       step();
-      super.draw(spriteBatch);
+
     }
+    super.draw(spriteBatch);
   }
 
   // Get Set
@@ -132,4 +136,39 @@ public abstract class Unit extends Sprite implements Serializable {
   public void getDamaged(int damage) {
     health -= damage;
   }
+  public boolean getSpawned(){
+    return spawned;
+  }
+
+  @Override
+  public synchronized Unit clone() {
+    try {
+      Unit clone = (Unit) super.clone();
+      clone.pathQ=new ArrayList<GridPoint>();
+      clone.spawned=spawned;
+      Iterator<GridPoint> it = pathQ.iterator();
+      while (it.hasNext()) {
+        GridPoint s = it.next();
+        GridPoint newS = new GridPoint(s.getX(),s.getY() ,s.getName());
+        clone.pathQ.add(newS);
+      }
+      clone.reinitialize();
+      clone.setX(x);
+      clone.setY(y);
+      // TODO: copy mutable state here, so the clone can't change the internals of the original
+      return clone;
+    } catch (CloneNotSupportedException e) {
+      throw new AssertionError();
+    }
+  }
+
+  public void reinitialize(){
+    set(new Sprite(new Texture("textures/placeholder.png")));
+    setSize(1, 1);
+  }
+
+  public String getClassName(){
+    return "nope";
+  }
 }
+
