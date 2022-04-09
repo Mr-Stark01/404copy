@@ -102,4 +102,7 @@ public abstract class Tower extends Sprite implements Serializable {
   public void setOwner(Castle owner) {
     this.owner = owner;
   }
+  public void reinitialize(){
+    set(new Sprite(new Texture("textures/tower-ph.png")));
+  }
 }

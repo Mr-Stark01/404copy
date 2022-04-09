@@ -1,7 +1,9 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.pathFinding.GridPoint;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.towers.FireTower;
 import com.mygdx.game.towers.Tower;
 import com.mygdx.game.units.Archer;
 import com.mygdx.game.units.Mage;
@@ -10,15 +12,16 @@ import com.mygdx.game.units.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /** Represent the player and the castle both. */
-public class Castle implements Serializable {
-  protected float health = 500, gold = 5000;
-  protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
+public class Castle implements Serializable,Cloneable {
+  protected Float health = 500f, gold = 5000f;
+  protected Integer archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
   private final String player;
-  private float spawnPointX, spawnPointY;
+  private Float spawnPointX, spawnPointY;
   /**
    * Creates a castle for the player and set's it's coordinates.
    *
@@ -139,5 +142,41 @@ public class Castle implements Serializable {
 
   public ArrayList<Unit> getUnits() {
     return units;
+  }
+
+  public void reinitialize(){
+    for (Unit unit : units) {
+      unit.reinitialize();
+    }
+    for (Tower tower : towers) {
+      tower.reinitialize();
+    }
+  }
+
+  @Override
+  public Castle clone() {
+    try {
+      Castle clone = (Castle) super.clone();
+      clone.towers=new ArrayList<>();
+      clone.units=new ArrayList<>();
+
+      for (Unit s : units) {
+        if (s.getClassName().equals("Archer")) {
+          Unit newS = s.clone();
+          clone.units.add(newS);
+        }
+      }
+      for (Tower s : towers) {
+        Tower newS = new FireTower(this, s.getX(), s.getY());
+        clone.towers.add(newS);
+      }
+      return clone;
+    } catch (CloneNotSupportedException e) {
+      throw new AssertionError();
+    }
+  }
+
+  public boolean check(ArrayList<Unit> units,ArrayList<Tower> towers){
+    return units==this.units && towers==this.towers;
   }
 }

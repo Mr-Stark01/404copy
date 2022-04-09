@@ -1,5 +1,6 @@
 package com.mygdx.game.network;
 
+import com.badlogic.gdx.utils.Null;
 import com.mygdx.game.Castle;
 
 public class ClientHandler implements NetworkHandler, Runnable {
@@ -22,8 +23,8 @@ public class ClientHandler implements NetworkHandler, Runnable {
     enemyCastle = client.receiveObject();
     client.sendObject(ownCastle);
     while (client.isConnected()) {
-      enemyCastle = client.receiveObject();
-      client.sendObject(ownCastle);
+        enemyCastle = client.receiveObject();
+        client.sendObject(ownCastle);
     }
     client.stopConnection();
   }
