@@ -19,7 +19,6 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   protected int price;
   protected int health;
   protected int range;
-  protected Castle owner; // Why are we storing this here ?
   protected boolean spawned = false;
   float speed = 0.1f; // increase this to make it faster decrease it to make it slower
   GridPoint previousPoint;
@@ -35,7 +34,6 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
       int price,
       int health,
       int range,
-      Castle owner,
       float spawnPointX,
       float spawnPointY) {
     super(new Sprite(new Texture("textures/placeholder.png")));
@@ -48,7 +46,6 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     this.price = price;
     this.health = health;
     this.range = range;
-    this.owner = owner;
   }
 
   public void spawn() {
@@ -121,9 +118,6 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   public int getPrice() {
     return price;
   }
-  public Castle getOwner() {
-    return owner;
-  }
   public int getHealth() {
     return health;
   }
@@ -146,6 +140,7 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
       Unit clone = (Unit) super.clone();
       clone.pathQ=new ArrayList<GridPoint>();
       clone.spawned=spawned;
+      clone.previousPoint = new GridPoint(previousPoint.getX(), previousPoint.getY(), previousPoint.getName());
       Iterator<GridPoint> it = pathQ.iterator();
       while (it.hasNext()) {
         GridPoint s = it.next();

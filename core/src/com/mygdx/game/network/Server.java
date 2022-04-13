@@ -3,6 +3,7 @@ package com.mygdx.game.network;
 import com.mygdx.game.Castle;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,19 +14,20 @@ public class Server {
   private DataInputStream in;
   private ObjectOutputStream objectOut;
   private ObjectInputStream objectIn;
+  private int backlog;
 
   public void start(int port) {
     try {
-      serverSocket = new ServerSocket(port);
+      serverSocket = new ServerSocket(port);//, backlog,InetAddress.getByName("localhost"));
       clientSocket = serverSocket.accept();
       out = new DataOutputStream(clientSocket.getOutputStream());
       in = new DataInputStream(clientSocket.getInputStream());
       objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
       objectIn = new ObjectInputStream(clientSocket.getInputStream());
     } catch (IOException e) {
-      System.out.println(e+"here7");
+      System.out.println(e + "here7");
     }
-  }
+    }
 
   public void sendMessage(String msg) {
     try {
@@ -39,6 +41,7 @@ public class Server {
     try {
       objectOut.writeObject(object);
     } catch (Exception a) {
+      a.printStackTrace();
       System.out.println(a.getLocalizedMessage()+"here5");
     }
     try {

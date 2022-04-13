@@ -10,6 +10,7 @@ public class ServerHandler implements NetworkHandler, Runnable {
   private Castle enemyCastle;
   private Thread t;
   private final String threadName = "John";
+  private boolean newCastle=true;
 
   public ServerHandler(Server server) {
     this.server = server;
@@ -22,13 +23,16 @@ public class ServerHandler implements NetworkHandler, Runnable {
     server.sendObject(ownCastle);
     enemyCastle = server.receiveObject();
     while (server.isConnected()) {
-      if (ownCastle.getUnits().size() > 0) {
-        System.out.println(ownCastle.getUnits().get(0).getX()+"inside the method");
-        }
+      synchronized (ownCastle) {
         server.sendObject(ownCastle);
+      }
         enemyCastle = server.receiveObject();
-      if (enemyCastle.getUnits().size() > 0) {
-        System.out.println(enemyCastle.getUnits().get(0).getX()+"enemy server hacastle");
+        newCastle=true;
+      try{
+        t.sleep(500);
+      }
+      catch(Exception e){
+
       }
     }
   }
@@ -37,7 +41,15 @@ public class ServerHandler implements NetworkHandler, Runnable {
           this.ownCastle = ownCastle;
   }
 
+  public boolean isNew(){
+    return newCastle;
+  }
+  public boolean castleArrived(){
+    return enemyCastle!=null;
+  }
+
   public synchronized Castle getEnemyCastle() {
+    newCastle=false;
     return enemyCastle;
   }
 

@@ -16,12 +16,12 @@ import java.util.Iterator;
 
 /** Represent the player and the castle both. */
 public class Castle implements Serializable,Cloneable {
-  protected Float health = 500f, gold = 5000f;
-  protected Integer archerPrice = 50, magePrice = 20, tankPrice = 30;
+  protected float health = 500f, gold = 5000f;
+  protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
   private final String player;
-  private Float spawnPointX, spawnPointY;
+  private float spawnPointX, spawnPointY;
   /**
    * Creates a castle for the player and set's it's coordinates.
    *
@@ -87,6 +87,7 @@ public class Castle implements Serializable,Cloneable {
    * @param spriteBatch
    */
   public void draw(SpriteBatch spriteBatch) {
+
     for (Unit unit : units) {
       unit.draw(spriteBatch);
     }
