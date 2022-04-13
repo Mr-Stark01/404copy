@@ -9,5 +9,8 @@ public interface NetworkHandler {
 
   void setCastle(Castle ownCastle);
 
+  boolean isNew();
+  boolean castleArrived();
+
   Castle getEnemyCastle();
 }

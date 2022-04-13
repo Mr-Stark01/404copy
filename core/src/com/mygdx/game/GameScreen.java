@@ -100,13 +100,13 @@ public class GameScreen implements Screen {
     spriteBatch.end();
     inputHandler.update();
     network.setCastle(castle.clone());
-    if (network.getEnemyCastle() != null) {
-      EnemyCastle=network.getEnemyCastle().clone();
+
+    if (network.castleArrived()) {
+      if(network.isNew()){
+        EnemyCastle=network.getEnemyCastle().clone();
+      }
       spriteBatch.begin();
       EnemyCastle.draw(spriteBatch);
-      if (EnemyCastle.getUnits().size() > 0) {
-        System.out.println(EnemyCastle.getUnits().get(0).getX()+"enemy castle");
-      }
       spriteBatch.end();
     }
     // Updatign camera position

@@ -10,6 +10,7 @@ public class ClientHandler implements NetworkHandler, Runnable {
   private Thread t;
   private final String threadName = "Steve";
   private final String ip;
+  private boolean newCastle=true;
 
   public ClientHandler(Client client, String ip) {
     this.client = client;
@@ -24,7 +25,14 @@ public class ClientHandler implements NetworkHandler, Runnable {
     client.sendObject(ownCastle);
     while (client.isConnected()) {
         enemyCastle = client.receiveObject();
+        newCastle=true;
         client.sendObject(ownCastle);
+        try{
+          t.sleep(500);
+        }
+        catch(Exception e){
+
+       }
     }
     client.stopConnection();
   }
@@ -34,7 +42,16 @@ public class ClientHandler implements NetworkHandler, Runnable {
   }
 
   public Castle getEnemyCastle() {
+    newCastle=false;
     return enemyCastle;
+  }
+
+  public boolean isNew(){
+    return newCastle;
+  }
+
+  public boolean castleArrived(){
+    return enemyCastle!=null;
   }
 
   public void start() {
