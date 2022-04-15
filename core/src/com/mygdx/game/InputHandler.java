@@ -77,19 +77,19 @@ public class InputHandler implements InputProcessor {
   public boolean keyDown(int keycode) {
     if (Input.Keys.A == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new ArcherTower(castle, T1.x, T1.y); // mouse koordináták kellenek
+      Tower tower = new ArcherTower(T1.x, T1.y); // mouse koordináták kellenek
       castle.buyTower(tower);
       castle.spawnTowers();
     }
     if (Input.Keys.C == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new CannonTower(castle, T1.x, T1.y); // mouse koordináták kellenek
+      Tower tower = new CannonTower(T1.x, T1.y); // mouse koordináták kellenek
       castle.buyTower(tower);
       castle.spawnTowers();
     }
     if (Input.Keys.F == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new FireTower(castle, T1.x, T1.y); // mouse koordináták kellenek
+      Tower tower = new FireTower(T1.x, T1.y); // mouse koordináták kellenek
       castle.buyTower(tower);
       castle.spawnTowers();
     }

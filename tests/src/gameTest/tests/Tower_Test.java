@@ -37,28 +37,28 @@ public class Tower_Test {
     }
     @Test
     public void ArcherTowerTest(){
-        Tower tower = new ArcherTower(castle, 10, 10);
+        Tower tower = new ArcherTower(10, 10);
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),10);
     }
     @Test
     public void CannonTowerTest(){
-        Tower tower = new CannonTower(castle, 10, 10);
+        Tower tower = new CannonTower(10, 10);
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),30);
     }
     @Test
     public void FireTowerTest(){
-        Tower tower = new FireTower(castle, 10, 10);
+        Tower tower = new FireTower(10, 10);
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),20);
     }
     @Test
     public void FireTowerTestAttack() {
-        Tower tower = new FireTower(castle, 10, 10);
+        Tower tower = new FireTower(10, 10);
         Castle ecastle = new Castle("p2");
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);
@@ -81,7 +81,7 @@ public class Tower_Test {
     }
     @Test
     public void ArcherTowerTestAttack() {
-        Tower tower = new ArcherTower(castle, 10, 10);
+        Tower tower = new ArcherTower(10, 10);
         Castle ecastle = new Castle("p2");
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);
@@ -101,7 +101,7 @@ public class Tower_Test {
     }
     @Test
     public void TowerAttackTest() {
-        Tower tower = new CannonTower(castle, 10, 10);
+        Tower tower = new CannonTower(10, 10);
         Castle ecastle = new Castle("p2");
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);

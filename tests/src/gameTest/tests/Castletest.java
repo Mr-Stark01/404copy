@@ -41,7 +41,7 @@ public class Castletest {
     @Test
     public void enoughMoneyTower(){
         Castle castle= new Castle("P1");
-        FireTower tower=new FireTower(castle,0,0);
+        FireTower tower=new FireTower(0,0);
 
         int goldStart=Math.round(castle.getGold());
         for(int i=0;i<goldStart/tower.getPrice();i++){

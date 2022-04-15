@@ -4,38 +4,38 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Castle;
+import com.mygdx.game.pathFinding.GridPoint;
 import com.mygdx.game.units.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public abstract class Tower extends Sprite implements Serializable {
+public abstract class Tower extends Sprite implements Serializable,Cloneable {
   protected int damage;
   protected int price;
   protected int health;
-
+  protected float x,y;
   protected int range;
   protected Unit target;
   protected boolean spawned;
   protected float spawnX;
   protected float spawnY;
-  protected Castle owner;
   boolean hasTarget;
 
   // CONSTRUCTORS
   public Tower(
-      int damage, int price, int health, int range, Castle owner, float spawnX, float spawnY) {
+      int damage, int price, int health, int range, float spawnX, float spawnY) {
     super(new Sprite(new Texture("textures/tower-ph.png")));
     this.damage = damage;
     this.price = price;
     this.health = health;
     this.range = range;
-    this.owner = owner;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
     setX(spawnX);
     setY(spawnY);
-    setSize(1, 1);
+    setSize(2, 2);
   }
 
   // FUNCTIONS
@@ -94,15 +94,31 @@ public abstract class Tower extends Sprite implements Serializable {
     }
   }
 
+  @Override
+  public synchronized Tower clone() {
+    try {
+      Tower clone = (Tower) super.clone();
+      if (target != null) {
+        clone.target = target.clone();
+      }
+      //clone.reinitialize();
+      clone.setX(getX());
+      clone.setY(getY());
+      // TODO: copy mutable state here, so the clone can't change the internals of the original
+      return clone;
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e.getStackTrace());
+      throw new AssertionError();
+    }
+  }
+
   // GETTERS & SETTERS
   public int getPrice() {
     return price;
   }
 
-  public void setOwner(Castle owner) {
-    this.owner = owner;
-  }
   public void reinitialize(){
     set(new Sprite(new Texture("textures/tower-ph.png")));
+    setSize(2, 2);
   }
 }

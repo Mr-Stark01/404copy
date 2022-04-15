@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public abstract class Unit extends Sprite implements Serializable,Cloneable {
+  public boolean reachedDestinition=false;
   protected int damage;
   protected int price;
   protected int health;
@@ -104,12 +105,12 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   private void reachDestination() {
     deltaX = 0;
     deltaY = 0;
+    reachedDestinition=true;
   }
 
   public void draw(SpriteBatch spriteBatch) {
     if (spawned) {
       step();
-
     }
     super.draw(spriteBatch);
   }
