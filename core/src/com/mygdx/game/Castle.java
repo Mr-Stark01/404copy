@@ -90,22 +90,13 @@ public class Castle implements Serializable,Cloneable {
 
     for (Unit unit : units) {
       unit.draw(spriteBatch);
+      if(unit.reachedDestinition){
+        this.health=this.health-unit.getDamage();
+      }
     }
     for (Tower tower : towers) {
       tower.draw(spriteBatch, this); // enemy lesz this helyett
     }
-  }
-  /**
-   * For updating the specific instance of the castle with the castle give to it by the networkd
-   * handler.
-   *
-   * @param castle The castle given to it by the Network.
-   */
-  public void update(Castle castle) {
-    this.units = castle.getUnits();
-    this.towers = castle.getTowers();
-    this.gold = castle.getGold();
-    if (this.health != castle.health /*&& thisIsServer*/) {}
   }
   // Getter and Setters
   public void setSpawn(float x, float y) {
@@ -161,15 +152,13 @@ public class Castle implements Serializable,Cloneable {
       clone.towers=new ArrayList<>();
       clone.units=new ArrayList<>();
 
-      for (Unit s : units) {
-        if (s.getClassName().equals("Archer")) {
-          Unit newS = s.clone();
-          clone.units.add(newS);
-        }
+      for (Unit unit : units) {
+          Unit newUnit = unit.clone();
+          clone.units.add(newUnit);
       }
-      for (Tower s : towers) {
-        Tower newS = new FireTower(this, s.getX(), s.getY());
-        clone.towers.add(newS);
+      for (Tower tower : towers) {
+        Tower newTower = tower.clone();
+        clone.towers.add(newTower);
       }
       return clone;
     } catch (CloneNotSupportedException e) {
