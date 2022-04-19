@@ -20,6 +20,7 @@ public class Castle implements Serializable,Cloneable {
   protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
+  protected ArrayList<Pair> blocked;
   private final String player;
   private float spawnPointX, spawnPointY;
   /**
@@ -31,6 +32,7 @@ public class Castle implements Serializable,Cloneable {
     this.player = player;
     towers = new ArrayList<>();
     units = new ArrayList<>();
+    blocked = new ArrayList<>();
   }
 
   /**
@@ -73,7 +75,12 @@ public class Castle implements Serializable,Cloneable {
     if (tower.getPrice() <= gold) {
       gold -= tower.getPrice();
       towers.add(tower);
+      blocked.add(new Pair(tower.getX(), tower.getY()));
     }
+  }
+
+  public ArrayList<Pair> getBlocked(){
+    return blocked;
   }
 
   public void spawnTowers() {
@@ -86,16 +93,21 @@ public class Castle implements Serializable,Cloneable {
    *
    * @param spriteBatch
    */
-  public void draw(SpriteBatch spriteBatch) {
-
-    for (Unit unit : units) {
+  public void draw(SpriteBatch spriteBatch,Castle castle) {
+    System.out.println(health);
+    Iterator<Unit> itr = units.iterator();
+    while (itr.hasNext()) {
+      Unit unit = itr.next();
+      if(unit.getHealth()<=0){
+        itr.remove();
+      }
       unit.draw(spriteBatch);
       if(unit.reachedDestinition){
         this.health=this.health-unit.getDamage();
       }
     }
     for (Tower tower : towers) {
-      tower.draw(spriteBatch, this); // enemy lesz this helyett
+      tower.draw(spriteBatch, castle); // enemy lesz this helyett
     }
   }
   // Getter and Setters
@@ -151,6 +163,7 @@ public class Castle implements Serializable,Cloneable {
       Castle clone = (Castle) super.clone();
       clone.towers=new ArrayList<>();
       clone.units=new ArrayList<>();
+      clone.blocked=new ArrayList<>();
 
       for (Unit unit : units) {
           Unit newUnit = unit.clone();
@@ -159,6 +172,11 @@ public class Castle implements Serializable,Cloneable {
       for (Tower tower : towers) {
         Tower newTower = tower.clone();
         clone.towers.add(newTower);
+      }
+      for (Pair blocked1 : blocked) {
+        float asd=blocked1.getX();
+        float basd=blocked1.getY();
+        clone.blocked.add(new Pair(asd,basd));
       }
       return clone;
     } catch (CloneNotSupportedException e) {

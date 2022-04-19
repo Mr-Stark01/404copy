@@ -14,6 +14,7 @@ import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.NetworkHandler;
 import com.mygdx.game.pathFinding.PathFinder;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.SynchronousQueue;
 
@@ -39,6 +40,7 @@ public class GameScreen implements Screen {
   private OrthogonalTiledMapRenderer renderer;
   private PathFinder pathFinder;
   private SynchronousQueue<Castle> queue = new SynchronousQueue<>();
+  protected ArrayList<Pair> blocked ;
 
   /**
    * Everything thats needs to be initiated should be done here or in the show if it's a display
@@ -52,6 +54,7 @@ public class GameScreen implements Screen {
     player = (network.getClass() == ClientHandler.class ? "Client" : "Server");
     this.game = game;
     spriteBatch = new SpriteBatch();
+    blocked = new ArrayList<>();
   }
 
   /** Anything that will be shown to the player Will be initiated here. */
@@ -95,9 +98,7 @@ public class GameScreen implements Screen {
     renderer.render();
     // To draw anything that's needed
     spriteBatch.setProjectionMatrix(camera.combined);
-    spriteBatch.begin();
-    castle.draw(spriteBatch);
-    spriteBatch.end();
+
     inputHandler.update();
     network.setCastle(castle.clone());
 
@@ -106,7 +107,10 @@ public class GameScreen implements Screen {
         EnemyCastle=network.getEnemyCastle().clone();
       }
       spriteBatch.begin();
-      EnemyCastle.draw(spriteBatch);
+      castle.draw(spriteBatch,EnemyCastle);
+      spriteBatch.end();
+      spriteBatch.begin();
+      EnemyCastle.draw(spriteBatch,castle);
       spriteBatch.end();
     }
     // Updatign camera position
