@@ -129,7 +129,6 @@ public class OptionScreen implements Screen {
                     if (vec.x < fButtonX + fButtonWid && vec.x > fButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
                         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                         fsIsOn = true;
-
                     }
                 }
             }
@@ -143,7 +142,6 @@ public class OptionScreen implements Screen {
                     if (vec.x < wButtonX + wButtonWid && vec.x > wButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
                         Gdx.graphics.setWindowedMode(1920,1080);
                         fsIsOn = false;
-
                     }
                 }
             }
