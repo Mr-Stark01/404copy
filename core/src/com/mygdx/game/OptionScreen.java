@@ -120,6 +120,8 @@ public class OptionScreen implements Screen {
             }
         }
 
+        // fasz git
+
         if(!fsIsOn){
             game.batch.draw(fButton, fButtonX , wfButtonY, fButtonWid, wfButtonHei);
             if(Gdx.input.justTouched()) {
