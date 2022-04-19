@@ -168,10 +168,7 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < archerTowerImgX + picHeightWidth && vec.x  > archerTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 10){
-          inputHandler.keyDown(Input.Keys.A);
-          castle.setGold(castle.getGold()-10);
-        }
+
       }
     }
 
@@ -181,10 +178,7 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < fireTowerImgX + picHeightWidth && vec.x  > fireTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 20){
-          inputHandler.keyDown(Input.Keys.F);
-          castle.setGold(castle.getGold()-20);
-        }
+
       }
     }
 
@@ -194,10 +188,7 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < cannonTowerImgX + picHeightWidth && vec.x  > cannonTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 30){
-          inputHandler.keyDown(Input.Keys.C);
-          castle.setGold(castle.getGold()-30);
-        }
+
       }
     }
 
@@ -207,10 +198,7 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < archerUnitImgX + picHeightWidth && vec.x  > archerUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 10){
-          inputHandler.keyDown(Input.Keys.B);
-          castle.setGold(castle.getGold()-10);
-        }
+
       }
     }
 
@@ -220,10 +208,7 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < mageUnitImgX + picHeightWidth && vec.x  > mageUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 20){
-          inputHandler.keyDown(Input.Keys.M);
-          castle.setGold(castle.getGold()-20);
-        }
+
       }
     }
 
@@ -233,13 +218,10 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < tankUnitImgX + picHeightWidth && vec.x  > tankUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-        if(castle.getGold() >= 15){
-          inputHandler.keyDown(Input.Keys.T);
-          castle.setGold(castle.getGold()-15);
-        }
+
       }
     }
-
+    hud.setGold(castle.getGold());
   }
 
   /**
