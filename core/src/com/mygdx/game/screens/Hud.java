@@ -32,7 +32,10 @@ public class Hud implements Disposable {
 
     //Scene2D Widgets
     private Label goldLabel, gold1Label, scoreLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,mageUnitLabel,tankUnitLabel;
+
     private Image archerTowerImg,fireTowerImg,cannonTowerImg,archerUnitImg,mageUnitImg,tankUnitImg;
+
+    private Label aLabel,fLabel,cLabel,bLabel,mLabel,tLabel;
 
     public Hud(SpriteBatch sb) {
 
@@ -61,6 +64,14 @@ public class Hud implements Disposable {
         mageUnitLabel = new Label("Mage", new Label.LabelStyle(font1, Color.WHITE));
         tankUnitLabel = new Label("Tank", new Label.LabelStyle(font1, Color.WHITE));
 
+        aLabel = new Label("A", new Label.LabelStyle(font1, Color.WHITE));
+        fLabel = new Label("F", new Label.LabelStyle(font1, Color.WHITE));
+        cLabel = new Label("C", new Label.LabelStyle(font1, Color.WHITE));
+
+        bLabel = new Label("B", new Label.LabelStyle(font1, Color.WHITE));
+        mLabel = new Label("M", new Label.LabelStyle(font1, Color.WHITE));
+        tLabel = new Label("T", new Label.LabelStyle(font1, Color.WHITE));
+
         archerTowerImg = new Image(new Texture("textures/archer-tower.png"));
         fireTowerImg = new Image(new Texture("textures/mage-tower.png"));
         cannonTowerImg = new Image(new Texture("textures/canon-tower.png"));
@@ -80,6 +91,13 @@ public class Hud implements Disposable {
         archerUnitLabel.setFontScale(2);
         mageUnitLabel.setFontScale(2);
         tankUnitLabel.setFontScale(2);
+
+        aLabel.setFontScale(2);
+        fLabel.setFontScale(2);
+        cLabel.setFontScale(2);
+        bLabel.setFontScale(2);
+        mLabel.setFontScale(2);
+        tLabel.setFontScale(2);
 
 
         //define a table used to organize hud's labels
@@ -132,13 +150,23 @@ public class Hud implements Disposable {
         tableBot.row();
         //pics
             //tower
-        tableBot.add(archerTowerImg).width(80).height(80).expandX().padBottom(10);
-        tableBot.add(fireTowerImg).width(80).height(80).expandX().padBottom(10);
-        tableBot.add(cannonTowerImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(archerTowerImg).width(80).height(80).expandX();
+        tableBot.add(fireTowerImg).width(80).height(80).expandX();
+        tableBot.add(cannonTowerImg).width(80).height(80).expandX();
             //unit
-        tableBot.add(archerUnitImg).width(80).height(80).expandX().padBottom(10);
-        tableBot.add(mageUnitImg).width(80).height(80).expandX().padBottom(10);
-        tableBot.add(tankUnitImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(archerUnitImg).width(80).height(80).expandX();
+        tableBot.add(mageUnitImg).width(80).height(80).expandX();
+        tableBot.add(tankUnitImg).width(80).height(80).expandX();
+        //row
+        tableBot.row();
+        //pics
+        tableBot.add(aLabel).expandX();
+        tableBot.add(fLabel).expandX();
+        tableBot.add(cLabel).expandX();
+        //unit
+        tableBot.add(bLabel).expandX();
+        tableBot.add(mLabel).expandX();
+        tableBot.add(tLabel).expandX();
 
 
         //add table to the stage
