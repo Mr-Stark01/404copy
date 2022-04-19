@@ -16,6 +16,9 @@ public class OptionScreen implements Screen {
     Texture onButton;
     Texture offButton;
 
+    Texture wButton;
+    Texture fButton;
+
     Texture backButton;
 
     int buttonWid;
@@ -28,7 +31,15 @@ public class OptionScreen implements Screen {
     int onoffButtonX;
     int onoffButtonY;
 
+    int wButtonWid;
+    int wfButtonHei;
+    int wButtonX;
+    int wfButtonY;
+    int fButtonWid;
+    int fButtonX;
+
     boolean musicIsOn;
+    boolean fsIsOn;
 
     public OptionScreen(final MyGdxGame game){
         this.game = game;
@@ -44,6 +55,8 @@ public class OptionScreen implements Screen {
         bg = new Texture("menu/background_options.jpg");
         onButton = new Texture("menu/musicOnButton.png");
         offButton = new Texture("menu/musicOffButton.png");
+        wButton = new Texture("menu/windowedbutton.png");
+        fButton = new Texture("menu/fullscreenbutton.png");
         backButton = new Texture("menu/back_button.png");
 
         buttonWid = 250;
@@ -52,11 +65,21 @@ public class OptionScreen implements Screen {
         backbuttonY = 50;
 
         musicIsOn = true;
+        fsIsOn = false;
 
         onoffButtonWid = 600;
         onoffButtonHei = 100;
         onoffButtonX = 1920/2-onoffButtonWid/2;
         onoffButtonY = 500;
+
+        wfButtonY = 350;
+        wfButtonHei = 150;
+
+        wButtonWid = 700;
+        wButtonX = 1920/2-wButtonWid/2;
+
+        fButtonWid = 700;
+        fButtonX = 1920/2-fButtonWid/2;
     }
 
     @Override
@@ -92,6 +115,33 @@ public class OptionScreen implements Screen {
                     if (vec.x < onoffButtonX + onoffButtonWid && vec.x > onoffButtonX && vec.y > onoffButtonY && vec.y < onoffButtonY + onoffButtonHei) {
                         musicIsOn = true;
                         MyGdxGame.startMusic();
+                    }
+                }
+            }
+        }
+
+        if(!fsIsOn){
+            game.batch.draw(fButton, fButtonX , wfButtonY, fButtonWid, wfButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < fButtonX + fButtonWid && vec.x > fButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
+                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                        fsIsOn = true;
+                    }
+                }
+            }
+        }
+        else{
+            game.batch.draw(wButton, wButtonX , wfButtonY, wButtonWid, wfButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < wButtonX + wButtonWid && vec.x > wButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
+                        Gdx.graphics.setWindowedMode(1920,1080);
+                        fsIsOn = false;
                     }
                 }
             }
