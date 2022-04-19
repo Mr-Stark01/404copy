@@ -5,14 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.NetworkHandler;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.screens.Hud;
 
 import java.util.ArrayList;
 import java.util.concurrent.SynchronousQueue;
@@ -39,6 +42,16 @@ public class GameScreen implements Screen {
   private OrthogonalTiledMapRenderer renderer;
   private PathFinder pathFinder;
   private SynchronousQueue<Castle> queue = new SynchronousQueue<>();
+  private Hud hud;
+
+  int picHeightWidth;
+  int picY;
+  int archerTowerImgX;
+  int fireTowerImgX;
+  int cannonTowerImgX;
+  int archerUnitImgX;
+  int mageUnitImgX;
+  int tankUnitImgX;
 
   /**
    * Everything thats needs to be initiated should be done here or in the show if it's a display
@@ -52,6 +65,8 @@ public class GameScreen implements Screen {
     player = (network.getClass() == ClientHandler.class ? "Client" : "Server");
     this.game = game;
     spriteBatch = new SpriteBatch();
+
+    hud = new Hud(spriteBatch);
   }
 
   /** Anything that will be shown to the player Will be initiated here. */
@@ -63,22 +78,41 @@ public class GameScreen implements Screen {
     tileyLayer = (TiledMapTileLayer) map.getLayers().get(0);
     scale = (float) tileyLayer.getTileWidth();
     renderer = new OrthogonalTiledMapRenderer(map, 1 / scale);
+
     // Creaating Castle
     castle = new Castle(player);
+
     // Creating a pathfinder
     pathFinder = new PathFinder(map, player);
     castle.setSpawn(pathFinder.getStart().getX(), pathFinder.getStart().getY());
+
     // Network setup
     network.setCastle(castle.clone());
     network.start();
+
     // Camera viewport settings
     camera = new OrthographicCamera();
     camera.viewportHeight = 1080 / scale;
     camera.viewportWidth = 1920 / scale;
     camera.update();
+
     // For handling game inputs
     inputHandler = new InputHandler(camera, scale, castle, pathFinder);
     Gdx.input.setInputProcessor(inputHandler);
+
+    // Hud
+    hud.setHealth(castle.getHealth());
+    hud.setGold(castle.getGold());
+
+    picHeightWidth = 80;
+    picY = 10;
+
+    archerTowerImgX = 130;
+    fireTowerImgX = 460;
+    cannonTowerImgX = 795;
+    archerUnitImgX = 1122;
+    mageUnitImgX = 1425;
+    tankUnitImgX = 1730;
   }
 
   /**
@@ -93,6 +127,7 @@ public class GameScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     renderer.setView(camera);
     renderer.render();
+
     // To draw anything that's needed
     spriteBatch.setProjectionMatrix(camera.combined);
     spriteBatch.begin();
@@ -101,6 +136,7 @@ public class GameScreen implements Screen {
     inputHandler.update();
     network.setCastle(castle.clone());
 
+    // Updating Castle
     if (network.castleArrived()) {
       if(network.isNew()){
         EnemyCastle=network.getEnemyCastle().clone();
@@ -109,13 +145,101 @@ public class GameScreen implements Screen {
       EnemyCastle.draw(spriteBatch);
       spriteBatch.end();
     }
-    // Updatign camera position
+
+    //Hud update
+    hud.update(1f);
+    game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+    hud.stage.draw();
+
+    // Updating camera position
     camera.update();
+
     // Exit on escape
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
       this.dispose();
       Gdx.app.exit();
     }
+
+    // Putting down tower and unit
+
+    //archerTower
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < archerTowerImgX + picHeightWidth && vec.x  > archerTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 10){
+          inputHandler.keyDown(Input.Keys.A);
+          castle.setGold(castle.getGold()-10);
+        }
+      }
+    }
+
+    //fireTower
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < fireTowerImgX + picHeightWidth && vec.x  > fireTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 20){
+          inputHandler.keyDown(Input.Keys.F);
+          castle.setGold(castle.getGold()-20);
+        }
+      }
+    }
+
+    //cannonTower
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < cannonTowerImgX + picHeightWidth && vec.x  > cannonTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 30){
+          inputHandler.keyDown(Input.Keys.C);
+          castle.setGold(castle.getGold()-30);
+        }
+      }
+    }
+
+    //archerUnit
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < archerUnitImgX + picHeightWidth && vec.x  > archerUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 10){
+          inputHandler.keyDown(Input.Keys.B);
+          castle.setGold(castle.getGold()-10);
+        }
+      }
+    }
+
+    //mageUnit
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < mageUnitImgX + picHeightWidth && vec.x  > mageUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 20){
+          inputHandler.keyDown(Input.Keys.M);
+          castle.setGold(castle.getGold()-20);
+        }
+      }
+    }
+
+    //tankUnit
+    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+      camera.unproject(vec);
+      if(vec.x < tankUnitImgX + picHeightWidth && vec.x  > tankUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
+        //buy if possible
+        if(castle.getGold() >= 15){
+          inputHandler.keyDown(Input.Keys.T);
+          castle.setGold(castle.getGold()-15);
+        }
+      }
+    }
+
   }
 
   /**

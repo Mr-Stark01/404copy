@@ -23,26 +23,21 @@ public class Hud implements Disposable {
     private Viewport viewport;
 
     //score && time tracking variables
-    private Integer gold;
-    private Integer health;
+    private float gold;
+    private float health;
     private Integer score;
     private boolean timeUp;
     private ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
     //Scene2D Widgets
-    private Label goldLabel, gold1Label, scoreLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,knightUnitLabel,mageUnitLabel,tankUnitLabel;
-
+    private Label goldLabel, gold1Label, scoreLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,mageUnitLabel,tankUnitLabel;
+    private Image archerTowerImg,fireTowerImg,cannonTowerImg,archerUnitImg,mageUnitImg,tankUnitImg;
 
     public Hud(SpriteBatch sb) {
 
         shapeRenderer = new ShapeRenderer();
         projectionMatrixSet = false;
-        //define tracking variables
-        gold = 0;
-        health = 500;
-
-        score = 0;
 
         //setup the HUD viewport using a new camera seperate from gamecam
         //define stage using that viewport and games spritebatch
@@ -53,8 +48,8 @@ public class Hud implements Disposable {
         BitmapFont font1 = new BitmapFont(Gdx.files.internal("fonts/test.fnt"),
                 Gdx.files.internal("fonts/test.png"), false);
 
-        gold1Label = new Label(String.format("%05d", gold), new Label.LabelStyle(font1, Color.WHITE));
-        scoreLabel = new Label(String.format("%03d", health), new Label.LabelStyle(font1, Color.WHITE));
+        gold1Label = new Label(String.format("%.0f", gold), new Label.LabelStyle(font1, Color.WHITE));
+        scoreLabel = new Label(String.format("%.0f", health), new Label.LabelStyle(font1, Color.WHITE));
         goldLabel = new Label("Gold:", new Label.LabelStyle(font1, Color.WHITE));
         healthLabel = new Label("Health:", new Label.LabelStyle(font1, Color.WHITE));
 
@@ -63,9 +58,16 @@ public class Hud implements Disposable {
         cannonTowerLabel = new Label("CannonTower", new Label.LabelStyle(font1, Color.WHITE));
 
         archerUnitLabel = new Label("Archer", new Label.LabelStyle(font1, Color.WHITE));
-        knightUnitLabel = new Label("Knight", new Label.LabelStyle(font1, Color.WHITE));
         mageUnitLabel = new Label("Mage", new Label.LabelStyle(font1, Color.WHITE));
         tankUnitLabel = new Label("Tank", new Label.LabelStyle(font1, Color.WHITE));
+
+        archerTowerImg = new Image(new Texture("textures/archer-tower.png"));
+        fireTowerImg = new Image(new Texture("textures/mage-tower.png"));
+        cannonTowerImg = new Image(new Texture("textures/canon-tower.png"));
+
+        archerUnitImg = new Image(new Texture("textures/archer-unit.png"));
+        mageUnitImg = new Image(new Texture("textures/mage-unit.png"));
+        tankUnitImg = new Image(new Texture("textures/tank-unit.png"));
 
         goldLabel.setFontScale(4);
         gold1Label.setFontScale(3);
@@ -76,7 +78,6 @@ public class Hud implements Disposable {
         fireTowerLabel.setFontScale(2);
         cannonTowerLabel.setFontScale(2);
         archerUnitLabel.setFontScale(2);
-        knightUnitLabel.setFontScale(2);
         mageUnitLabel.setFontScale(2);
         tankUnitLabel.setFontScale(2);
 
@@ -98,7 +99,7 @@ public class Hud implements Disposable {
         imageTop.setY(1080-100);
 
         Image imageBot = new Image(new Texture("menu/white.png"));
-        imageBot.setSize(1920,100);
+        imageBot.setSize(1920,150);
         imageBot.setX(0);
         imageBot.setY(0);
 
@@ -120,18 +121,24 @@ public class Hud implements Disposable {
 
         //bot table
             //tower
-        tableBot.add(archerTowerLabel).expandX().padBottom(70);
-        tableBot.add(fireTowerLabel).expandX().padBottom(70);
-        tableBot.add(cannonTowerLabel).expandX().padBottom(70);
+        tableBot.add(archerTowerLabel).expandX().padBottom(20);
+        tableBot.add(fireTowerLabel).expandX().padBottom(20);
+        tableBot.add(cannonTowerLabel).expandX().padBottom(20);
             //unit
-        tableBot.add(archerUnitLabel).expandX().padBottom(70);
-        tableBot.add(knightUnitLabel).expandX().padBottom(70);
-        tableBot.add(mageUnitLabel).expandX().padBottom(70);
-        tableBot.add(tankUnitLabel).expandX().padBottom(70);
+        tableBot.add(archerUnitLabel).expandX().padBottom(20);
+        tableBot.add(mageUnitLabel).expandX().padBottom(20);
+        tableBot.add(tankUnitLabel).expandX().padBottom(20);
         //row
         tableBot.row();
         //pics
-
+            //tower
+        tableBot.add(archerTowerImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(fireTowerImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(cannonTowerImg).width(80).height(80).expandX().padBottom(10);
+            //unit
+        tableBot.add(archerUnitImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(mageUnitImg).width(80).height(80).expandX().padBottom(10);
+        tableBot.add(tankUnitImg).width(80).height(80).expandX().padBottom(10);
 
 
         //add table to the stage
@@ -155,7 +162,8 @@ public class Hud implements Disposable {
             timeCount = 0;
         }
         */
-
+        gold1Label.setText(String.format("%.0f", gold));
+        scoreLabel.setText(String.format("%.0f", health));
     }
 
 
@@ -171,5 +179,11 @@ public class Hud implements Disposable {
         return timeUp;
     }
 
+    public void setGold(float gold) {
+        this.gold = gold;
+    }
 
+    public void setHealth(float health) {
+        this.health = health;
+    }
 }
