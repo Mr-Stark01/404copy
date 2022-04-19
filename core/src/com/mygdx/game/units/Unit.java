@@ -141,6 +141,7 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
       Unit clone = (Unit) super.clone();
       clone.pathQ=new ArrayList<GridPoint>();
       clone.spawned=spawned;
+
       clone.previousPoint = new GridPoint(previousPoint.getX(), previousPoint.getY(), previousPoint.getName());
       Iterator<GridPoint> it = pathQ.iterator();
       while (it.hasNext()) {
