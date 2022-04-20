@@ -72,6 +72,7 @@ public class Hud implements Disposable {
         mLabel = new Label("M", new Label.LabelStyle(font1, Color.WHITE));
         tLabel = new Label("T", new Label.LabelStyle(font1, Color.WHITE));
 
+
         archerTowerImg = new Image(new Texture("textures/archer-tower.png"));
         fireTowerImg = new Image(new Texture("textures/mage-tower.png"));
         cannonTowerImg = new Image(new Texture("textures/canon-tower.png"));
