@@ -144,6 +144,14 @@ public class Castle implements Serializable,Cloneable {
     return gold;
   }
 
+  public float getHealth() {
+    return health;
+  }
+
+  public void setGold(float gold) {
+    this.gold = gold;
+  }
+
   public ArrayList<Unit> getUnits() {
     return units;
   }

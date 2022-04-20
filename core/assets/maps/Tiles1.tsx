@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.8" tiledversion="1.8.1" name="Tiles1" tilewidth="32" tileheight="32" tilecount="784" columns="28">
+<tileset version="1.8" tiledversion="1.8.2" name="Tiles1" tilewidth="32" tileheight="32" tilecount="784" columns="28">
  <image source="../tiles/tiles1_2.png" width="896" height="896"/>
  <tile id="2">
   <properties>
-   <property name="blocked" value="blocked"/>
+   <property name="grass" value="grass"/>
   </properties>
  </tile>
  <tile id="6">

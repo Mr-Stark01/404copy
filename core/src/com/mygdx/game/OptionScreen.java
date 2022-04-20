@@ -9,69 +9,183 @@ import com.badlogic.gdx.math.Vector3;
 
 public class OptionScreen implements Screen {
 
-  final MyGdxGame game;
-  OrthographicCamera camera;
+    final MyGdxGame game;
+    OrthographicCamera camera;
 
-  Texture bg;
-  int buttonWid;
-  int buttonHei;
-  int buttonX;
-  int backbuttonY;
+    Texture bg;
+    Texture onButton;
+    Texture offButton;
 
-  public OptionScreen(final MyGdxGame game) {
-    this.game = game;
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, 1920, 1080);
-  }
+    Texture wButton;
+    Texture fButton;
 
-  @Override
-  public void show() {
-    // ScreenUtils.clear(255, 98, 0, 1);
-    bg = new Texture("menu/background.jpg");
-    buttonWid = 250;
-    buttonHei = 100;
-    buttonX = 1920 - buttonWid - 50;
-    backbuttonY = 50;
-  }
+    Texture backButton;
 
-  @Override
-  public void render(float delta) {
-    camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
-    game.batch.begin();
-    game.batch.draw(bg, 0, 0, 1920, 1080);
-    game.font.setColor(0, 0, 0, 1);
-    game.font.draw(game.batch, "Game by 404", 1700, 40);
-    game.font.draw(game.batch, "Options", 1920 / 2, 800);
-    // backButton
-    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-      Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-      camera.unproject(vec);
-      if (vec.x < buttonX + buttonWid
-          && vec.x > buttonX
-          && vec.y > backbuttonY
-          && vec.y < backbuttonY + buttonHei) {
-        game.setScreen(new MainMenu(game));
-        dispose();
-      }
+    int buttonWid;
+    int buttonHei;
+    int buttonX;
+    int backbuttonY;
+
+    int onoffButtonWid;
+    int onoffButtonHei;
+    int onoffButtonX;
+    int onoffButtonY;
+
+    int wButtonWid;
+    int wfButtonHei;
+    int wButtonX;
+    int wfButtonY;
+    int fButtonWid;
+    int fButtonX;
+
+    boolean musicIsOn;
+    boolean fsIsOn;
+
+    public OptionScreen(final MyGdxGame game){
+        this.game = game;
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1920, 1080);
+
     }
-    game.batch.end();
-  }
 
-  @Override
-  public void resize(int width, int height) {}
+    @Override
+    public void show() {
+        //ScreenUtils.clear(255, 98, 0, 1);
+        bg = new Texture("menu/background_options.jpg");
+        onButton = new Texture("menu/musicOnButton.png");
+        offButton = new Texture("menu/musicOffButton.png");
+        wButton = new Texture("menu/windowedbutton.png");
+        fButton = new Texture("menu/fullscreenbutton.png");
+        backButton = new Texture("menu/back_button.png");
 
-  @Override
-  public void pause() {}
+        buttonWid = 250;
+        buttonHei = 100;
+        buttonX = 1920-buttonWid-50;
+        backbuttonY = 50;
 
-  @Override
-  public void resume() {}
+        musicIsOn = true;
+        fsIsOn = false;
 
-  @Override
-  public void hide() {
-    dispose();
-  }
+        onoffButtonWid = 600;
+        onoffButtonHei = 100;
+        onoffButtonX = 1920/2-onoffButtonWid/2;
+        onoffButtonY = 500;
 
-  @Override
-  public void dispose() {}
+        wfButtonY = 350;
+        wfButtonHei = 150;
+
+        wButtonWid = 700;
+        wButtonX = 1920/2-wButtonWid/2;
+
+        fButtonWid = 700;
+        fButtonX = 1920/2-fButtonWid/2;
+    }
+
+    @Override
+    public void render(float delta) {
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+
+        game.batch.begin();
+
+        game.batch.draw(bg, 0 , 0, 1920, 1080);
+        game.font.setColor(0,0,0,1);
+        game.font.draw(game.batch, "Game by 404", 1700, 40);
+
+        if(musicIsOn){
+            game.batch.draw(offButton, onoffButtonX , onoffButtonY, onoffButtonWid, onoffButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < onoffButtonX + onoffButtonWid && vec.x > onoffButtonX && vec.y > onoffButtonY && vec.y < onoffButtonY + onoffButtonHei) {
+                        musicIsOn = false;
+                        MyGdxGame.stopMusic();
+                    }
+                }
+            }
+        }
+        else{
+            game.batch.draw(onButton, onoffButtonX , onoffButtonY, onoffButtonWid, onoffButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < onoffButtonX + onoffButtonWid && vec.x > onoffButtonX && vec.y > onoffButtonY && vec.y < onoffButtonY + onoffButtonHei) {
+                        musicIsOn = true;
+                        MyGdxGame.startMusic();
+                    }
+                }
+            }
+        }
+
+        // fasz git
+
+        if(!fsIsOn){
+            game.batch.draw(fButton, fButtonX , wfButtonY, fButtonWid, wfButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < fButtonX + fButtonWid && vec.x > fButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
+                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                        fsIsOn = true;
+                    }
+                }
+            }
+        }
+        else{
+            game.batch.draw(wButton, wButtonX , wfButtonY, wButtonWid, wfButtonHei);
+            if(Gdx.input.justTouched()) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    camera.unproject(vec);
+                    if (vec.x < wButtonX + wButtonWid && vec.x > wButtonX && vec.y > wfButtonY && vec.y < wfButtonY + wfButtonHei) {
+                        Gdx.graphics.setWindowedMode(1920,1080);
+                        fsIsOn = false;
+                    }
+                }
+            }
+        }
+
+        //backButton
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+            camera.unproject(vec);
+            if(vec.x < buttonX + buttonWid && vec.x > buttonX && vec.y > backbuttonY  && vec.y < backbuttonY + buttonHei){
+                game.setScreen(new MainMenu(game));
+                dispose();
+            }
+        }
+
+        game.batch.end();
+
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+        dispose();
+    }
+
+    @Override
+    public void dispose() {
+    }
 }
+

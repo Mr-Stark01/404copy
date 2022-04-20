@@ -23,6 +23,7 @@ public class InputHandler implements InputProcessor {
   PathFinder pathFinder;
   float scale;
 
+
   public InputHandler(
       OrthographicCamera camera, float scale, Castle castle, PathFinder pathFinder) {
     this.scale = scale;
@@ -77,24 +78,42 @@ public class InputHandler implements InputProcessor {
   public boolean keyDown(int keycode) {
     if (Input.Keys.A == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new ArcherTower(T1.x, T1.y); // mouse koordináták kellenek
-      castle.buyTower(tower);
-      castle.spawnTowers();
+      if(castle.getGold() >= 10){
+        Tower tower = new ArcherTower(T1.x, T1.y); // mouse koordináták kellenek
+        castle.buyTower(tower);
+        castle.spawnTowers();
+      }
     }
     if (Input.Keys.C == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new CannonTower(T1.x, T1.y); // mouse koordináták kellenek
-      castle.buyTower(tower);
-      castle.spawnTowers();
+      if(castle.getGold() >= 30) {
+        Tower tower = new CannonTower(T1.x, T1.y); // mouse koordináták kellenek
+        castle.buyTower(tower);
+        castle.spawnTowers();
+      }
     }
     if (Input.Keys.F == keycode) {
       Vector3 T1 = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-      Tower tower = new FireTower(T1.x, T1.y); // mouse koordináták kellenek
-      castle.buyTower(tower);
-      castle.spawnTowers();
+      if(castle.getGold() >= 20) {
+        Tower tower = new FireTower(T1.x, T1.y); // mouse koordináták kellenek
+        castle.buyTower(tower);
+        castle.spawnTowers();
+      }
     }
     if (Input.Keys.B == keycode) {
-      castle.buyArcher(pathFinder);
+      if(castle.getGold() >= 10) {
+        castle.buyArcher(pathFinder);
+      }
+    }
+    if (Input.Keys.T == keycode) {
+      if(castle.getGold() >= 15) {
+        castle.buyTank(pathFinder);
+      }
+    }
+    if (Input.Keys.M == keycode) {
+      if(castle.getGold() >= 20) {
+        castle.buyMage(pathFinder);
+      }
     }
     if (Gdx.input.isKeyPressed(Input.Keys.J)) {
       castle.spawnUnits();

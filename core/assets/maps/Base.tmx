@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="300" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="300" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="33">
  <tileset firstgid="1" source="Tiles1.tsx"/>
  <tileset firstgid="785" source="Castle.tsx"/>
  <layer id="1" name="Tile Layer 1" width="300" height="100">
@@ -210,4 +210,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="5" name="test">
+  <object id="32" name="CellPath" x="688" y="848">
+   <properties>
+    <property name="CellPath" value="Rl Point"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

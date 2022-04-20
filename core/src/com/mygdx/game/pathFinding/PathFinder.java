@@ -32,7 +32,7 @@ public class PathFinder {
       gridPointGraph.addSpawnPoint(tmp);
     }
     for (int i = 0; i < cellList.size(); i++) {
-      if (!cellList.get(i).cell.getTile().getProperties().containsKey("blocked")) {
+      if (!(cellList.get(i).cell.getTile().getProperties().containsKey("blocked") || cellList.get(i).cell.getTile().getProperties().containsKey("grass"))) {
         if (!(i + 1 % tileyLayer.getHeight() == 0)) {
           if (i + 1 < cellList.size()) {
             gridPointGraph.connectSpawnPoint(gridPoints.get(i), gridPoints.get(i + 1));
