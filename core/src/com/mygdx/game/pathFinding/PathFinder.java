@@ -3,6 +3,7 @@ package com.mygdx.game.pathFinding;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.Pair;
 import com.mygdx.game.units.Unit;
 
 import java.util.ArrayList;
@@ -94,6 +95,24 @@ public class PathFinder {
 
   public GridPoint getEnd() {
     return end;
+  }
+  // This is another warcrime by me :D
+  public void deleteBlocked(ArrayList<Pair>blocked){
+    int[] todelete = new int[30];
+    int i=0,j=0;
+    for (GridPoint gridPoint : gridPoints) {
+      for(Pair block: blocked){
+        if (gridPoint.x == block.getX() && block.getY()== gridPoint.y) {
+          todelete[j]=i;
+          j++;
+        }
+      }
+      i++;
+    }
+    for(int tmp:todelete){
+      gridPoints.remove(tmp);
+    }
+
   }
 
   public void findWay(Unit unit) {

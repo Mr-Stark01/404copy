@@ -10,10 +10,6 @@ build-job:       # This job runs in the build stage, which runs first.
     - apt-get update -qq && apt-get install -y -qq gradle
     - gradle desktop:dist
     - echo "Compile complete."
-  artifacts:
-    paths:
-      - build
-    expire_in: 1 week
 
 #Doc-job:       # This job runs in the build stage, which runs first.
 #  stage: build
@@ -28,9 +24,6 @@ unit-test-job:
     - apt-get update -qq && apt-get install -y -qq gradle
     - gradle tests:test
     - echo "good"
-  dependencies:
-    - build-job
-
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
 #  script:

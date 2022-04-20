@@ -19,6 +19,7 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(GdxTestRunner.class)
 public class Unit_test { // I can't see this name causing any problems ever good job me.
+    Castle eCastle;
     Castle castle;
     TmxMapLoader loader;
     TiledMap map;
@@ -29,6 +30,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
         loader = new TmxMapLoader();
         map = loader.load("maps/map_01.tmx");
         pathFinder = new PathFinder(map,"Client");
+        eCastle=mock(Castle.class);
     }
     @Test
     public void ArcherTest(){
@@ -41,7 +43,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
         float ogX=castle.getUnits().get(0).getX();
         float ogY=castle.getUnits().get(0).getY();
         for(int i=0;i<999;i++) {
-            castle.draw(sb);
+            castle.draw(sb,eCastle);
         }
         assertNotEquals(ogX,castle.getUnits().get(0).getX());
         assertNotEquals(ogY,castle.getUnits().get(0).getY());
@@ -57,7 +59,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
         float ogX=castle.getUnits().get(0).getX();
         float ogY=castle.getUnits().get(0).getY();
         for(int i=0;i<999;i++) {
-            castle.draw(sb);
+            castle.draw(sb,eCastle);
         }
         assertNotEquals(ogX,castle.getUnits().get(0).getX());
         assertNotEquals(ogY,castle.getUnits().get(0).getY());
@@ -77,7 +79,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
         float ogX=castle.getUnits().get(0).getX();
         float ogY=castle.getUnits().get(0).getY();
         for(int i=0;i<999;i++) {
-            castle.draw(sb);
+            castle.draw(sb,eCastle);
         }
         assertNotEquals(ogX,castle.getUnits().get(0).getX());
         assertNotEquals(ogY,castle.getUnits().get(0).getY());
@@ -91,7 +93,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
         Unit unit = castle.getUnits().get(0);
         SpriteBatch sb=mock(SpriteBatch.class);
         for(int i=0;i<4000;i++) {
-            castle.draw(sb);
+            castle.draw(sb,eCastle);
         }
         assertEquals(pathFinder.getEnd().getX(),castle.getUnits().get(0).getX(),0);
         assertEquals(pathFinder.getEnd().getY(),castle.getUnits().get(0).getY(),0);

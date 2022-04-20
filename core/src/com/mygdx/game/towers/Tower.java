@@ -31,6 +31,8 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     this.price = price;
     this.health = health;
     this.range = range;
+    spawnX=(float)Math.floor(spawnX);
+    spawnY=(float)Math.floor(spawnY);
     this.spawnX = spawnX;
     this.spawnY = spawnY;
     setX(spawnX);
@@ -44,6 +46,8 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   }
 
   public void draw(SpriteBatch spriteBatch, Castle enemy) {
+    setX(spawnX);
+    setY(spawnY);
     if (spawned) {
       update(enemy);
       super.draw(spriteBatch);
@@ -53,6 +57,7 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   public void update(Castle enemy) {
     checkTargetPresence();
     if (hasTarget) {
+      System.out.println();
       attack();
     } else {
       selectTarget(enemy.getUnits());
@@ -98,12 +103,15 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   public synchronized Tower clone() {
     try {
       Tower clone = (Tower) super.clone();
+      clone.spawned=spawned;
+      clone.spawnX=spawnX;
+      clone.spawnY=spawnY;
       if (target != null) {
         clone.target = target.clone();
       }
-      //clone.reinitialize();
-      clone.setX(getX());
-      clone.setY(getY());
+      clone.reinitialize();
+      clone.setX(clone.spawnX);
+      clone.setY(clone.spawnY);
       // TODO: copy mutable state here, so the clone can't change the internals of the original
       return clone;
     } catch (CloneNotSupportedException e) {

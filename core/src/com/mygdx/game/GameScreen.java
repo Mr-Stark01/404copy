@@ -17,6 +17,7 @@ import com.mygdx.game.network.NetworkHandler;
 import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.screens.Hud;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.SynchronousQueue;
 
@@ -130,9 +131,7 @@ public class GameScreen implements Screen {
 
     // To draw anything that's needed
     spriteBatch.setProjectionMatrix(camera.combined);
-    spriteBatch.begin();
-    castle.draw(spriteBatch);
-    spriteBatch.end();
+
     inputHandler.update();
     network.setCastle(castle.clone());
 
@@ -142,7 +141,10 @@ public class GameScreen implements Screen {
         EnemyCastle=network.getEnemyCastle().clone();
       }
       spriteBatch.begin();
-      EnemyCastle.draw(spriteBatch);
+      castle.draw(spriteBatch,EnemyCastle);
+      spriteBatch.end();
+      spriteBatch.begin();
+      EnemyCastle.draw(spriteBatch,castle);
       spriteBatch.end();
     }
 
