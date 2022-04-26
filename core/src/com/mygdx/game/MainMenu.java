@@ -122,11 +122,9 @@ public class MainMenu implements Screen {
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX - ((exitButtonWid - buttonWid)/2)  + exitButtonWid && vec.x > buttonX - ((exitButtonWid - buttonWid)/2) && vec.y > exitbuttonY  &&  vec.y < exitbuttonY + buttonHei){
-
                     this.dispose();
                     Gdx.app.exit();
-
-                }
+            }
         }
 
 
