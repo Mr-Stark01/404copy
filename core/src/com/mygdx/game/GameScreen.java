@@ -242,40 +242,43 @@ public class GameScreen implements Screen {
       }
     }
     hud.setGold(castle.getGold());
+    hud.setHealth(castle.getHealth());
 
     // endscreen working only online
     game.batch.begin();
 
-    if(castle.getHealth() <= 0 && EnemyCastle.getHealth() > 0){
-      game.batch.draw(endscreen_l, 0 , 0, 1920, 1080);
-      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-        camera.unproject(vec);
-        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
-          this.dispose();
-          Gdx.app.exit();
+    if(castle != null && EnemyCastle != null){
+      if(castle.getHealth() <= 0 && EnemyCastle.getHealth() > 0){
+        game.batch.draw(endscreen_l, 0 , 0, 1920, 1080);
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+          Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+          camera.unproject(vec);
+          if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+            this.dispose();
+            Gdx.app.exit();
+          }
         }
       }
-    }
-    else if(castle.getHealth() > 0 && EnemyCastle.getHealth() <= 0){
-      game.batch.draw(endscreen_w, 0 , 0, 1920, 1080);
-      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-        camera.unproject(vec);
-        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
-          this.dispose();
-          Gdx.app.exit();
+      else if(castle.getHealth() > 0 && EnemyCastle.getHealth() <= 0){
+        game.batch.draw(endscreen_w, 0 , 0, 1920, 1080);
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+          Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+          camera.unproject(vec);
+          if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+            this.dispose();
+            Gdx.app.exit();
+          }
         }
       }
-    }
-    else if(castle.getHealth() <= 0 && EnemyCastle.getHealth() <= 0){
-      game.batch.draw(endscreen_d, 0 , 0, 1920, 1080);
-      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-        camera.unproject(vec);
-        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
-          this.dispose();
-          Gdx.app.exit();
+      else if(castle.getHealth() <= 0 && EnemyCastle.getHealth() <= 0){
+        game.batch.draw(endscreen_d, 0 , 0, 1920, 1080);
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+          Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+          camera.unproject(vec);
+          if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+            this.dispose();
+            Gdx.app.exit();
+          }
         }
       }
     }

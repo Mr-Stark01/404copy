@@ -183,6 +183,13 @@ public class Castle implements Serializable,Cloneable {
   }
 
   /**
+   * set Health
+   */
+  public void setHealth(float health) {
+    this.health = health;
+  }
+
+  /**
    * get Units
    */
   public ArrayList<Unit> getUnits() {
