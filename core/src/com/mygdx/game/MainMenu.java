@@ -11,6 +11,9 @@ import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.Server;
 import com.mygdx.game.network.ServerHandler;
 
+/**
+ * The main MainMenu class. This class handles the Main Menu
+ */
 public class MainMenu implements Screen {
 
     final MyGdxGame game;
@@ -33,6 +36,11 @@ public class MainMenu implements Screen {
 
     OrthographicCamera camera;
 
+    /**
+     * Everything thats needs to be initiated should be done here
+     *
+     * @param game final MyGdxGame
+     */
     public MainMenu(final MyGdxGame game) {
         this.game = game;
 
@@ -42,13 +50,10 @@ public class MainMenu implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
     }
 
-
+    /** Anything that will be shown to the player Will be initiated here. */
     @Override
     public void show() {
-        //ScreenUtils.clear(255, 98, 0, 1);
-
         bg = new Texture("menu/background_main.png");
-
 
         buttonWid = 250;
         buttonHei = 90;
@@ -64,11 +69,13 @@ public class MainMenu implements Screen {
         startButtonWid = 281;
     }
 
+    /**
+     * Updating the screen
+     *
+     * @param delta float
+     */
     @Override
     public void render(float delta) {
-
-
-
         camera.update();
         game.batch.begin();
         game.batch.draw(bg, 0 , 0, 1920, 1080);
@@ -122,11 +129,9 @@ public class MainMenu implements Screen {
             Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             camera.unproject(vec);
             if(vec.x < buttonX - ((exitButtonWid - buttonWid)/2)  + exitButtonWid && vec.x > buttonX - ((exitButtonWid - buttonWid)/2) && vec.y > exitbuttonY  &&  vec.y < exitbuttonY + buttonHei){
-
                     this.dispose();
                     Gdx.app.exit();
-
-                }
+            }
         }
 
 
@@ -134,47 +139,32 @@ public class MainMenu implements Screen {
         game.font.draw(game.batch, "Game by 404", 1700, 40);
 
         game.batch.end();
-
-        /*
-        //Client and server
-        if(Gdx.input.isKeyPressed(Input.Keys.K)){
-            ServerHandler serverHandler=new ServerHandler(new Server());
-            game.setScreen(new GameScreen(game,serverHandler));
-            dispose();
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.C)){
-            ClientHandler clh=new ClientHandler(new Client(),"192.168.0.210");
-            game.setScreen(new GameScreen(game,clh));
-            dispose();
-
-        }
-         */
-
     }
 
-    
+    /**
+     * resizing the screen
+     *
+     * @param width int
+     * @param height int
+     */
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
+    public void resume() {}
 
-    }
-
+    /**
+     * hiding the screen
+     */
     @Override
-    public void hide() {
+    public void hide() {}
 
-    }
-
+    /**
+     * hiding the screen
+     */
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

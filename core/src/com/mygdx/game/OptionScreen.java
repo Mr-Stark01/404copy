@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * The main OptionScreen class. This class handles the Options
+ */
 public class OptionScreen implements Screen {
 
     final MyGdxGame game;
@@ -41,6 +44,11 @@ public class OptionScreen implements Screen {
     boolean musicIsOn;
     boolean fsIsOn;
 
+    /**
+     * Everything thats needs to be initiated should be done here
+     *
+     * @param game final MyGdxGame
+     */
     public OptionScreen(final MyGdxGame game){
         this.game = game;
 
@@ -49,6 +57,7 @@ public class OptionScreen implements Screen {
 
     }
 
+    /** Anything that will be shown to the player Will be initiated here. */
     @Override
     public void show() {
         //ScreenUtils.clear(255, 98, 0, 1);
@@ -82,6 +91,11 @@ public class OptionScreen implements Screen {
         fButtonX = 1920/2-fButtonWid/2;
     }
 
+    /**
+     * Updating the screen
+     *
+     * @param delta float
+     */
     @Override
     public void render(float delta) {
         camera.update();
@@ -164,28 +178,33 @@ public class OptionScreen implements Screen {
 
     }
 
+    /**
+     * resizing the screen
+     *
+     * @param width int
+     * @param height int
+     */
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
+    public void resume() {}
 
-    }
-
+    /**
+     * hiding the screen
+     */
     @Override
     public void hide() {
         dispose();
     }
 
+    /**
+     * hiding the screen
+     */
     @Override
-    public void dispose() {
-    }
+    public void dispose() {}
 }
 

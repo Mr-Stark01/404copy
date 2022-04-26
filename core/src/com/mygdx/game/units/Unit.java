@@ -14,6 +14,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The main Tower class. This class handles the Units
+ */
 public abstract class Unit extends Sprite implements Serializable,Cloneable {
   public boolean reachedDestinition=false;
   protected int damage;
@@ -30,6 +33,15 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   private final float spawnPointY;
   private float x,y;
 
+  /**
+   * CONSTRUCTOR
+   * @param damage int
+   * @param price int
+   * @param health int
+   * @param range int
+   * @param spawnPointX float
+   * @param spawnPointY float
+   */
   public Unit(
       int damage,
       int price,
@@ -49,11 +61,17 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     this.range = range;
   }
 
+  /**
+   * spawn Unit
+   */
   public void spawn() {
     spawned = true;
     setSpeedToNextPoint();
   }
 
+  /**
+   * set Path for Unit
+   */
   public void setPath(GraphPath<GridPoint> path, GridPoint start) {
     previousPoint = start;
     setX(start.getX());
@@ -63,6 +81,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * set Speed for Unit
+   */
   private void setSpeedToNextPoint() {
     GridPoint nextPoint = pathQ.get(0);
     float angle =
@@ -72,6 +93,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     deltaY = MathUtils.sin(angle) * speed;
   }
 
+  /**
+   * check for Collision
+   */
   private void checkCollision() {
     if (pathQ.size() > 0) {
       GridPoint targetCity = pathQ.get(0);
@@ -81,6 +105,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * step Unit
+   */
   public void step() {
     setX(getX() + deltaX);
     setY(getY() + deltaY);
@@ -89,6 +116,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     checkCollision();
   }
 
+  /**
+   * reach Next Point
+   */
   private void reachNextPoint() {
     GridPoint nextPoint = pathQ.get(0);
     setX(nextPoint.getX());
@@ -102,12 +132,19 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * reach Destination
+   */
   private void reachDestination() {
     deltaX = 0;
     deltaY = 0;
     reachedDestinition=true;
   }
 
+  /**
+   * draw Unit
+   * @param spriteBatch SpriteBatch
+   */
   public void draw(SpriteBatch spriteBatch) {
     if (spawned) {
       step();
@@ -115,19 +152,37 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     super.draw(spriteBatch);
   }
 
-  // Get Set
+  /**
+   * get Price
+   */
   public int getPrice() {
     return price;
   }
+
+  /**
+   * get Health
+   */
   public int getHealth() {
     return health;
   }
+
+  /**
+   * get Range
+   */
   public int getRange() {
     return range;
   }
+
+  /**
+   * get Damage
+   */
   public int getDamage() {
     return damage;
   }
+
+  /**
+   * get Damaged
+   */
   public void getDamaged(int damage) {
     health -= damage;
   }

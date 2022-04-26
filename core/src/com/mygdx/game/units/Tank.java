@@ -4,7 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.Castle;
 
+/**
+ * The main Tank class. This class handles the Tank Unit
+ */
 public class Tank extends Unit {
+  /**
+   * CONSTRUCTOR
+   * @param owner Castle
+   */
   public Tank(Castle owner) {
     super(5, 15, 30, 1, owner.getSpawnPointX(), owner.getSpawnPointY());
     setTexture(new Texture("textures/tank-unit.png"));
@@ -15,6 +22,9 @@ public class Tank extends Unit {
     setSize(1,1);
   }
 
+  /**
+   * get Class Name
+   */
   public String getClassName(){
     return "Tank";
   }

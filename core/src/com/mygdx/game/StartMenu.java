@@ -14,6 +14,9 @@ import com.mygdx.game.network.ServerHandler;
 
 import java.util.regex.Pattern;
 
+/**
+ * The main StartMenu class. This class handles the game Start
+ */
 public class StartMenu implements Screen, TextInputListener {
 
   final MyGdxGame game;
@@ -21,28 +24,36 @@ public class StartMenu implements Screen, TextInputListener {
 
   Texture bg;
 
+  //Button variables
   int backButtonX;
   int backbuttonY;
   int backButtonWid;
   int backButtonHei;
-
   int clientButtonY;
-
   int serverButtonY;
   int serverButtonWid;
-
   int buttonX;
   int buttonWid;
   int buttonHei;
 
   String text;
 
+  /**
+   * Everything thats needs to be initiated should be done here
+   *
+   * @param game final MyGdxGame
+   */
   public StartMenu(final MyGdxGame game) {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 1920, 1080);
   }
 
+  /**
+   * Checcking for correct IP
+   *
+   * @param text String
+   */
   public boolean correctIPCheck(String text) {
     String IPV4_REGEX = "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
     Pattern IPv4_PATTERN = Pattern.compile(IPV4_REGEX);
@@ -67,6 +78,7 @@ public class StartMenu implements Screen, TextInputListener {
     return true;
   }
 
+  /** Anything that will be shown to the player Will be initiated here. */
   @Override
   public void show() {
     // ScreenUtils.clear(255, 98, 0, 1);
@@ -84,6 +96,11 @@ public class StartMenu implements Screen, TextInputListener {
     text = "";
   }
 
+  /**
+   * Updating the screen
+   *
+   * @param delta float
+   */
   @Override
   public void render(float delta) {
     camera.update();
@@ -144,6 +161,12 @@ public class StartMenu implements Screen, TextInputListener {
     game.batch.end();
   }
 
+  /**
+   * resizing the screen
+   *
+   * @param width int
+   * @param height int
+   */
   @Override
   public void resize(int width, int height) {}
 
@@ -153,14 +176,24 @@ public class StartMenu implements Screen, TextInputListener {
   @Override
   public void resume() {}
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void hide() {
     dispose();
   }
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void dispose() {}
 
+  /**
+   * text set
+   * @param text String
+   */
   @Override
   public void input(String text) {
     if (correctIPCheck(text)) {
@@ -168,6 +201,9 @@ public class StartMenu implements Screen, TextInputListener {
     }
   }
 
+  /**
+   * text handle
+   */
   @Override
   public void canceled() {
     text = "Cancelled";

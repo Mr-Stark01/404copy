@@ -110,48 +110,81 @@ public class Castle implements Serializable,Cloneable {
       tower.draw(spriteBatch, castle); // enemy lesz this helyett
     }
   }
-  // Getter and Setters
+
+  /**
+   * set Spawn Point
+   */
   public void setSpawn(float x, float y) {
     spawnPointX = x;
     spawnPointY = y;
   }
 
+  /**
+   * get Spawn Point X
+   */
   public float getSpawnPointX() {
     return this.spawnPointX;
   }
 
+  /**
+   * get Spawn Point Y
+   */
   public float getSpawnPointY() {
     return this.spawnPointY;
   }
 
+  /**
+   * get Archer Price
+   */
   public int getArcherPrice() {
     return archerPrice;
   }
 
+  /**
+   * get Mage Price
+   */
   public int getMagePrice() {
     return magePrice;
   }
 
+  /**
+   * get Tank Price
+   */
   public int getTankPrice() {
     return tankPrice;
   }
 
+  /**
+   * get Towers
+   */
   public ArrayList<Tower> getTowers() {
     return towers;
   }
 
+  /**
+   * get Gold
+   */
   public float getGold() {
     return gold;
   }
 
+  /**
+   * get Health
+   */
   public float getHealth() {
     return health;
   }
 
+  /**
+   * set Gold
+   */
   public void setGold(float gold) {
     this.gold = gold;
   }
 
+  /**
+   * get Units
+   */
   public ArrayList<Unit> getUnits() {
     return units;
   }

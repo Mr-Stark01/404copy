@@ -54,6 +54,15 @@ public class GameScreen implements Screen {
   int mageUnitImgX;
   int tankUnitImgX;
 
+  Texture endscreen_w;
+  Texture endscreen_l;
+  Texture endscreen_d;
+
+  int exitButtonWid;
+  int exitButtonHei;
+  int exitButtonY;
+  int exitButtonX;
+
   /**
    * Everything thats needs to be initiated should be done here or in the show if it's a display
    * thing.
@@ -114,6 +123,15 @@ public class GameScreen implements Screen {
     archerUnitImgX = 1122;
     mageUnitImgX = 1425;
     tankUnitImgX = 1730;
+
+    endscreen_w = new Texture("menu/endsc_win.png");
+    endscreen_l = new Texture("menu/endsc_lose.png");
+    endscreen_d = new Texture("menu/endsc_draw.png");
+
+    exitButtonWid = 200;
+    exitButtonHei = 90;
+    exitButtonY = 100;
+    exitButtonX = 1920/2-exitButtonWid/2;
   }
 
   /**
@@ -224,6 +242,45 @@ public class GameScreen implements Screen {
       }
     }
     hud.setGold(castle.getGold());
+
+    // endscreen working only online
+    game.batch.begin();
+
+    if(castle.getHealth() <= 0 && EnemyCastle.getHealth() > 0){
+      game.batch.draw(endscreen_l, 0 , 0, 1920, 1080);
+      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+        camera.unproject(vec);
+        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+          this.dispose();
+          Gdx.app.exit();
+        }
+      }
+    }
+    else if(castle.getHealth() > 0 && EnemyCastle.getHealth() <= 0){
+      game.batch.draw(endscreen_w, 0 , 0, 1920, 1080);
+      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+        camera.unproject(vec);
+        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+          this.dispose();
+          Gdx.app.exit();
+        }
+      }
+    }
+    else if(castle.getHealth() <= 0 && EnemyCastle.getHealth() <= 0){
+      game.batch.draw(endscreen_d, 0 , 0, 1920, 1080);
+      if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+        camera.unproject(vec);
+        if(vec.x < exitButtonX + exitButtonWid && vec.x > exitButtonX && vec.y > exitButtonY  &&  vec.y < exitButtonY + exitButtonHei){
+          this.dispose();
+          Gdx.app.exit();
+        }
+      }
+    }
+
+    game.batch.end();
   }
 
   /**
@@ -241,11 +298,17 @@ public class GameScreen implements Screen {
   @Override
   public void resume() {}
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void hide() {
     dispose();
   }
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void dispose() {
     map.dispose();
