@@ -17,6 +17,9 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * The main Hud class. This class handles the Hud
+ */
 public class Hud implements Disposable {
 
     public Stage stage;
@@ -25,18 +28,19 @@ public class Hud implements Disposable {
     //score && time tracking variables
     private float gold;
     private float health;
-    private Integer score;
-    private boolean timeUp;
     private ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
     //Scene2D Widgets
-    private Label goldLabel, gold1Label, scoreLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,mageUnitLabel,tankUnitLabel;
-
+    private Label goldLabel, currentGoldLabel, currentHealthLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,mageUnitLabel,tankUnitLabel;
     private Image archerTowerImg,fireTowerImg,cannonTowerImg,archerUnitImg,mageUnitImg,tankUnitImg;
-
     private Label aLabel,fLabel,cLabel,bLabel,mLabel,tLabel;
 
+    /**
+     * Everything thats needs to be initiated should be done here or in the show if it's a display
+     *
+     * @param sb SpriteBatch for display
+     */
     public Hud(SpriteBatch sb) {
 
         shapeRenderer = new ShapeRenderer();
@@ -48,11 +52,10 @@ public class Hud implements Disposable {
         stage = new Stage(viewport, sb);
 
         //define labels using the String, and a Label style consisting of a font and color
-        BitmapFont font1 = new BitmapFont(Gdx.files.internal("fonts/test.fnt"),
-                Gdx.files.internal("fonts/test.png"), false);
+        BitmapFont font1 = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), Gdx.files.internal("fonts/test.png"), false);
 
-        gold1Label = new Label(String.format("%.0f", gold), new Label.LabelStyle(font1, Color.WHITE));
-        scoreLabel = new Label(String.format("%.0f", health), new Label.LabelStyle(font1, Color.WHITE));
+        currentGoldLabel = new Label(String.format("%.0f", gold), new Label.LabelStyle(font1, Color.WHITE));
+        currentHealthLabel = new Label(String.format("%.0f", health), new Label.LabelStyle(font1, Color.WHITE));
         goldLabel = new Label("Gold:", new Label.LabelStyle(font1, Color.WHITE));
         healthLabel = new Label("Health:", new Label.LabelStyle(font1, Color.WHITE));
 
@@ -72,7 +75,7 @@ public class Hud implements Disposable {
         mLabel = new Label("M", new Label.LabelStyle(font1, Color.WHITE));
         tLabel = new Label("T", new Label.LabelStyle(font1, Color.WHITE));
 
-
+        //images for bottom hud part
         archerTowerImg = new Image(new Texture("textures/archer-tower.png"));
         fireTowerImg = new Image(new Texture("textures/mage-tower.png"));
         cannonTowerImg = new Image(new Texture("textures/canon-tower.png"));
@@ -81,10 +84,11 @@ public class Hud implements Disposable {
         mageUnitImg = new Image(new Texture("textures/mage-unit.png"));
         tankUnitImg = new Image(new Texture("textures/tank-unit.png"));
 
+        //Label scaling
         goldLabel.setFontScale(4);
-        gold1Label.setFontScale(3);
+        currentGoldLabel.setFontScale(3);
         healthLabel.setFontScale(4);
-        scoreLabel.setFontScale(3);
+        currentHealthLabel.setFontScale(3);
 
         archerTowerLabel.setFontScale(2);
         fireTowerLabel.setFontScale(2);
@@ -111,7 +115,7 @@ public class Hud implements Disposable {
         tableBot.setFillParent(true);
 
 
-        //Textures for Da menu
+        //images for Da menu
         Image imageTop = new Image(new Texture("menu/white.png"));
         imageTop.setSize(1920,100);
         imageTop.setX(0);
@@ -135,8 +139,8 @@ public class Hud implements Disposable {
         tableTop.add(goldLabel).expandX().padTop(10);
         //row
         tableTop.row();
-        tableTop.add(scoreLabel).expandX();
-        tableTop.add(gold1Label).expandX();
+        tableTop.add(currentHealthLabel).expandX();
+        tableTop.add(currentGoldLabel).expandX();
 
         //bot table
             //tower
@@ -161,10 +165,11 @@ public class Hud implements Disposable {
         //row
         tableBot.row();
         //pics
+            //tower
         tableBot.add(aLabel).expandX();
         tableBot.add(fLabel).expandX();
         tableBot.add(cLabel).expandX();
-        //unit
+            //unit
         tableBot.add(bLabel).expandX();
         tableBot.add(mLabel).expandX();
         tableBot.add(tLabel).expandX();
@@ -178,6 +183,11 @@ public class Hud implements Disposable {
         stage.addActor(tableBot);
     }
 
+    /**
+     * Updating vars for hud
+     *
+     * @param dt float
+     */
     public void update(float dt) {
         /*
         timeCount += dt;
@@ -191,8 +201,8 @@ public class Hud implements Disposable {
             timeCount = 0;
         }
         */
-        gold1Label.setText(String.format("%.0f", gold));
-        scoreLabel.setText(String.format("%.0f", health));
+        currentGoldLabel.setText(String.format("%.0f", gold));
+        currentHealthLabel.setText(String.format("%.0f", health));
     }
 
 
@@ -204,14 +214,20 @@ public class Hud implements Disposable {
         stage.dispose();
     }
 
-    public boolean isTimeUp() {
-        return timeUp;
-    }
-
+    /**
+     * Updating vars for hud
+     *
+     * @param gold float
+     */
     public void setGold(float gold) {
         this.gold = gold;
     }
 
+    /**
+     * Updating vars for hud
+     *
+     * @param health float
+     */
     public void setHealth(float health) {
         this.health = health;
     }

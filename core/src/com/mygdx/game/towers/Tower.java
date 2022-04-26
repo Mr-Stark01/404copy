@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The main Tower class. This class handles the Towers
+ */
 public abstract class Tower extends Sprite implements Serializable,Cloneable {
   protected int damage;
   protected int price;
@@ -23,7 +26,15 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   protected float spawnY;
   boolean hasTarget;
 
-  // CONSTRUCTORS
+  /**
+   * CONSTRUCTOR
+   * @param damage int
+   * @param price int
+   * @param health int
+   * @param range int
+   * @param spawnX float
+   * @param spawnY float
+   */
   public Tower(
       int damage, int price, int health, int range, float spawnX, float spawnY) {
     super(new Sprite(new Texture("textures/tower-ph.png")));
@@ -40,11 +51,18 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     setSize(2, 2);
   }
 
-  // FUNCTIONS
+  /**
+   * spawn Tower
+   */
   public void spawn() {
     spawned = true;
   }
 
+  /**
+   * draw Tower
+   * @param spriteBatch SpriteBatch
+   * @param enemy Castle
+   */
   public void draw(SpriteBatch spriteBatch, Castle enemy) {
     setX(spawnX);
     setY(spawnY);
@@ -54,6 +72,10 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * update Tower
+   * @param enemy Castle
+   */
   public void update(Castle enemy) {
     checkTargetPresence();
     if (hasTarget) {
@@ -64,6 +86,10 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * select targets for Tower
+   * @param enemyKnights ArrayList<Unit>
+   */
   public void selectTarget(ArrayList<Unit> enemyKnights) {
     float distanceX;
     float distanceY;
@@ -81,6 +107,9 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * checking target presence for Tower
+   */
   public void checkTargetPresence() {
     if (target != null
         && (Math.abs(target.getX() - this.getX()) > range
@@ -90,6 +119,9 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     }
   }
 
+  /**
+   * attack Units
+   */
   public void attack() {
     if (target.getHealth() > 0) {
       target.getDamaged(damage);
@@ -120,10 +152,27 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
     }
   }
 
-  // GETTERS & SETTERS
+  /**
+   * get Price
+   */
   public int getPrice() {
     return price;
   }
+
+  /**
+   * get Health
+   */
+  public int getHealth() { return health; }
+
+  /**
+   * get Damage
+   */
+  public int getDamage() { return damage; }
+
+  /**
+   * get Range
+   */
+  public int getRange() { return range; }
 
   public void reinitialize(){
     set(new Sprite(new Texture("textures/tower-ph.png")));

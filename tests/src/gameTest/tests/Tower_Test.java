@@ -41,6 +41,9 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),10);
+        assertEquals(tower.getHealth(),10);
+        assertEquals(tower.getDamage(),1);
+        assertEquals(tower.getRange(),3);
     }
     @Test
     public void CannonTowerTest(){
@@ -48,6 +51,9 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),30);
+        assertEquals(tower.getHealth(),30);
+        assertEquals(tower.getDamage(),30);
+        assertEquals(tower.getRange(),1);
     }
     @Test
     public void FireTowerTest(){
@@ -55,6 +61,9 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),20);
+        assertEquals(tower.getHealth(),20);
+        assertEquals(tower.getDamage(),20);
+        assertEquals(tower.getRange(),2);
     }
     @Test
     public void FireTowerTestAttack() {

@@ -298,11 +298,17 @@ public class GameScreen implements Screen {
   @Override
   public void resume() {}
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void hide() {
     dispose();
   }
 
+  /**
+   * hiding the screen
+   */
   @Override
   public void dispose() {
     map.dispose();
