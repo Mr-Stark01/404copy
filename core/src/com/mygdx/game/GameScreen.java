@@ -16,6 +16,7 @@ import com.mygdx.game.network.ClientHandler;
 import com.mygdx.game.network.NetworkHandler;
 import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.screens.Hud;
+import com.mygdx.game.towers.Tower;
 
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class GameScreen implements Screen {
   InputHandler inputHandler;
   Castle castle;
   Castle EnemyCastle;
+  Tower tower;
   // Camera
   OrthographicCamera camera;
   SpriteBatch spriteBatch;
@@ -44,6 +46,7 @@ public class GameScreen implements Screen {
   private PathFinder pathFinder;
   private SynchronousQueue<Castle> queue = new SynchronousQueue<>();
   private Hud hud;
+  Boolean buyRound=true;
 
   int picHeightWidth;
   int picY;
@@ -90,7 +93,7 @@ public class GameScreen implements Screen {
     renderer = new OrthogonalTiledMapRenderer(map, 1 / scale);
 
     // Creaating Castle
-    castle = new Castle(player);
+    castle = new Castle(player,buyRound);
 
     // Creating a pathfinder
     pathFinder = new PathFinder(map, player);
@@ -106,8 +109,10 @@ public class GameScreen implements Screen {
     camera.viewportWidth = 1920 / scale;
     camera.update();
 
+
+
     // For handling game inputs
-    inputHandler = new InputHandler(camera, scale, castle, pathFinder);
+    inputHandler = new InputHandler(camera, scale, castle, pathFinder,hud,spriteBatch);
     Gdx.input.setInputProcessor(inputHandler);
 
     // Hud
@@ -152,6 +157,12 @@ public class GameScreen implements Screen {
 
     inputHandler.update();
     network.setCastle(castle.clone());
+    if(inputHandler.tower!=null){
+      tower=inputHandler.tower;
+      spriteBatch.begin();
+      tower.dragDraw(spriteBatch);
+      spriteBatch.end();
+    }
 
     // Updating Castle
     if (network.castleArrived()) {
@@ -205,10 +216,9 @@ public class GameScreen implements Screen {
     //cannonTower
     if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
       Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
       if(vec.x < cannonTowerImgX + picHeightWidth && vec.x  > cannonTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-
+        System.out.println("asd2");
       }
     }
 
@@ -218,7 +228,6 @@ public class GameScreen implements Screen {
       camera.unproject(vec);
       if(vec.x < archerUnitImgX + picHeightWidth && vec.x  > archerUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
         //buy if possible
-
       }
     }
 

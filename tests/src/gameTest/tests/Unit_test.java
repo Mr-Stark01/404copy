@@ -26,7 +26,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
     PathFinder pathFinder;
     @Before
     public void init(){
-        castle = new Castle("p1");
+        castle = new Castle("p1",true);
         loader = new TmxMapLoader();
         map = loader.load("maps/map_01.tmx");
         pathFinder = new PathFinder(map,"Client");
@@ -36,6 +36,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
     public void ArcherTest(){
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyArcher(pathFinder);
+        castle.setBuildRound(false);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         Unit unit = castle.getUnits().get(0);
@@ -52,6 +53,7 @@ public class Unit_test { // I can't see this name causing any problems ever good
     public void MageTest(){
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyArcher(pathFinder);
+        castle.setBuildRound(false);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         Unit unit = castle.getUnits().get(0);
@@ -66,12 +68,13 @@ public class Unit_test { // I can't see this name causing any problems ever good
     }
     @Test
     public void tankTest(){
-        Castle castle = new Castle("p1");
+        Castle castle = new Castle("p1",true);
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap map = loader.load("maps/map_01.tmx");
         PathFinder pathFinder = new PathFinder(map,"Client");
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyTank(pathFinder);
+        castle.setBuildRound(false);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         Unit tank = castle.getUnits().get(0);
@@ -88,9 +91,11 @@ public class Unit_test { // I can't see this name causing any problems ever good
     public void pathFinderTest(){ // I can't see this name causeing any problems ever good job me.
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyArcher(pathFinder);
+        castle.setBuildRound(false);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         Unit unit = castle.getUnits().get(0);
+        assertNotNull(unit);
         SpriteBatch sb=mock(SpriteBatch.class);
         for(int i=0;i<4000;i++) {
             castle.draw(sb,eCastle);

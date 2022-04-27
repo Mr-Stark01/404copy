@@ -20,13 +20,13 @@ public class Castletest {
     // This shit ain't working.
     @Before
     public void init(){
-        Castle castle= new Castle("P1");
+        Castle castle= new Castle("P1",true);
     }
 
     @Test
     public void enoughMoneyKnight(){
         PathFinder pathFinder=mock(PathFinder.class);
-        Castle castle= new Castle("P1");
+        Castle castle= new Castle("P1",true);
         castle.setSpawn(10,10);
         int goldStart=Math.round(castle.getGold());
         for(int i=0;i<goldStart/castle.getArcherPrice();i++){
@@ -40,7 +40,7 @@ public class Castletest {
     }
     @Test
     public void enoughMoneyTower(){
-        Castle castle= new Castle("P1");
+        Castle castle= new Castle("P1",true);
         FireTower tower=new FireTower(0,0);
 
         int goldStart=Math.round(castle.getGold());

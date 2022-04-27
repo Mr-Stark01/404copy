@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.pathFinding.PathFinder;
+import com.mygdx.game.screens.Hud;
 import com.mygdx.game.towers.ArcherTower;
 import com.mygdx.game.towers.CannonTower;
 import com.mygdx.game.towers.FireTower;
@@ -21,15 +23,20 @@ public class InputHandler implements InputProcessor {
   Map<Integer, Boolean> flags;
   Castle castle;
   PathFinder pathFinder;
+  Hud hud;
+  SpriteBatch spriteBatch;
+  Tower tower;
   float scale;
 
 
   public InputHandler(
-      OrthographicCamera camera, float scale, Castle castle, PathFinder pathFinder) {
+          OrthographicCamera camera, float scale, Castle castle, PathFinder pathFinder, Hud hud, SpriteBatch spriteBatch) {
     this.scale = scale;
     this.camera = camera;
     this.castle = castle;
+    this.spriteBatch=spriteBatch;
     this.pathFinder = pathFinder;
+    this.hud=hud;
     flags = new HashMap<>();
     flags.put(Input.Keys.LEFT, false);
     flags.put(Input.Keys.UP, false);
@@ -154,8 +161,58 @@ public class InputHandler implements InputProcessor {
     mouseInWorld2D.y = screenY;
     mouseInWorld2D.z = 0;
     camera.unproject(mouseInWorld2D);
+    System.out.println(screenX+"    "+screenY);
+    // Look at this more hard coded shit that shouldn't be
+    /*⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⡏⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿
+    ⣿⣿⣿⣿⣿⣿⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿
+    ⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀⣸⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿*/
 
-    return false;
+    if (tower == null) {
+      // ArcherTower
+      if (screenX < 210 && screenX > 130 && screenY > 980 && screenY < 1060) {
+        tower = new ArcherTower(screenX, screenY); // mouse koordináták kellenek
+      }
+      //fireTower
+      if (screenX < 540 && screenX > 460 && screenY > 980 && screenY < 1060) {
+        tower = new FireTower(screenX, screenY); // mouse koordináták kellenek
+      }
+      //CanonTower
+      if (screenX < 880 && screenX > 790 && screenY > 980 && screenY < 1060) {
+        tower = new CannonTower(screenX, screenY); // mouse koordináták kellenek
+      }
+      //ArcherUnit
+      if (screenX < 1200 && screenX > 1120 && screenY > 980 && screenY < 1060) {
+        castle.buyArcher(pathFinder);
+      }
+      if (screenX < 1500 && screenX > 1426 && screenY > 980 && screenY < 1060) {
+        castle.buyMage(pathFinder);
+      }
+      if (screenX < 1810 && screenX > 1730 && screenY > 980 && screenY < 1060) {
+        castle.buyTank(pathFinder);
+      }
+    }
+    else{
+      tower.draging(mouseInWorld2D.x,mouseInWorld2D.y);
+      castle.buyTower(tower.clone());
+      castle.spawnTowers();
+      tower=null;
+    }
+    if (screenX < 1070 && screenX > 858 && screenY > 20 && screenY < 90) {
+      System.out.println("Switcher ready state");
+      castle.buildRound=!castle.buildRound; // mouse koordináták kellenek
+    }
+    return true;
   }
 
   @Override
@@ -183,6 +240,14 @@ public class InputHandler implements InputProcessor {
 
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
+    final Vector3 mouseInWorld2D = new Vector3();
+    mouseInWorld2D.x = screenX;
+    mouseInWorld2D.y = screenY;
+    mouseInWorld2D.z = 0;
+    camera.unproject(mouseInWorld2D);
+    if(tower!=null){
+      tower.draging(mouseInWorld2D.x,mouseInWorld2D.y);
+    }
     return false;
   }
 
@@ -204,5 +269,8 @@ public class InputHandler implements InputProcessor {
       camera.zoom = camera.zoom + amountY;
     }
     return true;
+  }
+  public void setSpriteBatch(SpriteBatch spriteBatch){
+    this.spriteBatch=spriteBatch;
   }
 }

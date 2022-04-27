@@ -96,6 +96,7 @@ public class PathFinder {
   public GridPoint getEnd() {
     return end;
   }
+
   // This is another warcrime by me :D
   public void deleteBlocked(ArrayList<Pair>blocked){
     int[] todelete = new int[30];

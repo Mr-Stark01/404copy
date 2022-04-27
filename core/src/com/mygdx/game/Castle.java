@@ -16,6 +16,7 @@ import java.util.Iterator;
 
 /** Represent the player and the castle both. */
 public class Castle implements Serializable,Cloneable {
+  protected Boolean buildRound;
   protected float health = 500f, gold = 5000f;
   protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
@@ -28,8 +29,9 @@ public class Castle implements Serializable,Cloneable {
    *
    * @param player
    */
-  public Castle(String player) {
+  public Castle(String player,Boolean buildRound) {
     this.player = player;
+    this.buildRound=buildRound;
     towers = new ArrayList<>();
     units = new ArrayList<>();
     blocked = new ArrayList<>();
@@ -41,7 +43,7 @@ public class Castle implements Serializable,Cloneable {
    * @param pathFinder
    */
   public void buyArcher(PathFinder pathFinder) {
-    if (gold >= archerPrice) {
+    if (gold >= archerPrice && buildRound) {
       gold -= archerPrice;
       units.add(new Archer(this));
       pathFinder.findWay(units.get(units.size() - 1));
@@ -49,7 +51,7 @@ public class Castle implements Serializable,Cloneable {
   }
 
   public void buyTank(PathFinder pathFinder) {
-    if (gold >= tankPrice) {
+    if (gold >= tankPrice && buildRound) {
       gold -= tankPrice;
       units.add(new Tank(this));
       pathFinder.findWay(units.get(units.size() - 1));
@@ -57,7 +59,7 @@ public class Castle implements Serializable,Cloneable {
   }
 
   public void buyMage(PathFinder pathFinder) {
-    if (gold >= magePrice) {
+    if (gold >= magePrice && buildRound) {
       gold -= magePrice;
       units.add(new Mage(this));
       pathFinder.findWay(units.get(units.size() - 1));
@@ -66,16 +68,19 @@ public class Castle implements Serializable,Cloneable {
 
   /** Spawns the units that were bought in the buy phase. */
   public void spawnUnits() {
-    for (Unit unit : units) {
-      unit.spawn();
+    if (!buildRound) {
+      for (Unit unit : units) {
+        unit.spawn();
+      }
     }
   }
 
   public void buyTower(Tower tower) {
-    if (tower.getPrice() <= gold) {
+    if (tower.getPrice() <= gold && buildRound) {
       gold -= tower.getPrice();
       towers.add(tower);
       blocked.add(new Pair(tower.getX(), tower.getY()));
+      System.out.println("tower bough with"+tower.getX()+" "+tower.getY());
     }
   }
 
@@ -182,6 +187,10 @@ public class Castle implements Serializable,Cloneable {
     this.gold = gold;
   }
 
+  public void setBuildRound(boolean buildRound){
+    this.buildRound=buildRound;
+  }
+
   /**
    * set Health
    */
@@ -209,6 +218,7 @@ public class Castle implements Serializable,Cloneable {
   public Castle clone() {
     try {
       Castle clone = (Castle) super.clone();
+      clone.buildRound = buildRound;
       clone.towers=new ArrayList<>();
       clone.units=new ArrayList<>();
       clone.blocked=new ArrayList<>();
