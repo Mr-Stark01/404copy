@@ -30,7 +30,7 @@ public class Tower_Test {
     PathFinder pathFinder;
     @Before
     public void init(){
-        castle = new Castle("p1");
+        castle = new Castle("p1",true);
         loader = new TmxMapLoader();
         map = loader.load("maps/map_01.tmx");
         pathFinder = new PathFinder(map,"Client");
@@ -68,7 +68,7 @@ public class Tower_Test {
     @Test
     public void FireTowerTestAttack() {
         Tower tower = new FireTower(10, 10);
-        Castle ecastle = new Castle("p2");
+        Castle ecastle = new Castle("p2",true);
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);
         TmxMapLoader eloader = new TmxMapLoader();
@@ -91,7 +91,7 @@ public class Tower_Test {
     @Test
     public void ArcherTowerTestAttack() {
         Tower tower = new ArcherTower(10, 10);
-        Castle ecastle = new Castle("p2");
+        Castle ecastle = new Castle("p2",true);
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);
         TmxMapLoader eloader = new TmxMapLoader();
@@ -111,7 +111,7 @@ public class Tower_Test {
     @Test
     public void TowerAttackTest() {
         Tower tower = new CannonTower(10, 10);
-        Castle ecastle = new Castle("p2");
+        Castle ecastle = new Castle("p2",true);
         castle.setSpawn(10,10);
         ecastle.setSpawn(10,10);
         TmxMapLoader eloader = new TmxMapLoader();

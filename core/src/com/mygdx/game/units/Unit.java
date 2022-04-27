@@ -146,7 +146,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
    * @param spriteBatch SpriteBatch
    */
   public void draw(SpriteBatch spriteBatch) {
+    System.out.println("kurva");
     if (spawned) {
+
       step();
     }
     super.draw(spriteBatch);

@@ -1,6 +1,7 @@
 package com.mygdx.game.towers;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Castle;
@@ -130,6 +131,14 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
       hasTarget = false;
     }
   }
+  public void draging(float x,float y){
+    setX(x);
+    setY(y);
+  }
+  public void dragDraw(SpriteBatch spriteBatch){
+    super.draw(spriteBatch);
+  }
+
 
   @Override
   public synchronized Tower clone() {

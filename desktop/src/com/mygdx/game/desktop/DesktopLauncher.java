@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.title = "404";
 		config.width = 480;
 		config.height = 320;
-		config.fullscreen = false;
+		config.fullscreen = true;
 
 		new LwjglApplication(new MyGdxGame(), config);
 	}
