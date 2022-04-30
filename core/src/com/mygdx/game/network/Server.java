@@ -3,7 +3,6 @@ package com.mygdx.game.network;
 import com.mygdx.game.Castle;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,6 +13,7 @@ public class Server {
   private DataInputStream in;
   private ObjectOutputStream objectOut;
   private ObjectInputStream objectIn;
+  protected boolean buildRound;
   private int backlog;
 
   public void start(int port) {
@@ -62,7 +62,8 @@ public class Server {
   }
 
   public Castle receiveObject() {
-    Castle receive = new Castle("Client",true);
+    buildRound=true;
+    Castle receive = new Castle("Client",buildRound);
     try {
       receive = (Castle) objectIn.readObject();
     } catch (Exception e) {

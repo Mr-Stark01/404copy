@@ -2,7 +2,6 @@ package com.mygdx.game.towers;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.game.Castle;
 
 /**
  * The main FireTower class. This class handles the Fire Tower

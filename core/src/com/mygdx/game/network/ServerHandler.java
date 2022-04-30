@@ -1,10 +1,11 @@
 package com.mygdx.game.network;
 
 import com.mygdx.game.Castle;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServerHandler implements NetworkHandler, Runnable {
-  private ReentrantLock lock = new ReentrantLock();
+  private final ReentrantLock lock = new ReentrantLock();
   private final Server server;
   private Castle ownCastle;
   private Castle enemyCastle;
@@ -29,7 +30,7 @@ public class ServerHandler implements NetworkHandler, Runnable {
         enemyCastle = server.receiveObject();
         newCastle=true;
       try{
-        t.sleep(500);
+        Thread.sleep(500);
       }
       catch(Exception e){
 

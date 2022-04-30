@@ -11,6 +11,7 @@ public class Client {
   private DataInputStream in;
   private ObjectInputStream objectIn;
   private ObjectOutputStream objectOut;
+  boolean buildRound;
 
   public void startConnection(String ip, int port) {
     try {
@@ -64,7 +65,8 @@ public class Client {
   }
 
   public Castle receiveObject() {
-    Castle receive = new Castle("Server",true);
+    buildRound=true;
+    Castle receive = new Castle("Server",buildRound);
     try {
       receive = (Castle) objectIn.readObject();
     } catch (Exception e) {

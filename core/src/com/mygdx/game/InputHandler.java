@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.screens.Hud;
-import com.mygdx.game.towers.ArcherTower;
-import com.mygdx.game.towers.CannonTower;
-import com.mygdx.game.towers.FireTower;
-import com.mygdx.game.towers.Tower;
+import com.mygdx.game.towers.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +21,11 @@ public class InputHandler implements InputProcessor {
   Castle castle;
   PathFinder pathFinder;
   Hud hud;
+  protected String classV;
   SpriteBatch spriteBatch;
   Tower tower;
   float scale;
+  protected TowerRangeCircle towerRangeCircle;
 
 
   public InputHandler(
@@ -161,7 +160,6 @@ public class InputHandler implements InputProcessor {
     mouseInWorld2D.y = screenY;
     mouseInWorld2D.z = 0;
     camera.unproject(mouseInWorld2D);
-    System.out.println(screenX+"    "+screenY);
     // Look at this more hard coded shit that shouldn't be
     /*⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
@@ -182,14 +180,20 @@ public class InputHandler implements InputProcessor {
       // ArcherTower
       if (screenX < 210 && screenX > 130 && screenY > 980 && screenY < 1060) {
         tower = new ArcherTower(screenX, screenY); // mouse koordináták kellenek
+        classV="Archer";
+        towerRangeCircle=new TowerRangeCircle(tower.getRange());
       }
       //fireTower
       if (screenX < 540 && screenX > 460 && screenY > 980 && screenY < 1060) {
         tower = new FireTower(screenX, screenY); // mouse koordináták kellenek
+        classV="Fire";
+        towerRangeCircle=new TowerRangeCircle(tower.getRange());
       }
       //CanonTower
       if (screenX < 880 && screenX > 790 && screenY > 980 && screenY < 1060) {
         tower = new CannonTower(screenX, screenY); // mouse koordináták kellenek
+        classV="Cannon";
+        towerRangeCircle=new TowerRangeCircle(tower.getRange());
       }
       //ArcherUnit
       if (screenX < 1200 && screenX > 1120 && screenY > 980 && screenY < 1060) {
@@ -204,13 +208,23 @@ public class InputHandler implements InputProcessor {
     }
     else{
       tower.draging(mouseInWorld2D.x,mouseInWorld2D.y);
-      castle.buyTower(tower.clone());
+      if (classV.equals("Archer")) {
+        castle.buyTower(new ArcherTower(mouseInWorld2D.x, mouseInWorld2D.y));
+      }
+      if (classV.equals("Fire")) {
+        castle.buyTower(new FireTower(mouseInWorld2D.x, mouseInWorld2D.y));
+      }
+      if (classV.equals("Cannon")) {
+        castle.buyTower(new CannonTower(mouseInWorld2D.x, mouseInWorld2D.y));
+        classV="asd";
+      }
       castle.spawnTowers();
       tower=null;
+      towerRangeCircle=null;
     }
+    //ready button
     if (screenX < 1070 && screenX > 858 && screenY > 20 && screenY < 90) {
-      System.out.println("Switcher ready state");
-      castle.buildRound=!castle.buildRound; // mouse koordináták kellenek
+      castle.setReady(!castle.isReady());
     }
     return true;
   }
@@ -246,9 +260,11 @@ public class InputHandler implements InputProcessor {
     mouseInWorld2D.z = 0;
     camera.unproject(mouseInWorld2D);
     if(tower!=null){
+      towerRangeCircle.setX(mouseInWorld2D.x-tower.getRange());
+      towerRangeCircle.setY(mouseInWorld2D.y-tower.getRange());
       tower.draging(mouseInWorld2D.x,mouseInWorld2D.y);
     }
-    return false;
+    return true;
   }
 
   /**
@@ -270,7 +286,9 @@ public class InputHandler implements InputProcessor {
     }
     return true;
   }
-  public void setSpriteBatch(SpriteBatch spriteBatch){
-    this.spriteBatch=spriteBatch;
+  public void draw(SpriteBatch spriteBatch){
+    if(towerRangeCircle !=null){
+      towerRangeCircle.draw(spriteBatch);
+    }
   }
 }
