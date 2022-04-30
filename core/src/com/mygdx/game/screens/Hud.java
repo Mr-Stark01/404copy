@@ -11,9 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -23,18 +21,37 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Hud implements Disposable {
 
     public Stage stage;
-    private Viewport viewport;
+    private final Viewport viewport;
 
     //score && time tracking variables
     private float gold;
     private float health;
-    private ShapeRenderer shapeRenderer;
+    private final ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
     //Scene2D Widgets
-    private Label goldLabel, currentGoldLabel, currentHealthLabel,healthLabel,archerTowerLabel,fireTowerLabel,cannonTowerLabel,archerUnitLabel,mageUnitLabel,tankUnitLabel;
-    private Image archerTowerImg,fireTowerImg,cannonTowerImg,archerUnitImg,mageUnitImg,tankUnitImg;
-    private Label aLabel,fLabel,cLabel,bLabel,mLabel,tLabel;
+    private final Label goldLabel;
+    private final Label currentGoldLabel;
+    private final Label currentHealthLabel;
+    private final Label healthLabel;
+    private final Label archerTowerLabel;
+    private final Label fireTowerLabel;
+    private final Label cannonTowerLabel;
+    private final Label archerUnitLabel;
+    private final Label mageUnitLabel;
+    private final Label tankUnitLabel;
+    private final Image archerTowerImg;
+    private final Image fireTowerImg;
+    private final Image cannonTowerImg;
+    private final Image archerUnitImg;
+    private final Image mageUnitImg;
+    private final Image tankUnitImg;
+    private final Label aLabel;
+    private final Label fLabel;
+    private final Label cLabel;
+    private final Label bLabel;
+    private final Label mLabel;
+    private final Label tLabel;
 
     /**
      * Everything thats needs to be initiated should be done here or in the show if it's a display

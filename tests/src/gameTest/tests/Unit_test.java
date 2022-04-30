@@ -24,83 +24,99 @@ public class Unit_test { // I can't see this name causing any problems ever good
     TmxMapLoader loader;
     TiledMap map;
     PathFinder pathFinder;
+    boolean buildRun;
     @Before
     public void init(){
-        castle = new Castle("p1",true);
+        buildRun=true;
+        castle = new Castle("p1",buildRun);
         loader = new TmxMapLoader();
         map = loader.load("maps/map_01.tmx");
         pathFinder = new PathFinder(map,"Client");
         eCastle=mock(Castle.class);
     }
-    @Test
-    public void ArcherTest(){
-        castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
+
+  @Test
+  public void ArcherTest() {
+        castle.setSpawn(pathFinder.getStart().getX(), pathFinder.getStart().getY());
         castle.buyArcher(pathFinder);
-        castle.setBuildRound(false);
+        buildRun = false;
+        castle.setBuildRound(buildRun);
         castle.spawnUnits();
-        castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
-        Unit unit = castle.getUnits().get(0);
-        SpriteBatch sb=mock(SpriteBatch.class);
-        float ogX=castle.getUnits().get(0).getX();
-        float ogY=castle.getUnits().get(0).getY();
-        for(int i=0;i<999;i++) {
-            castle.draw(sb,eCastle);
+        castle.setSpawn(pathFinder.getStart().getX(), pathFinder.getStart().getY());
+        for (int i = 0; i < 300; i++) {
+          castle.spawnOne();
         }
-        assertNotEquals(ogX,castle.getUnits().get(0).getX());
-        assertNotEquals(ogY,castle.getUnits().get(0).getY());
+        SpriteBatch sb = mock(SpriteBatch.class);
+        float ogX = castle.getSpawned().get(0).getX();
+        float ogY = castle.getSpawned().get(0).getY();
+        for (int i = 0; i < 9990; i++) {
+          castle.draw(sb, eCastle, 0.05f);
+        }
+        assertNotEquals(ogX, castle.getSpawned().get(0).getX());
+        assertNotEquals(ogY, castle.getSpawned().get(0).getY());
     }
     @Test
     public void MageTest(){
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
-        castle.buyArcher(pathFinder);
-        castle.setBuildRound(false);
+        castle.buyMage(pathFinder);
+        buildRun=false;
+        castle.setBuildRound(buildRun);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
-        Unit unit = castle.getUnits().get(0);
-        SpriteBatch sb=mock(SpriteBatch.class);
-        float ogX=castle.getUnits().get(0).getX();
-        float ogY=castle.getUnits().get(0).getY();
-        for(int i=0;i<999;i++) {
-            castle.draw(sb,eCastle);
+        for(int i=0;i<300;i++){
+            castle.spawnOne();
         }
-        assertNotEquals(ogX,castle.getUnits().get(0).getX());
-        assertNotEquals(ogY,castle.getUnits().get(0).getY());
+        SpriteBatch sb=mock(SpriteBatch.class);
+        float ogX=castle.getSpawned().get(0).getX();
+        float ogY=castle.getSpawned().get(0).getY();
+        for(int i=0;i<9990;i++) {
+            castle.draw(sb,eCastle,0.05f);
+        }
+        assertNotEquals(ogX,castle.getSpawned().get(0).getX());
+        assertNotEquals(ogY,castle.getSpawned().get(0).getY());
     }
     @Test
     public void tankTest(){
-        Castle castle = new Castle("p1",true);
+        Castle castle = new Castle("p1",buildRun);
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap map = loader.load("maps/map_01.tmx");
         PathFinder pathFinder = new PathFinder(map,"Client");
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyTank(pathFinder);
-        castle.setBuildRound(false);
+        buildRun=false;
+        castle.setBuildRound(buildRun);
         castle.spawnUnits();
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
-        Unit tank = castle.getUnits().get(0);
-        SpriteBatch sb=mock(SpriteBatch.class);
-        float ogX=castle.getUnits().get(0).getX();
-        float ogY=castle.getUnits().get(0).getY();
-        for(int i=0;i<999;i++) {
-            castle.draw(sb,eCastle);
+        for(int i=0;i<300;i++){
+            castle.spawnOne();
         }
-        assertNotEquals(ogX,castle.getUnits().get(0).getX());
-        assertNotEquals(ogY,castle.getUnits().get(0).getY());
+        SpriteBatch sb=mock(SpriteBatch.class);
+        float ogX=castle.getSpawned().get(0).getX();
+        float ogY=castle.getSpawned().get(0).getY();
+        for(int i=0;i<9990;i++) {
+            castle.draw(sb,eCastle,0.05f);
+        }
+        assertNotEquals(ogX,castle.getSpawned().get(0).getX());
+        assertNotEquals(ogY,castle.getSpawned().get(0).getY());
     }
     @Test
-    public void pathFinderTest(){ // I can't see this name causeing any problems ever good job me.
+    public void pathFinderTest(){
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
         castle.buyArcher(pathFinder);
-        castle.setBuildRound(false);
+        buildRun=false;
+        castle.setBuildRound(buildRun);
         castle.spawnUnits();
+        for(int i=0;i<300;i++){
+            castle.spawnOne();
+        }
         castle.setSpawn(pathFinder.getStart().getX(),pathFinder.getStart().getY());
-        Unit unit = castle.getUnits().get(0);
+        Unit unit = castle.getSpawned().get(0);
         assertNotNull(unit);
         SpriteBatch sb=mock(SpriteBatch.class);
         for(int i=0;i<4000;i++) {
-            castle.draw(sb,eCastle);
+            castle.draw(sb,eCastle,0.05f);
         }
-        assertEquals(pathFinder.getEnd().getX(),castle.getUnits().get(0).getX(),0);
-        assertEquals(pathFinder.getEnd().getY(),castle.getUnits().get(0).getY(),0);
+        assertEquals(pathFinder.getEnd().getX(),castle.getSpawned().get(0).getX(),0);
+        assertEquals(pathFinder.getEnd().getY(),castle.getSpawned().get(0).getY(),0);
     }
 }

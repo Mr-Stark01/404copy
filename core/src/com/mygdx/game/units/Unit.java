@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Queue;
-import com.mygdx.game.Castle;
 import com.mygdx.game.pathFinding.GridPoint;
 
 import java.io.Serializable;
@@ -89,8 +87,8 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     float angle =
         MathUtils.atan2(
             nextPoint.getY() - previousPoint.getY(), nextPoint.getX() - previousPoint.getX());
-    deltaX = MathUtils.cos(angle) * speed;
-    deltaY = MathUtils.sin(angle) * speed;
+    deltaX = MathUtils.cos(angle) * speed * 3;
+    deltaY = MathUtils.sin(angle) * speed * 3;
   }
 
   /**
@@ -145,10 +143,9 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
    * draw Unit
    * @param spriteBatch SpriteBatch
    */
-  public void draw(SpriteBatch spriteBatch) {
-    System.out.println("kurva");
+  public void draw(SpriteBatch spriteBatch,float delta) {
     if (spawned) {
-
+      speed=delta;
       step();
     }
     super.draw(spriteBatch);
@@ -185,7 +182,7 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   /**
    * get Damaged
    */
-  public void getDamaged(int damage) {
+  public void getDamaged(float damage) {
     health -= damage;
   }
   public boolean getSpawned(){

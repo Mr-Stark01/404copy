@@ -17,16 +17,17 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(GdxTestRunner.class)
 public class Castletest {
-    // This shit ain't working.
+    boolean buildRun;
     @Before
     public void init(){
-        Castle castle= new Castle("P1",true);
+        buildRun=true;
+        Castle castle= new Castle("P1",buildRun);
     }
 
     @Test
     public void enoughMoneyKnight(){
         PathFinder pathFinder=mock(PathFinder.class);
-        Castle castle= new Castle("P1",true);
+        Castle castle= new Castle("P1",buildRun);
         castle.setSpawn(10,10);
         int goldStart=Math.round(castle.getGold());
         for(int i=0;i<goldStart/castle.getArcherPrice();i++){
@@ -40,7 +41,7 @@ public class Castletest {
     }
     @Test
     public void enoughMoneyTower(){
-        Castle castle= new Castle("P1",true);
+        Castle castle= new Castle("P1",buildRun);
         FireTower tower=new FireTower(0,0);
 
         int goldStart=Math.round(castle.getGold());

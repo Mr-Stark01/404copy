@@ -1,16 +1,13 @@
 package com.mygdx.game.towers;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Castle;
-import com.mygdx.game.pathFinding.GridPoint;
 import com.mygdx.game.units.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * The main Tower class. This class handles the Towers
@@ -63,27 +60,31 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
    * draw Tower
    * @param spriteBatch SpriteBatch
    * @param enemy Castle
+   * @param delta float
    */
-  public void draw(SpriteBatch spriteBatch, Castle enemy) {
+  public void draw(SpriteBatch spriteBatch, Castle enemy,float delta) {
     setX(spawnX);
     setY(spawnY);
     if (spawned) {
-      update(enemy);
+      update(enemy,delta);
       super.draw(spriteBatch);
     }
+  }
+
+  public boolean isSpawned() {
+    return spawned;
   }
 
   /**
    * update Tower
    * @param enemy Castle
    */
-  public void update(Castle enemy) {
+  public void update(Castle enemy,float delta) {
     checkTargetPresence();
     if (hasTarget) {
-      System.out.println();
-      attack();
+      attack(delta);
     } else {
-      selectTarget(enemy.getUnits());
+      selectTarget(enemy.getSpawned());
     }
   }
 
@@ -114,7 +115,7 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   public void checkTargetPresence() {
     if (target != null
         && (Math.abs(target.getX() - this.getX()) > range
-            || Math.abs(target.getX() - this.getX()) > range)) {
+            || Math.abs(target.getY() - this.getY()) > range)) {
       target = null;
       hasTarget = false;
     }
@@ -123,9 +124,9 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   /**
    * attack Units
    */
-  public void attack() {
+  public void attack(float delta) {
     if (target.getHealth() > 0) {
-      target.getDamaged(damage);
+      target.getDamaged(damage*delta);
     } else {
       target = null;
       hasTarget = false;
@@ -151,8 +152,8 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
         clone.target = target.clone();
       }
       clone.reinitialize();
-      clone.setX(clone.spawnX);
-      clone.setY(clone.spawnY);
+      clone.setX(spawnX);
+      clone.setY(spawnY);
       // TODO: copy mutable state here, so the clone can't change the internals of the original
       return clone;
     } catch (CloneNotSupportedException e) {

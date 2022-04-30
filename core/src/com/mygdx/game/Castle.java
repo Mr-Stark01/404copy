@@ -1,9 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.pathFinding.GridPoint;
 import com.mygdx.game.pathFinding.PathFinder;
-import com.mygdx.game.towers.FireTower;
 import com.mygdx.game.towers.Tower;
 import com.mygdx.game.units.Archer;
 import com.mygdx.game.units.Mage;
@@ -16,25 +14,43 @@ import java.util.Iterator;
 
 /** Represent the player and the castle both. */
 public class Castle implements Serializable,Cloneable {
-  protected Boolean buildRound;
+  protected boolean buildRound;
+  protected boolean ready=false;
   protected float health = 500f, gold = 5000f;
   protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
+  protected ArrayList<Unit> spawned;
   protected ArrayList<Pair> blocked;
+  protected int idk=0;
+
+  public boolean isBuildRound() {
+    return buildRound;
+  }
+
+  public boolean isReady() {
+    return ready;
+  }
+
+  public void setReady(boolean ready) {
+    this.ready = ready;
+  }
+
   private final String player;
   private float spawnPointX, spawnPointY;
   /**
    * Creates a castle for the player and set's it's coordinates.
    *
    * @param player
+   * @param buildRound
    */
-  public Castle(String player,Boolean buildRound) {
+  public Castle(String player, boolean buildRound) {
     this.player = player;
     this.buildRound=buildRound;
     towers = new ArrayList<>();
     units = new ArrayList<>();
     blocked = new ArrayList<>();
+    spawned = new ArrayList<>();
   }
 
   /**
@@ -59,7 +75,7 @@ public class Castle implements Serializable,Cloneable {
   }
 
   public void buyMage(PathFinder pathFinder) {
-    if (gold >= magePrice && buildRound) {
+    if (gold >= magePrice &&buildRound) {
       gold -= magePrice;
       units.add(new Mage(this));
       pathFinder.findWay(units.get(units.size() - 1));
@@ -72,6 +88,9 @@ public class Castle implements Serializable,Cloneable {
       for (Unit unit : units) {
         unit.spawn();
       }
+      for (Unit unit : spawned) {
+        unit.spawn();
+      }
     }
   }
 
@@ -80,7 +99,6 @@ public class Castle implements Serializable,Cloneable {
       gold -= tower.getPrice();
       towers.add(tower);
       blocked.add(new Pair(tower.getX(), tower.getY()));
-      System.out.println("tower bough with"+tower.getX()+" "+tower.getY());
     }
   }
 
@@ -93,26 +111,38 @@ public class Castle implements Serializable,Cloneable {
       tower.spawn();
     }
   }
+
+  public void spawnOne(){
+    if ((idk % 100 == 0) && !buildRound ) {
+      if (units.size() > 0) {
+        spawned.add(units.get(0));
+        System.out.println("asd");
+        units.remove(0);
+      }
+      idk=0;
+    }
+    idk++;
+  }
   /**
    * Draws anything that is connected to this specific player. Such as towers and units.
    *
    * @param spriteBatch
    */
-  public void draw(SpriteBatch spriteBatch,Castle castle) {
-    System.out.println(health);
-    Iterator<Unit> itr = units.iterator();
+  public void draw(SpriteBatch spriteBatch,Castle castle,float delta) {
+    spawnOne();
+    Iterator<Unit> itr = spawned.iterator();
     while (itr.hasNext()) {
       Unit unit = itr.next();
       if(unit.getHealth()<=0){
         itr.remove();
       }
-      unit.draw(spriteBatch);
+      unit.draw(spriteBatch,delta);
       if(unit.reachedDestinition){
-        this.health=this.health-unit.getDamage();
+        this.health=this.health-(unit.getDamage()*delta);
       }
     }
     for (Tower tower : towers) {
-      tower.draw(spriteBatch, castle); // enemy lesz this helyett
+      tower.draw(spriteBatch, castle, delta); // enemy lesz this helyett
     }
   }
 
@@ -198,11 +228,18 @@ public class Castle implements Serializable,Cloneable {
     this.health = health;
   }
 
+  public boolean getBuildRound() {
+    return buildRound;
+  }
+
   /**
    * get Units
    */
   public ArrayList<Unit> getUnits() {
     return units;
+  }
+  public ArrayList<Unit> getSpawned() {
+    return spawned;
   }
 
   public void reinitialize(){
@@ -211,6 +248,9 @@ public class Castle implements Serializable,Cloneable {
     }
     for (Tower tower : towers) {
       tower.reinitialize();
+    }
+    for (Unit unit : spawned) {
+      unit.reinitialize();
     }
   }
 
@@ -222,10 +262,15 @@ public class Castle implements Serializable,Cloneable {
       clone.towers=new ArrayList<>();
       clone.units=new ArrayList<>();
       clone.blocked=new ArrayList<>();
+      clone.spawned=new ArrayList<>();
 
       for (Unit unit : units) {
           Unit newUnit = unit.clone();
           clone.units.add(newUnit);
+      }
+      for (Unit unit : spawned) {
+        Unit newUnit = unit.clone();
+        clone.spawned.add(newUnit);
       }
       for (Tower tower : towers) {
         Tower newTower = tower.clone();

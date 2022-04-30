@@ -18,7 +18,8 @@ import com.mygdx.game.pathFinding.PathFinder;
 import com.mygdx.game.screens.Hud;
 import com.mygdx.game.towers.Tower;
 
-
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.SynchronousQueue;
 
@@ -39,14 +40,17 @@ public class GameScreen implements Screen {
   OrthographicCamera camera;
   SpriteBatch spriteBatch;
   ArrayList<TiledMapTileLayer.Cell> cellList;
+
+  protected Instant now;
+  protected boolean needNewTime=true;
   // map from tiled
   private TiledMapTileLayer tileyLayer;
   private TiledMap map;
   private OrthogonalTiledMapRenderer renderer;
   private PathFinder pathFinder;
-  private SynchronousQueue<Castle> queue = new SynchronousQueue<>();
-  private Hud hud;
-  Boolean buyRound=true;
+  private final SynchronousQueue<Castle> queue = new SynchronousQueue<>();
+  private final Hud hud;
+  private boolean buildRound =true;
 
   int picHeightWidth;
   int picY;
@@ -74,6 +78,7 @@ public class GameScreen implements Screen {
    * @param network For handling the exchange of the Castle classes.
    */
   public GameScreen(final MyGdxGame game, NetworkHandler network) {
+
     this.network = network;
     player = (network.getClass() == ClientHandler.class ? "Client" : "Server");
     this.game = game;
@@ -81,7 +86,6 @@ public class GameScreen implements Screen {
 
     hud = new Hud(spriteBatch);
   }
-
   /** Anything that will be shown to the player Will be initiated here. */
   @Override
   public void show() {
@@ -93,7 +97,7 @@ public class GameScreen implements Screen {
     renderer = new OrthogonalTiledMapRenderer(map, 1 / scale);
 
     // Creaating Castle
-    castle = new Castle(player,buyRound);
+    castle = new Castle(player, buildRound);
 
     // Creating a pathfinder
     pathFinder = new PathFinder(map, player);
@@ -163,17 +167,51 @@ public class GameScreen implements Screen {
       tower.dragDraw(spriteBatch);
       spriteBatch.end();
     }
-
+    spriteBatch.begin();
+    inputHandler.draw(spriteBatch);
+    spriteBatch.end();
     // Updating Castle
     if (network.castleArrived()) {
       if(network.isNew()){
         EnemyCastle=network.getEnemyCastle().clone();
       }
+      // Well would you look at this a bad solution to the problem who would have tought.
+
+        if (player.equals("Client")) {
+          buildRound=EnemyCastle.getBuildRound();
+          castle.setBuildRound(EnemyCastle.getBuildRound());
+          castle.spawnUnits();
+          castle.setReady(EnemyCastle.isReady());
+        }
+      if (player.equals("Server")) {
+        if (castle.isReady() && EnemyCastle.isReady()){
+          buildRound=false;
+          castle.setBuildRound(buildRound);
+          castle.spawnUnits();
+          castle.setReady(false);
+        }
+        if (buildRound && needNewTime) {
+          needNewTime = false;
+          now = Instant.now();
+        }
+        if (buildRound && Duration.between(now, Instant.now()).compareTo(Duration.ofSeconds(60)) > 0) { // TODO: Na szoval van itt ez a now változo és enek a küllönbségét kéne kiteni másodpercre a hudba if possible
+          buildRound = false;
+          castle.setBuildRound(buildRound);
+          castle.spawnUnits();
+        }
+        if(!buildRound && !needNewTime && castle.getSpawned().size() == 0 && EnemyCastle.getSpawned().size() == 0 && castle.getUnits().size()==0 && EnemyCastle.getUnits().size()==0) {
+          System.out.println("aséklslédféáasldféáasldéáflaséádlféáasldféá");
+          needNewTime = true;
+          buildRound = true;
+          castle.setBuildRound(buildRound);
+          now = Instant.now();
+        }
+      }
       spriteBatch.begin();
-      castle.draw(spriteBatch,EnemyCastle);
+      castle.draw(spriteBatch,EnemyCastle,delta);
       spriteBatch.end();
       spriteBatch.begin();
-      EnemyCastle.draw(spriteBatch,castle);
+      EnemyCastle.draw(spriteBatch,castle,delta);
       spriteBatch.end();
     }
 
@@ -193,63 +231,6 @@ public class GameScreen implements Screen {
 
     // Putting down tower and unit
 
-    //archerTower
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
-      if(vec.x < archerTowerImgX + picHeightWidth && vec.x  > archerTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-
-      }
-    }
-
-    //fireTower
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
-      if(vec.x < fireTowerImgX + picHeightWidth && vec.x  > fireTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-
-      }
-    }
-
-    //cannonTower
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      if(vec.x < cannonTowerImgX + picHeightWidth && vec.x  > cannonTowerImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-        System.out.println("asd2");
-      }
-    }
-
-    //archerUnit
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
-      if(vec.x < archerUnitImgX + picHeightWidth && vec.x  > archerUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-      }
-    }
-
-    //mageUnit
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
-      if(vec.x < mageUnitImgX + picHeightWidth && vec.x  > mageUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-
-      }
-    }
-
-    //tankUnit
-    if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-      Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-      camera.unproject(vec);
-      if(vec.x < tankUnitImgX + picHeightWidth && vec.x  > tankUnitImgX && vec.y > picY && vec.y < picY + picHeightWidth){
-        //buy if possible
-
-      }
-    }
     hud.setGold(castle.getGold());
     hud.setHealth(castle.getHealth());
 
