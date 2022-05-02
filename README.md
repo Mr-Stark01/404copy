@@ -7,13 +7,13 @@
     <li><a href="https://www.lwjgl.org/">lwjgl</li>
 </ul>
 
-##Requirements to run
+## Requirements to run
 <ul>
     <li>JRE 8+</li>
 </ul>
 
 
-##Requirements to develop
+## Requirements to develop
 <ul>
     <li>jdk 8+</li>
     <li>gradlew</li>
