@@ -42,8 +42,8 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),10);
-        assertEquals(tower.getHealth(),10);
-        assertEquals(tower.getDamage(),1);
+        assertEquals(tower.getHealth(),10,0);
+        assertEquals(tower.getDamage(),1,0);
         assertEquals(tower.getRange(),3);
     }
     @Test
@@ -52,8 +52,8 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),30);
-        assertEquals(tower.getHealth(),30);
-        assertEquals(tower.getDamage(),30);
+        assertEquals(tower.getHealth(),30,0);
+        assertEquals(tower.getDamage(),30,0);
         assertEquals(tower.getRange(),1);
     }
     @Test
@@ -62,8 +62,8 @@ public class Tower_Test {
         castle.buyTower(tower);
         castle.spawnTowers();
         assertEquals(tower.getPrice(),20);
-        assertEquals(tower.getHealth(),20);
-        assertEquals(tower.getDamage(),20);
+        assertEquals(tower.getHealth(),20,0);
+        assertEquals(tower.getDamage(),20,0);
         assertEquals(tower.getRange(),2);
     }
     @Test
@@ -87,11 +87,11 @@ public class Tower_Test {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth());
+        assertEquals(30,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,tank.getHealth());
+        assertEquals(10,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-10,tank.getHealth());
+        assertEquals(-10,tank.getHealth(),0);
     }
     @Test
     public void ArcherTowerTestAttack() {
@@ -115,7 +115,7 @@ public class Tower_Test {
         assertTrue(tower.isSpawned());
         for(int i=30;i>0;i--){
             tower.update(ecastle,1f);
-            assertEquals(i,tank.getHealth());
+            assertEquals(i,tank.getHealth(),0);
         }
     }
     @Test
@@ -139,12 +139,12 @@ public class Tower_Test {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth());
+        assertEquals(30,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(0,tank.getHealth());
+        assertEquals(0,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(0,tank.getHealth());
+        assertEquals(0,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(0,tank.getHealth());
+        assertEquals(0,tank.getHealth(),0);
     }
 }

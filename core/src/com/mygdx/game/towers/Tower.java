@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * The main Tower class. This class handles the Towers
  */
 public abstract class Tower extends Sprite implements Serializable,Cloneable {
-  protected int damage;
+  protected float damage;
   protected int price;
-  protected int health;
+  protected float health;
   protected float x,y;
   protected int range;
   protected Unit target;
@@ -172,12 +172,12 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   /**
    * get Health
    */
-  public int getHealth() { return health; }
+  public float getHealth() { return health; }
 
   /**
    * get Damage
    */
-  public int getDamage() { return damage; }
+  public float getDamage() { return damage; }
 
   /**
    * get Range

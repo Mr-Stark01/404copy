@@ -17,9 +17,9 @@ import java.util.Iterator;
  */
 public abstract class Unit extends Sprite implements Serializable,Cloneable {
   public boolean reachedDestinition=false;
-  protected int damage;
+  protected float damage;
   protected int price;
-  protected int health;
+  protected float health;
   protected int range;
   protected boolean spawned = false;
   float speed = 0.1f; // increase this to make it faster decrease it to make it slower
@@ -161,7 +161,7 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   /**
    * get Health
    */
-  public int getHealth() {
+  public float getHealth() {
     return health;
   }
 
@@ -175,7 +175,7 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
   /**
    * get Damage
    */
-  public int getDamage() {
+  public float getDamage() {
     return damage;
   }
 
