@@ -16,6 +16,7 @@ public class GrassFinder {
       for (int j = 0; j < tileyLayer.getHeight(); j++) {
         if ((grassList.get(i).cell.getTile().getProperties().containsKey("grass"))) {
           grassList.add(new CellWithCoordinates(tileyLayer.getCell(i, j), i, j));
+
         }
       }
     }
