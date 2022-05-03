@@ -160,6 +160,11 @@ public class InputHandler implements InputProcessor {
     mouseInWorld2D.y = screenY;
     mouseInWorld2D.z = 0;
     camera.unproject(mouseInWorld2D);
+    for(Tower tower : castle.getTowers()){
+      if(Math.abs(tower.getX()-mouseInWorld2D.x)<2 &&Math.abs(tower.getY()-mouseInWorld2D.y)<2){
+        castle.upgrade(tower);
+      }
+    }
     // Look at this more hard coded shit that shouldn't be
     /*⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿

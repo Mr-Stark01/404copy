@@ -22,6 +22,7 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
   protected boolean spawned;
   protected float spawnX;
   protected float spawnY;
+  protected int lvl;
   boolean hasTarget;
 
   /**
@@ -118,6 +119,17 @@ public abstract class Tower extends Sprite implements Serializable,Cloneable {
             || Math.abs(target.getY() - this.getY()) > range)) {
       target = null;
       hasTarget = false;
+    }
+  }
+  /**
+   * Upgrades tower
+   */
+  public void upgrade(){
+    if(lvl<=3) {
+      lvl++;
+      health = health * 1.5f;
+      damage = damage * 1.5f;
+      range = range * 2;
     }
   }
 

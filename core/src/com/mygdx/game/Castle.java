@@ -254,6 +254,12 @@ public class Castle implements Serializable,Cloneable {
     }
   }
 
+  public void upgrade(Tower tower){
+    if(gold>=100) {
+      tower.upgrade();
+    }
+  }
+
   @Override
   public Castle clone() {
     try {
