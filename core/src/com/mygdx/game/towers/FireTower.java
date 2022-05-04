@@ -13,7 +13,7 @@ public class FireTower extends Tower {
    * @param spawnY float
    */
   public FireTower( float spawnX, float spawnY) {
-    super(20, 20, 20, 2, spawnX, spawnY);
+    super(20, 20, 20, 3, spawnX, spawnY);
     setTexture(new Texture("textures/mage-tower.png"));
   }
 
