@@ -13,7 +13,7 @@ public class Tank extends Unit {
    * @param owner Castle
    */
   public Tank(Castle owner) {
-    super(5, 15, 30, 1, owner.getSpawnPointX(), owner.getSpawnPointY());
+    super(5, 15, 300, 1, owner.getSpawnPointX(), owner.getSpawnPointY());
     setTexture(new Texture("textures/tank-unit.png"));
   }
   @Override

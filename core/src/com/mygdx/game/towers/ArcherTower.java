@@ -13,7 +13,7 @@ public class ArcherTower extends Tower {
    * @param spawnY float
    */
   public ArcherTower( float spawnX, float spawnY) {
-    super(1, 10, 10, 4, spawnX, spawnY);
+    super(10, 10, 10, 4, spawnX, spawnY);
     setTexture(new Texture("textures/archer-tower.png"));
   }
   @Override
