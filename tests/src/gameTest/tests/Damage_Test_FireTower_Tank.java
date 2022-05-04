@@ -56,11 +56,11 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-10,tank.getHealth(),0);
+        assertEquals(260,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestRange1() {
@@ -70,11 +70,11 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-10,tank.getHealth(),0);
+        assertEquals(260,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestRange2() {
@@ -84,11 +84,11 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-10,tank.getHealth(),0);
+        assertEquals(260,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestRange3() {
@@ -98,11 +98,11 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-10,tank.getHealth(),0);
+        assertEquals(260,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestRange4() {
@@ -112,11 +112,11 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(260,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestDeltaTiming() {
@@ -126,13 +126,13 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,0.5f); //Here it just finds it
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,0.5f);
-        assertEquals(20,tank.getHealth(),0);
+        assertEquals(290,tank.getHealth(),0);
         tower.update(ecastle,0.5f);
-        assertEquals(10,tank.getHealth(),0);
+        assertEquals(280,tank.getHealth(),0);
         tower.update(ecastle,0.5f);
-        assertEquals(0,tank.getHealth(),0);
+        assertEquals(270,tank.getHealth(),0);
     }
     @Test
     public void FireTowerDamageTestDeltaTiming2() {
@@ -142,12 +142,12 @@ public class Damage_Test_FireTower_Tank {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,0.5f); //Here it just finds it
-        assertEquals(30,tank.getHealth(),0);
+        assertEquals(300,tank.getHealth(),0);
         tower.update(ecastle,0.0123f);
-        assertEquals(29.753999710083008,tank.getHealth(),0);
+        assertEquals(299.7539978027344,tank.getHealth(),0);
         tower.update(ecastle,0.120f);
-        assertEquals(27.354,tank.getHealth(),0.1);
+        assertEquals(297.35400390625,tank.getHealth(),0.1);
         tower.update(ecastle,0.7f);
-        assertEquals(13.5,tank.getHealth(),0.2);
+        assertEquals(283.35400390625,tank.getHealth(),0.2);
     }
 }
