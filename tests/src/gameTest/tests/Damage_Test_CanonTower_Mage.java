@@ -57,11 +57,11 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(20,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(-10,mage.getHealth(),0);
     }
     @Test
     public void CanonTowerDamageTestRange1() {
@@ -71,11 +71,11 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(20,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(-10,mage.getHealth(),0);
     }
     @Test
     public void CanonTowerDamageTestRange2() {
@@ -85,11 +85,11 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(20,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(-20,mage.getHealth(),0);
+        assertEquals(-10,mage.getHealth(),0);
     }
     @Test
     public void CanonTowerDamageTestRange4() {
@@ -99,11 +99,11 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,1f);
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
     }
     @Test
     public void CanonTowerDamageTestDeltaTiming() {
@@ -113,15 +113,15 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,0.125f); //Here it just finds it
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,0.125f);
-        assertEquals(6.25,mage.getHealth(),0);
+        assertEquals(46.25,mage.getHealth(),0);
         tower.update(ecastle,0.125f);
-        assertEquals(2.5,mage.getHealth(),0);
+        assertEquals(42.5,mage.getHealth(),0);
         tower.update(ecastle,0.125f);
-        assertEquals(-1.25,mage.getHealth(),0);
+        assertEquals(38.75,mage.getHealth(),0);
         tower.update(ecastle,0.125f);
-        assertEquals(-1.25,mage.getHealth(),0);
+        assertEquals(35,mage.getHealth(),0);
     }
     @Test
     public void CanonTowerDamageTestDeltaTiming2() {
@@ -131,12 +131,12 @@ public class Damage_Test_CanonTower_Mage {
         castle.spawnTowers();
         assertTrue(tower.isSpawned());
         tower.update(ecastle,0.5f); //Here it just finds it
-        assertEquals(10,mage.getHealth(),0);
+        assertEquals(50,mage.getHealth(),0);
         tower.update(ecastle,0.0123f);
-        assertEquals(9.630999565124512,mage.getHealth(),0);
+        assertEquals(49.63100051879883,mage.getHealth(),0);
         tower.update(ecastle,0.120f);
-        assertEquals(6.03,mage.getHealth(),0.1);
+        assertEquals(46.031002044677734,mage.getHealth(),0.1);
         tower.update(ecastle,0.7f);
-        assertEquals(-14.96,mage.getHealth(),0.2);
+        assertEquals(25.031002044677734,mage.getHealth(),0.2);
     }
 }
