@@ -236,7 +236,6 @@ public class GameScreen implements Screen {
 
     hud.setGold(castle.getGold());
     hud.setHealth(castle.getHealth());
-    hud.setNow(this.now);
 
     // endscreen working only online
     game.batch.begin();

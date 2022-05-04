@@ -15,9 +15,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.time.Duration;
-import java.time.Instant;
-
 /**
  * The main Hud class. This class handles the Hud
  */
@@ -30,7 +27,6 @@ public class Hud implements Disposable {
     private float gold;
     private float health;
     private int seconds;
-    private Instant now;
     private final ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
@@ -273,9 +269,5 @@ public class Hud implements Disposable {
      */
     public void setHealth(float health) {
         this.health = health;
-    }
-
-    public void setNow(Instant now) {
-        this.now = now;
     }
 }
