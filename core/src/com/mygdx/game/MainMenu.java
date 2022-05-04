@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
+import java.awt.*;
+import java.io.IOException;
+
 /**
  * The main MainMenu class. This class handles the Main Menu
  */
@@ -98,15 +101,20 @@ public class MainMenu implements Screen {
 
     //here we go
         //mapButton
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            Vector3 vec=new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-            camera.unproject(vec);
-            if(vec.x < buttonX - ((mapEditorButtonWid - buttonWid)/2)  + mapEditorButtonWid && vec.x > buttonX - ((mapEditorButtonWid - buttonWid)/2) && vec.y >  mapButtonY  &&  vec.y < mapButtonY + buttonHei){
-                game.setScreen(new MapEditorScreen(game));
-                dispose();
+        if (Gdx.input.justTouched()) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(vec);
+                if (vec.x < buttonX - ((mapEditorButtonWid - buttonWid) / 2) + mapEditorButtonWid && vec.x > buttonX - ((mapEditorButtonWid - buttonWid) / 2) && vec.y > mapButtonY && vec.y < mapButtonY + buttonHei) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(java.net.URI.create("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-
 
         //optionsButton
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
