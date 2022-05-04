@@ -240,6 +240,10 @@ public class Hud implements Disposable {
         stage.dispose();
     }
 
+    public void setTime(long seconds){
+        //idk
+    }
+
     /**
      * Updating vars for hud
      *
