@@ -29,12 +29,16 @@ public class Hud implements Disposable {
     //score && time tracking variables
     private float gold;
     private float health;
+    private int seconds;
     private Instant now;
     private final ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
     //Scene2D Widgets
+    private final Label readyButtonPlaceHolder1;
+    private final Label readyButtonPlaceHolder2;
     private final Label goldLabel;
+    private final Label timeLabel;
     private final Label currentGoldLabel;
     private final Label currentHealthLabel;
     private final Label currentTimeLabel;
@@ -78,8 +82,11 @@ public class Hud implements Disposable {
 
         currentGoldLabel = new Label(String.format("%.0f", gold), new Label.LabelStyle(font1, Color.WHITE));
         currentHealthLabel = new Label(String.format("%.0f", health), new Label.LabelStyle(font1, Color.WHITE));
-        currentTimeLabel = new Label(String.format("%.0f", /*Duration.between(now, Instant.now()).compareTo(Duration.ofSeconds(60)*/ now), new Label.LabelStyle(font1, Color.WHITE));
+        currentTimeLabel = new Label(String.format("%d", seconds), new Label.LabelStyle(font1, Color.WHITE));
+        readyButtonPlaceHolder1 = new Label("", new Label.LabelStyle(font1, Color.WHITE));
+        readyButtonPlaceHolder2 = new Label("", new Label.LabelStyle(font1, Color.WHITE));
         goldLabel = new Label("Gold", new Label.LabelStyle(font1, Color.WHITE));
+        timeLabel = new Label("Time", new Label.LabelStyle(font1, Color.WHITE));
         healthLabel = new Label("Health", new Label.LabelStyle(font1, Color.WHITE));
 
         archerTowerLabel = new Label("ArcherTower", new Label.LabelStyle(font1, Color.WHITE));
@@ -111,8 +118,11 @@ public class Hud implements Disposable {
         goldLabel.setFontScale(4);
         currentGoldLabel.setFontScale(3);
         healthLabel.setFontScale(4);
+        readyButtonPlaceHolder1.setFontScale(4);
+        timeLabel.setFontScale(4);
         currentHealthLabel.setFontScale(3);
         currentTimeLabel.setFontScale(3);
+        readyButtonPlaceHolder2.setFontScale(3);
 
         archerTowerLabel.setFontScale(2);
         fireTowerLabel.setFontScale(2);
@@ -153,7 +163,7 @@ public class Hud implements Disposable {
         //ready button
         Image readyButton = new Image(new Texture("menu/button_ready.png"));
         readyButton.setSize(250,100);
-        readyButton.setX(1920/2-125);
+        readyButton.setX(1920-400);
         readyButton.setY(1080-100);
 
         //add labels to table, padding the top, and giving them all equal width with expandX
@@ -161,11 +171,14 @@ public class Hud implements Disposable {
         //top table
         tableTop.add(healthLabel).expandX().padTop(10);
         tableTop.add(goldLabel).expandX().padTop(10);
+        tableTop.add(timeLabel).expandX().padTop(10);
+        tableTop.add(readyButtonPlaceHolder1).expandX().padTop(10);
         //row
         tableTop.row();
         tableTop.add(currentHealthLabel).expandX();
         tableTop.add(currentGoldLabel).expandX();
         tableTop.add(currentTimeLabel).expandX();
+        tableTop.add(readyButtonPlaceHolder2).expandX();
 
         //bot table
             //tower
@@ -203,7 +216,7 @@ public class Hud implements Disposable {
         //add table to the stage
         stage.addActor(imageTop);
         stage.addActor(imageBot);
-        //stage.addActor(readyButton);
+        stage.addActor(readyButton);
         stage.addActor(tableTop);
         stage.addActor(tableBot);
     }
@@ -228,7 +241,7 @@ public class Hud implements Disposable {
         */
         currentGoldLabel.setText(String.format("%.0f", gold));
         currentHealthLabel.setText(String.format("%.0f", health));
-        currentTimeLabel.setText(String.format("%.0f", now));
+        currentTimeLabel.setText(String.format("%d", seconds));
     }
 
 
@@ -241,7 +254,7 @@ public class Hud implements Disposable {
     }
 
     public void setTime(long seconds){
-        //idk
+        this.seconds = (int) seconds;
     }
 
     /**
