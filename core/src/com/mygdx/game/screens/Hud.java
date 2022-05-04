@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * The main Hud class. This class handles the Hud
  */
@@ -26,6 +29,7 @@ public class Hud implements Disposable {
     //score && time tracking variables
     private float gold;
     private float health;
+    private Instant now;
     private final ShapeRenderer shapeRenderer;
     static private boolean projectionMatrixSet;
 
@@ -33,6 +37,7 @@ public class Hud implements Disposable {
     private final Label goldLabel;
     private final Label currentGoldLabel;
     private final Label currentHealthLabel;
+    private final Label currentTimeLabel;
     private final Label healthLabel;
     private final Label archerTowerLabel;
     private final Label fireTowerLabel;
@@ -73,8 +78,9 @@ public class Hud implements Disposable {
 
         currentGoldLabel = new Label(String.format("%.0f", gold), new Label.LabelStyle(font1, Color.WHITE));
         currentHealthLabel = new Label(String.format("%.0f", health), new Label.LabelStyle(font1, Color.WHITE));
-        goldLabel = new Label("Gold:", new Label.LabelStyle(font1, Color.WHITE));
-        healthLabel = new Label("Health:", new Label.LabelStyle(font1, Color.WHITE));
+        currentTimeLabel = new Label(String.format("%.0f", /*Duration.between(now, Instant.now()).compareTo(Duration.ofSeconds(60)*/ now), new Label.LabelStyle(font1, Color.WHITE));
+        goldLabel = new Label("Gold", new Label.LabelStyle(font1, Color.WHITE));
+        healthLabel = new Label("Health", new Label.LabelStyle(font1, Color.WHITE));
 
         archerTowerLabel = new Label("ArcherTower", new Label.LabelStyle(font1, Color.WHITE));
         fireTowerLabel = new Label("FireTower", new Label.LabelStyle(font1, Color.WHITE));
@@ -106,6 +112,7 @@ public class Hud implements Disposable {
         currentGoldLabel.setFontScale(3);
         healthLabel.setFontScale(4);
         currentHealthLabel.setFontScale(3);
+        currentTimeLabel.setFontScale(3);
 
         archerTowerLabel.setFontScale(2);
         fireTowerLabel.setFontScale(2);
@@ -158,6 +165,7 @@ public class Hud implements Disposable {
         tableTop.row();
         tableTop.add(currentHealthLabel).expandX();
         tableTop.add(currentGoldLabel).expandX();
+        tableTop.add(currentTimeLabel).expandX();
 
         //bot table
             //tower
@@ -195,7 +203,7 @@ public class Hud implements Disposable {
         //add table to the stage
         stage.addActor(imageTop);
         stage.addActor(imageBot);
-        stage.addActor(readyButton);
+        //stage.addActor(readyButton);
         stage.addActor(tableTop);
         stage.addActor(tableBot);
     }
@@ -220,6 +228,7 @@ public class Hud implements Disposable {
         */
         currentGoldLabel.setText(String.format("%.0f", gold));
         currentHealthLabel.setText(String.format("%.0f", health));
+        currentTimeLabel.setText(String.format("%.0f", now));
     }
 
 
@@ -247,5 +256,9 @@ public class Hud implements Disposable {
      */
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public void setNow(Instant now) {
+        this.now = now;
     }
 }

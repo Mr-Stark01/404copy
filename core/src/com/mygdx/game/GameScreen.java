@@ -233,6 +233,7 @@ public class GameScreen implements Screen {
 
     hud.setGold(castle.getGold());
     hud.setHealth(castle.getHealth());
+    hud.setNow(this.now);
 
     // endscreen working only online
     game.batch.begin();
@@ -306,5 +307,9 @@ public class GameScreen implements Screen {
   public void dispose() {
     map.dispose();
     renderer.dispose();
+  }
+
+  public Instant getNow(){
+    return now;
   }
 }
