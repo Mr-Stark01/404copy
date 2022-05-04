@@ -13,7 +13,7 @@ public class Mage extends Unit {
    * @param owner Castle
    */
   public Mage(Castle owner) {
-    super(10, 20, 10, 1, owner.getSpawnPointX(), owner.getSpawnPointY());
+    super(10, 20, 50, 1, owner.getSpawnPointX(), owner.getSpawnPointY());
     setTexture(new Texture("textures/mage-unit.png"));
   }
   @Override

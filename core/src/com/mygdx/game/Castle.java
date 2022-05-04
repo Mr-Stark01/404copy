@@ -16,13 +16,22 @@ import java.util.Iterator;
 public class Castle implements Serializable,Cloneable {
   protected boolean buildRound;
   protected boolean ready=false;
-  protected float health = 500f, gold = 5000f;
+  protected float health = 100f, gold = 5000f;
   protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
   protected ArrayList<Unit> spawned;
   protected ArrayList<Pair> blocked;
   protected int idk=0;
+  protected long time=60;
+
+  public long getTime() {
+    return time;
+  }
+
+  public void setTime(long time) {
+    this.time = time;
+  }
 
   public boolean isBuildRound() {
     return buildRound;
@@ -116,7 +125,6 @@ public class Castle implements Serializable,Cloneable {
     if ((idk % 100 == 0) && !buildRound ) {
       if (units.size() > 0) {
         spawned.add(units.get(0));
-        System.out.println("asd");
         units.remove(0);
       }
       idk=0;

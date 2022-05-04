@@ -228,7 +228,7 @@ public class InputHandler implements InputProcessor {
       towerRangeCircle=null;
     }
     //ready button
-    if (screenX < 1070 && screenX > 858 && screenY > 20 && screenY < 90) {
+    if (screenX < 1770 & screenX > 1520 && screenY > 20 && screenY < 80) {
       castle.setReady(!castle.isReady());
     }
     return true;

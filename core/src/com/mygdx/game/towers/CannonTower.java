@@ -13,7 +13,7 @@ public class CannonTower extends Tower {
    * @param spawnY float
    */
   public CannonTower(float spawnX, float spawnY) {
-    super(30, 30, 30, 1, spawnX, spawnY);
+    super(30, 30, 30, 2, spawnX, spawnY);
     setTexture(new Texture("textures/canon-tower.png"));
   }
   @Override

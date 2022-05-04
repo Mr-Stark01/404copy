@@ -13,7 +13,7 @@ public class Archer extends Unit {
    * @param owner Castle
    */
   public Archer(Castle owner) {
-    super(5, 10, 10, 2,  owner.getSpawnPointX(), owner.getSpawnPointY());
+    super(5, 10, 150, 2,  owner.getSpawnPointX(), owner.getSpawnPointY());
     setTexture(new Texture("textures/archer-unit.png"));
   }
   @Override
