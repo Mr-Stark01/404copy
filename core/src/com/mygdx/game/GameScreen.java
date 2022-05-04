@@ -181,10 +181,7 @@ public class GameScreen implements Screen {
           buildRound=EnemyCastle.getBuildRound();
           castle.setBuildRound(EnemyCastle.getBuildRound());
           castle.spawnUnits();
-          castle.setReady(EnemyCastle.isReady());
-          if(!needNewTime && buildRound ) {
-            hud.setTime(EnemyCastle.getTime());
-          }
+          hud.setTime(EnemyCastle.getTime());
         }
       if (player.equals("Server")) {
         if (castle.isReady() && EnemyCastle.isReady()){
