@@ -182,6 +182,9 @@ public class GameScreen implements Screen {
           castle.setBuildRound(EnemyCastle.getBuildRound());
           castle.spawnUnits();
           castle.setReady(EnemyCastle.isReady());
+          if(!needNewTime && buildRound ) {
+            hud.setTime(EnemyCastle.getTime());
+          }
         }
       if (player.equals("Server")) {
         if (castle.isReady() && EnemyCastle.isReady()){
@@ -197,6 +200,7 @@ public class GameScreen implements Screen {
         if(!needNewTime && buildRound ){
           System.out.println(Duration.between(now, Instant.now()).getSeconds());
           hud.setTime(Math.abs(Duration.between(now, Instant.now()).getSeconds()-60));
+          castle.setTime(Math.abs(Duration.between(now, Instant.now()).getSeconds()-60));
         }
         if (buildRound && Duration.between(now, Instant.now()).compareTo(Duration.ofSeconds(60)) > 0) { // TODO: Na szoval van itt ez a now változo és enek a küllönbségét kéne kiteni másodpercre a hudba if possible
           buildRound = false;

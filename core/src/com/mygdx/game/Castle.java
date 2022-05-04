@@ -23,6 +23,15 @@ public class Castle implements Serializable,Cloneable {
   protected ArrayList<Unit> spawned;
   protected ArrayList<Pair> blocked;
   protected int idk=0;
+  protected long time=60;
+
+  public long getTime() {
+    return time;
+  }
+
+  public void setTime(long time) {
+    this.time = time;
+  }
 
   public boolean isBuildRound() {
     return buildRound;
@@ -116,7 +125,6 @@ public class Castle implements Serializable,Cloneable {
     if ((idk % 100 == 0) && !buildRound ) {
       if (units.size() > 0) {
         spawned.add(units.get(0));
-        System.out.println("asd");
         units.remove(0);
       }
       idk=0;
