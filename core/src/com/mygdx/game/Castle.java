@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class Castle implements Serializable,Cloneable {
   protected boolean buildRound;
   protected boolean ready=false;
-  protected float health = 500f, gold = 5000f;
+  protected float health = 100f, gold = 5000f;
   protected int archerPrice = 50, magePrice = 20, tankPrice = 30;
   protected ArrayList<Tower> towers;
   protected ArrayList<Unit> units;
