@@ -87,8 +87,8 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
     float angle =
         MathUtils.atan2(
             nextPoint.getY() - previousPoint.getY(), nextPoint.getX() - previousPoint.getX());
-    deltaX = MathUtils.cos(angle) * 0.2f;
-    deltaY = MathUtils.sin(angle) * 0.2f;
+    deltaX = MathUtils.cos(angle) * 3;
+    deltaY = MathUtils.sin(angle) * 3;
   }
 
   /**
@@ -107,8 +107,8 @@ public abstract class Unit extends Sprite implements Serializable,Cloneable {
    * step Unit
    */
   public void step() {
-    setX(getX() + deltaX);
-    setY(getY() + deltaY);
+    setX((getX() + deltaX)*speed);
+    setY((getY() + deltaY)*speed);
     x=getX();
     y=getY();
     checkCollision();
